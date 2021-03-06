@@ -2,7 +2,7 @@
  * @Author: ferried
  * @Email: harlancui@outlook.com
  * @Date: 2021-03-06 21:20:54
- * @LastEditTime: 2021-03-06 23:08:40
+ * @LastEditTime: 2021-03-06 23:41:55
  * @LastEditors: ferried
  * @Description: Basic description
  * @FilePath: /led/src/cron.c
@@ -47,7 +47,7 @@ void main()
     // 0001:CT=0,M1=0,M0=1
     // TH0，TL0全用，组成一个16位定时器/计数器。
     // TH1，TL0全用，组成一个16位定时器/计数器。
-    MOD_0 = 0x01;
+    MOD_0 = 0b00010001;
     // T_TL0是 T0 定时器的低八位，高位自动没了
     T_TL0 = T_NUMBER_1MS;
     // T_TH0是 T0 定时器的高八位,右移8位,把低8位删掉,保留高8位
@@ -71,7 +71,7 @@ void main()
             if (count1 >= 50)
             {
                 count1 = 0;
-                if (LED0 = 1)
+                if (LED0 == 1)
                 {
                     LED0 = 0;
                 }
