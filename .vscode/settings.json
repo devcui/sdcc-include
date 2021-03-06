@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "8052.h": "c",
+        "stdio.h": "c",
+        "__config": "c",
+        "8051.h": "c",
+        "stc89xx.h": "c",
+        "compiler.h": "c",
+        "stdbool.h": "c",
+        "tinibios.h": "c",
+        "sdcc-lib.h": "c",
+        "stdlib.h": "c"
+    }
+}
