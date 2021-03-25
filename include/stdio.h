@@ -35,7 +35,7 @@
 #include <tinibios.h>
 #endif
 
-#include <sdcc-lib.h>
+#include "./sdcc-lib.h"
 
 #ifndef EOF
   #define EOF (-1)

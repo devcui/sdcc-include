@@ -9,7 +9,7 @@
  * @LICENSE: NONE
  */
 
-#include <STC89xx.h>
+#include "../../include/STC89xx.h"
 
 // 单片机晶振频率 单位(hz) 11059200 Hz
 // 11059200Hz*10^-3  = 11059.2 GHz

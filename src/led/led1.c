@@ -8,7 +8,7 @@
  * @FilePath: /led/src/main.c
  * @LICENSE: NONE
  */
-#include <STC89xx.h>
+#include "../../include/STC89xx.h"
 
 int i;
 int flag = 0;

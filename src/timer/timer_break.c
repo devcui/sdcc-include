@@ -8,8 +8,8 @@
  * @FilePath: /led/src/cron_break.c
  * @LICENSE: NONE
  */
-#include <STC89xx.h>
-#include <mcs51/lint.h>
+#include "../../include/STC89xx.h"
+#include "../../include/mcs51/lint.h"
 // 单片机晶振频率
 #define FOSC 11059200
 #define T_NUMBER_MS (65536 - FOSC / 12 / 1000)

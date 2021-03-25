@@ -9,7 +9,7 @@
  * @LICENSE: NONE
  */
 
-#include "STC89xx.h"
+#include "../../include/STC89xx.h"
 
 SBIT(LE_L, _P0, 6);
 SBIT(LE_R, _P0, 7);

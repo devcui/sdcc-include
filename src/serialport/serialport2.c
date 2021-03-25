@@ -8,8 +8,8 @@
  * @FilePath: /led/src/chuankou2.c
  * @LICENSE: NONE
  */
-#include <STC89xx.h>
-#include <mcs51/lint.h>
+#include "../../include/STC89xx.h"
+#include "../../include/mcs51/lint.h"
 
 #define unchar unsigned char
 #define uint unsigned int

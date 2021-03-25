@@ -62,7 +62,7 @@
 
 #else
 /* PENDING */
-#include <asm/default/features.h>
+#include "./asm/default/features.h"
 
 #endif
 

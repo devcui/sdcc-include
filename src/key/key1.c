@@ -9,7 +9,7 @@
  * @LICENSE: NONE
  */
 
-#include "STC89xx.h"
+#include "../../include/STC89xx.h"
 
 // 模拟电报
 // 按下k1 定时 1ms*1000 = 1s,蜂鸣器持续响1s (T0)
@@ -20,7 +20,7 @@
 #define T_NUMBER_MS (65536 - FOSC / 12 / 1000)
 int count1 = 0;
 int count2 = 0;
-void main()
+int main()
 {
     TMOD = 0b00010001;
     while (1)
@@ -79,4 +79,5 @@ void main()
             }
         }
     }
+    return 0;
 }

@@ -9,9 +9,8 @@
  * @LICENSE: NONE
  */
 
-#include "STC89xx.h"
-#include "mcs51/lint.h"
-#include "stdio.h"
+#include "../../include/STC89xx.h"
+#include "../../include/mcs51/lint.h"
 
 // 单片机晶振频率
 #define FOSC 11059200
@@ -34,7 +33,7 @@ int T_count = 0;
 int Sec = 0;
 char Buf_LED[8] = {0};
 
-void main()
+int main()
 {
     // 定时器模式
     TMOD = 0x01;
@@ -51,6 +50,7 @@ void main()
 
     while (1)
         ;
+    return 0;
 }
 
 void timmer0() __interrupt(1)
