@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: stcgal
+Version: 1.4
+Summary: STC MCU ISP flash tool
+Home-page: https://github.com/grigorig/stcgal
+Author: Grigori Goronzy
+Author-email: greg@kinoho.net
+License: MIT License
+Description: UNKNOWN
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Embedded Systems
+Classifier: Topic :: Software Development

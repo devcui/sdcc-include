@@ -1,0 +1,4 @@
+pyserial
+
+[usb]
+pyusb>=1.0.0

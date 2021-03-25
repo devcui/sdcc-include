@@ -1,0 +1,16 @@
+{
+  "name": "tool-stcgal",
+  "version": "1.104.0",
+  "description": "Open Source STC MCU ISP flash tool",
+  "keywords": [
+    "tools",
+    "uploader",
+    "debugger",
+    "debug server"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grigorig/stcgal"
+  }
+}

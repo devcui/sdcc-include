@@ -1,0 +1,100 @@
+2018-12-16 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Fix a bug in wide read via pointer.
+
+2018-12-16 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Fix bug #2856.
+
+2018-12-15 Maarten Brock <sourceforge.brock AT dse.nl>
+
+	* configure, configure.ac: changed warning into notice
+	* sdas/asz80/z80mch.c: cosmetic
+	* src/sdcc.vcxproj,
+	* src/sdcc.vcxproj.filters: added missing SDCC.lex & SDCC.y
+	* support/cpp/libcpp/files.c,
+	* support/cpp/libcpp/identifiers.c,
+	* support/cpp/libcpp/init.c,
+	* support/cpp/libcpp/symtab.c: fixed warnings for unsigned size_t
+	* support/regression/tests/bitopcse.c: only use idata for mcs51
+	* support/regression/tests/gcc-torture-execute-20021120-1.c: disabled for
+	  hc08 & s08, uses way too much spillocs in DSEG
+	* support/regression/tests/longlong.c: split the test in 3 parts
+	* support/sdbinutils/bfd/targets.c: added "ASXXXX"
+	* support/sdbinutils/libiberty/simple-object-elf.c: fixed warning
+
+2018-12-14 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/z80/gen.c:
+	  Refactor handling of return values, steps towards RFE #594.
+
+2018-12-13 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/SDCCicode.c,
+	  support/regression/tests/bug-2710.c:
+	  Fix bug #2710.
+	* Makefile.in,
+	  sim/ucsim/Makefile.in:
+	  Remove dist target, fix bug #2679.
+	* src/SDCCtree_dec.hpp:
+	  Improve fix for #1874.
+	* sdas/asz80/z80mch.c:
+	  Turn a few eZ80-related warning into comments.
+
+2018-12-12 Philipp Klaus Krause <pkk AT spth.de>
+
+	* sdas/asz80/z80mch.c:
+	  Fix handling of tst for eZ80, patch by Hynek Sladký.
+	* src/z80/gen.c,
+	  support/regression/tests/bug-2854.c:
+	  Fix an issue in 8-bit parameters to __z88dk_fastcall, bugs #2852 and #2854.
+	* src/hc08/ralloc2.cc:
+	  Fix bug #2215.
+	* src/stm8/ralloc.c,
+	  src/z80/ralloc.c,
+	  support/regression/tests/bug-2501.c:
+	  Fix bug #2501.
+
+2018-12-11 Philipp Klaus Krause <pkk AT spth.de>
+
+	* Merged ez80_z80 branch to trunk.
+
+2018-12-11 Philipp Klaus Krause <pkk AT spth.de>
+
+	* device/include/math.h,
+	  device/include/sdcc-lib.h:
+	  Fixes for ez80_z80 library.
+	* support/regression/ports/ez80-z80/spec.mk,
+	  support/regression/ports/ucz180/spec.mk:
+	  Preparation for ez80_z80 regression testing.
+
+2018-12-05 Philipp Klaus Krause <pkk AT spth.de>
+
+	* sdas/asz80/z80mch.c:
+	  Improve eZ80 support in assembler, patch by Hynek Sladký.
+	* configure,
+	  configure.ac,
+	  device/lib/Makefile.in,
+	  device/lib/ez80_z80/Makefile.in,
+	  src/z80/main.c,
+	  device/lib/ez80_z80:
+	  ez80_z80 library.
+
+2018-12-04 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/SDCCtree_dec.hpp:
+	  Fix bug #1847.
+
+2018-12-04 Maarten Brock <sourceforge.brock AT dse.nl>
+
+	* SDCCerr.c: replaced include sdccconf.h by SDCCglobl.h, required for MSVC
+
+2018-12-02 Philipp Klaus Krause <pkk AT spth.de>
+
+	* src/SDCCpeeph.c:
+	  Peephole function for z88dk, patch from zsdcc fork diff by Phillip Stevens.
+	* src/SDCC.lex,
+	  src/SDCC.y,
+	  src/SDCCerr.c,
