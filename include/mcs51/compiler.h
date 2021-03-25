@@ -225,7 +225,6 @@ extern void _nop (void);
   * unrecognized compiler
  */
 #else
-# warning unrecognized compiler
 # define SBIT(name, addr, bit)  volatile bool           name
 # define SFR(name, addr)        volatile unsigned char  name
 # define SFRX(name, addr)       volatile unsigned char  name

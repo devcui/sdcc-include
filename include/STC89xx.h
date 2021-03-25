@@ -1,8 +1,8 @@
 #ifndef STC89xx_H
 #define STC89xx_H
 
-#include <mcs51/compiler.h>
-#include <stdbool.h>
+#include "./mcs51/compiler.h"
+#include "./stdbool.h"
 
 // 适用于 STC89xx / STC90xx 系列的芯片
 // Modified based on STC-ISP version by: ZnHoCn
