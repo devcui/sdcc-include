@@ -44,7 +44,7 @@ void main()
         ;
 }
 
-void timmer0() __interrupt 1
+void timmer0() __interrupt(1)
 {
     T_TL0 = T_NUMBER_MS;
     T_TH0 = T_NUMBER_MS >> 8;
