@@ -15,7 +15,6 @@
 	.globl _WR_Cmd
 	.globl _Ready
 	.globl _RD_sta
-	.globl _DU
 	.globl _EN_1602
 	.globl _RW_1602
 	.globl _RS_1602
@@ -306,7 +305,6 @@ _CP_RL2	=	0x00c8
 _RS_1602	=	0x00b6
 _RW_1602	=	0x00b5
 _EN_1602	=	0x00b4
-_DU	=	0x0086
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -446,95 +444,97 @@ _RD_sta:
 ;	 function Ready
 ;	-----------------------------------------
 _Ready:
-;	./src/i2c/lcd.c:31: while (RD_sta() & 0x80)
+;	./src/i2c/lcd.c:31: P2 = 0xFF;
+	mov	_P2,#0xff
+;	./src/i2c/lcd.c:32: while (RD_sta() & 0x80)
 00101$:
 	lcall	_RD_sta
 	mov	a,dpl
 	jb	acc.7,00101$
-;	./src/i2c/lcd.c:33: }
+;	./src/i2c/lcd.c:34: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'WR_Cmd'
 ;------------------------------------------------------------
 ;cmd                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	./src/i2c/lcd.c:35: void WR_Cmd(unsigned char cmd) //写指令函数
+;	./src/i2c/lcd.c:36: void WR_Cmd(unsigned char cmd) //写指令函数
 ;	-----------------------------------------
 ;	 function WR_Cmd
 ;	-----------------------------------------
 _WR_Cmd:
 	mov	r7,dpl
-;	./src/i2c/lcd.c:37: Ready(); //检测 1602 是否处于空闲状态
+;	./src/i2c/lcd.c:38: Ready(); //检测 1602 是否处于空闲状态
 	push	ar7
 	lcall	_Ready
 	pop	ar7
-;	./src/i2c/lcd.c:38: RS_1602 = 0;
+;	./src/i2c/lcd.c:39: RS_1602 = 0;
 ;	assignBit
 	clr	_RS_1602
-;	./src/i2c/lcd.c:39: RW_1602 = 0; //进入写指令模式
+;	./src/i2c/lcd.c:40: RW_1602 = 0; //进入写指令模式
 ;	assignBit
 	clr	_RW_1602
-;	./src/i2c/lcd.c:40: P2 = cmd; //将指令数据输出
+;	./src/i2c/lcd.c:41: P2 = cmd;    //将指令数据输出
 	mov	_P2,r7
-;	./src/i2c/lcd.c:41: EN_1602 = 1; //拉高使能信号
+;	./src/i2c/lcd.c:42: EN_1602 = 1; //拉高使能信号
 ;	assignBit
 	setb	_EN_1602
-;	./src/i2c/lcd.c:42: EN_1602 = 0; //拉低使能，完成写操作
+;	./src/i2c/lcd.c:43: EN_1602 = 0; //拉低使能，完成写操作
 ;	assignBit
 	clr	_EN_1602
-;	./src/i2c/lcd.c:43: }
+;	./src/i2c/lcd.c:44: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'WR_Dat'
 ;------------------------------------------------------------
 ;dat                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	./src/i2c/lcd.c:45: void WR_Dat(unsigned char dat) //写数据函数
+;	./src/i2c/lcd.c:46: void WR_Dat(unsigned char dat) //写数据函数
 ;	-----------------------------------------
 ;	 function WR_Dat
 ;	-----------------------------------------
 _WR_Dat:
 	mov	r7,dpl
-;	./src/i2c/lcd.c:47: Ready(); //检测 1602 是否处于空闲状态
+;	./src/i2c/lcd.c:48: Ready(); //检测 1602 是否处于空闲状态
 	push	ar7
 	lcall	_Ready
 	pop	ar7
-;	./src/i2c/lcd.c:48: RS_1602 = 1;
+;	./src/i2c/lcd.c:49: RS_1602 = 1;
 ;	assignBit
 	setb	_RS_1602
-;	./src/i2c/lcd.c:49: RW_1602 = 0; //进入写数据模式
+;	./src/i2c/lcd.c:50: RW_1602 = 0; //进入写数据模式
 ;	assignBit
 	clr	_RW_1602
-;	./src/i2c/lcd.c:50: P2 = dat; //将数据输出
+;	./src/i2c/lcd.c:52: P2 = dat; //将数据输出
 	mov	_P2,r7
-;	./src/i2c/lcd.c:51: EN_1602 = 1; //拉高使能信号
+;	./src/i2c/lcd.c:54: EN_1602 = 1; //拉高使能信号
 ;	assignBit
 	setb	_EN_1602
-;	./src/i2c/lcd.c:52: EN_1602 = 0; //拉低使能，完成写操作
+;	./src/i2c/lcd.c:55: EN_1602 = 0; //拉低使能，完成写操作
 ;	assignBit
 	clr	_EN_1602
-;	./src/i2c/lcd.c:53: }
+;	./src/i2c/lcd.c:56: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Init_1602'
 ;------------------------------------------------------------
-;	./src/i2c/lcd.c:55: void Init_1602() //1602 初始化函
+;	./src/i2c/lcd.c:58: void Init_1602() //1602 初始化函
 ;	-----------------------------------------
 ;	 function Init_1602
 ;	-----------------------------------------
 _Init_1602:
-;	./src/i2c/lcd.c:57: WR_Cmd(0x38); //设置 16x2 显示，5x7 点阵，8 位数据接口
+;	./src/i2c/lcd.c:60: WR_Cmd(0x38); //设置 16x2 显示，5x7 点阵，8 位数据接口
 	mov	dpl,#0x38
 	lcall	_WR_Cmd
-;	./src/i2c/lcd.c:58: WR_Cmd(0x0C); //开显示，关闭光标
+;	./src/i2c/lcd.c:61: WR_Cmd(0x0C); //开显示，关闭光标
 	mov	dpl,#0x0c
 	lcall	_WR_Cmd
-;	./src/i2c/lcd.c:59: WR_Cmd(0x06); //读或写完一个字符后，地址指针、光标均加 1
+;	./src/i2c/lcd.c:62: WR_Cmd(0x06); //读或写完一个字符后，地址指针、光标均加 1
 	mov	dpl,#0x06
 	lcall	_WR_Cmd
-;	./src/i2c/lcd.c:60: WR_Cmd(0x01); //数据指针清零、所示显示清零
+;	./src/i2c/lcd.c:63: WR_Cmd(0x01); //数据指针清零、所示显示清零
 	mov	dpl,#0x01
-;	./src/i2c/lcd.c:61: }
+;	./src/i2c/lcd.c:64: }
 	ljmp	_WR_Cmd
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Disp_1602_str'
@@ -544,13 +544,13 @@ _Init_1602:
 ;row                       Allocated to registers r7 
 ;addr                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	./src/i2c/lcd.c:63: void Disp_1602_str(unsigned char row, unsigned char column, char *str)
+;	./src/i2c/lcd.c:66: void Disp_1602_str(unsigned char row, unsigned char column, char *str)
 ;	-----------------------------------------
 ;	 function Disp_1602_str
 ;	-----------------------------------------
 _Disp_1602_str:
 	mov	r7,dpl
-;	./src/i2c/lcd.c:67: addr = (row - 1) * 0x40 + (column - 1); //组合成地址
+;	./src/i2c/lcd.c:70: addr = (row - 1) * 0x40 + (column - 1); //组合成地址
 	dec	r7
 	mov	a,r7
 	rr	a
@@ -560,11 +560,11 @@ _Disp_1602_str:
 	mov	a,_Disp_1602_str_PARM_2
 	dec	a
 	add	a,r7
-;	./src/i2c/lcd.c:68: WR_Cmd(0x80 + addr);                    //写地址命令
+;	./src/i2c/lcd.c:71: WR_Cmd(0x80 + addr);                    //写地址命令
 	add	a,#0x80
 	mov	dpl,a
 	lcall	_WR_Cmd
-;	./src/i2c/lcd.c:70: while (*str) //判断 str 字符串是否已结束
+;	./src/i2c/lcd.c:73: while (*str) //判断 str 字符串是否已结束
 	mov	r5,_Disp_1602_str_PARM_3
 	mov	r6,(_Disp_1602_str_PARM_3 + 1)
 	mov	r7,(_Disp_1602_str_PARM_3 + 2)
@@ -575,7 +575,7 @@ _Disp_1602_str:
 	lcall	__gptrget
 	mov	r4,a
 	jz	00104$
-;	./src/i2c/lcd.c:72: WR_Dat(*str++); //将 str 字符串数据依次写入
+;	./src/i2c/lcd.c:75: WR_Dat(*str++); //将 str 字符串数据依次写入
 	mov	dpl,r4
 	inc	r5
 	cjne	r5,#0x00,00116$
@@ -590,43 +590,43 @@ _Disp_1602_str:
 	pop	ar7
 	sjmp	00101$
 00104$:
-;	./src/i2c/lcd.c:74: }
+;	./src/i2c/lcd.c:77: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	./src/i2c/lcd.c:76: void main(void)
+;	./src/i2c/lcd.c:79: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	./src/i2c/lcd.c:78: P2 = 0x00; //关闭所有数码管
+;	./src/i2c/lcd.c:81: P2 = 0x00; //关闭所有数码管
 	mov	_P2,#0x00
-;	./src/i2c/lcd.c:79: DU = 1;
+;	./src/i2c/lcd.c:82: P06 = 1;
 ;	assignBit
-	setb	_DU
-;	./src/i2c/lcd.c:80: DU = 0; //锁存段
+	setb	_P06
+;	./src/i2c/lcd.c:83: P06 = 0;                            //锁存段
 ;	assignBit
-	clr	_DU
-;	./src/i2c/lcd.c:81: Init_1602(); //1602 初始化
+	clr	_P06
+;	./src/i2c/lcd.c:84: Init_1602();                        //1602 初始ZaoDianShui化
 	lcall	_Init_1602
-;	./src/i2c/lcd.c:82: Disp_1602_str(1, 3, "ZhaiZhuZhu"); //第 1 行第 3 列开始显示"RongYi Mini-51"
+;	./src/i2c/lcd.c:85: Disp_1602_str(1, 3, "ZhaiZhuZhu");  //第 1 行第 3 列开始显示"RongYi Mini-51"
 	mov	_Disp_1602_str_PARM_3,#___str_0
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x03
 	mov	dpl,#0x01
 	lcall	_Disp_1602_str
-;	./src/i2c/lcd.c:83: Disp_1602_str(2, 3, "ZaoDianShui");    //第 2 行第 3 列开始显示"LCD1602 Test!"
+;	./src/i2c/lcd.c:86: Disp_1602_str(2, 3, "ZaoDianShui"); //第 2 行第 3 列开始显示"LCD1602 Test!"
 	mov	_Disp_1602_str_PARM_3,#___str_1
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x03
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/i2c/lcd.c:84: while (1)
+;	./src/i2c/lcd.c:87: while (1)
 00102$:
-;	./src/i2c/lcd.c:86: }
+;	./src/i2c/lcd.c:89: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

@@ -78,11 +78,11 @@ C:   0000005F  s_GSINIT
 C:   0000005F  s_GSINIT5                       
 C:   00000062  s_CSEG                          
 C:   00000080  l_DSEG                          
-C:   000000E4  l_CSEG                          
+C:   000000E7  l_CSEG                          
 C:   000000F4  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   00000146  s_CONST                         
-C:   0000015D  s_XINIT                         
+C:   00000149  s_CONST                         
+C:   00000160  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -104,7 +104,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000083  _P03                               lcd
      00000084  _P04                               lcd
      00000085  _P05                               lcd
-     00000086  _DU                                lcd
      00000086  _P06                               lcd
      00000087  _P07                               lcd
      00000087  _PCON                              lcd
@@ -143,6 +142,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000009C  _REN                               lcd
      0000009D  _SM2                               lcd
      0000009E  _SM1                               lcd
+     0000009F  _FE                                lcd
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -152,7 +152,6 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000009F  _FE                                lcd
      0000009F  _SM0                               lcd
      000000A0  _P2                                lcd
      000000A0  _P20                               lcd
@@ -203,6 +202,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000BA  _PX1                               lcd
      000000BB  _PT1                               lcd
      000000BC  _PS                                lcd
+     000000BD  _PT2                               lcd
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
@@ -212,7 +212,6 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000000BD  _PT2                               lcd
      000000C0  _XICON                             lcd
      000000C8  _CP_RL2                            lcd
      000000C8  _T2CON                             lcd
@@ -256,7 +255,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000F5  _B_5                               _gptrget
      000000F6  _B_6                               _gptrget
      000000F7  _B_7                               _gptrget
-
 ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
@@ -357,25 +355,25 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000062    000000E4 =         228. bytes (REL,CON,CODE)
+CSEG                                00000062    000000E7 =         231. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000062  _RD_sta                            lcd
 C:   0000006E  _Ready                             lcd
-C:   00000077  _WR_Cmd                            lcd
-C:   0000008B  _WR_Dat                            lcd
-C:   0000009F  _Init_1602                         lcd
-C:   000000B7  _Disp_1602_str                     lcd
-C:   000000F6  _main                              lcd
-C:   00000126  __gptrget                          _gptrget
-C:   00000142  __sdcc_external_startup            _startup
+C:   0000007A  _WR_Cmd                            lcd
+C:   0000008E  _WR_Dat                            lcd
+C:   000000A2  _Init_1602                         lcd
+C:   000000BA  _Disp_1602_str                     lcd
+C:   000000F9  _main                              lcd
+C:   00000129  __gptrget                          _gptrget
+C:   00000145  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00000146    00000017 =          23. bytes (REL,CON,CODE)
+CONST                               00000149    00000017 =          23. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

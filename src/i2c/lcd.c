@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-28 22:39:19
- * @LastEditTime: 2021-03-28 22:41:11
+ * @LastEditTime: 2021-03-28 22:51:04
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/i2c/lcd.c
@@ -14,7 +14,7 @@
 SBIT(RS_1602, _P3, 6);
 SBIT(RW_1602, _P3, 5);
 SBIT(EN_1602, _P3, 4);
-SBIT(DU, _P0, 6);
+// SBIT(DU, _P0, 6);
 unsigned char RD_sta() //读状态函数
 {
     unsigned char sta;
@@ -28,6 +28,7 @@ unsigned char RD_sta() //读状态函数
 
 void Ready() //空闲检测函数
 {
+    P2 = 0xFF;
     while (RD_sta() & 0x80)
         ; //bit7 等于 1 表示忙，一直检测到 0 为止
 }
@@ -37,7 +38,7 @@ void WR_Cmd(unsigned char cmd) //写指令函数
     Ready(); //检测 1602 是否处于空闲状态
     RS_1602 = 0;
     RW_1602 = 0; //进入写指令模式
-    P2 = cmd; //将指令数据输出
+    P2 = cmd;    //将指令数据输出
     EN_1602 = 1; //拉高使能信号
     EN_1602 = 0; //拉低使能，完成写操作
 }
@@ -47,7 +48,9 @@ void WR_Dat(unsigned char dat) //写数据函数
     Ready(); //检测 1602 是否处于空闲状态
     RS_1602 = 1;
     RW_1602 = 0; //进入写数据模式
+
     P2 = dat; //将数据输出
+
     EN_1602 = 1; //拉高使能信号
     EN_1602 = 0; //拉低使能，完成写操作
 }
@@ -76,11 +79,11 @@ void Disp_1602_str(unsigned char row, unsigned char column, char *str)
 void main(void)
 {
     P2 = 0x00; //关闭所有数码管
-    DU = 1;
-    DU = 0; //锁存段
-    Init_1602(); //1602 初始ZaoDianShui化
-    Disp_1602_str(1, 3, "ZhaiZhuZhu"); //第 1 行第 3 列开始显示"RongYi Mini-51"
-    Disp_1602_str(2, 3, "ZaoDianShui");    //第 2 行第 3 列开始显示"LCD1602 Test!"
+    P06 = 1;
+    P06 = 0;                            //锁存段
+    Init_1602();                        //1602 初始ZaoDianShui化
+    Disp_1602_str(1, 3, "ZhaiZhuZhu");  //第 1 行第 3 列开始显示"RongYi Mini-51"
+    Disp_1602_str(2, 3, "ZaoDianShui"); //第 2 行第 3 列开始显示"LCD1602 Test!"
     while (1)
         ;
 }
