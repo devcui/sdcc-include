@@ -1,5 +1,5 @@
 -muwx
--i /Users/ferried/Projects/mcs51/out/out.ihx
+-i /Users/devcui/Projects/sdcc-include/out/out.ihx
 -M
 -Y
 -b HOME = 0x0000
@@ -7,13 +7,13 @@
 -b PSEG = 0x0001
 -b ISEG = 0x0000
 -b BSEG = 0x0000
--k ./tool-sdcc/bin/../share/sdcc/lib/small
--k /usr/local/share/sdcc/lib/small
+-k /usr/local/bin/../share/sdcc/lib/small
+-k /usr/local/Cellar/sdcc/4.0.0_1/share/sdcc/lib/small
 -l mcs51
 -l libsdcc
 -l libint
 -l liblong
 -l libfloat
-/Users/ferried/Projects/mcs51/out/out.rel
+/Users/devcui/Projects/sdcc-include/out/out.rel
 
 -e
