@@ -1,5 +1,5 @@
 -muwx
--i /Users/devcui/Projects/sdcc-include/out/out.ihx
+-i ./out/out.ihx
 -M
 -Y
 -b HOME = 0x0000
@@ -14,6 +14,7 @@
 -l libint
 -l liblong
 -l libfloat
-/Users/devcui/Projects/sdcc-include/out/out.rel
+./src/temperature/lib/temperature.rel
+./src/temperature/lib/1602.rel
 
 -e

@@ -309,8 +309,8 @@
                                     309 ; Stack segment in internal ram 
                                     310 ;--------------------------------------------------------
                                     311 	.area	SSEG
-      000000                        312 __start__stack:
-      000000                        313 	.ds	1
+      00000C                        312 __start__stack:
+      00000C                        313 	.ds	1
                                     314 
                                     315 ;--------------------------------------------------------
                                     316 ; indirectly addressable internal ram data
@@ -356,7 +356,7 @@
                                     356 ;--------------------------------------------------------
                                     357 	.area HOME    (CODE)
       000000                        358 __interrupt_vect:
-      000000 02r00r00         [24]  359 	ljmp	__sdcc_gsinit_startup
+      000000 02 00 06         [24]  359 	ljmp	__sdcc_gsinit_startup
                                     360 ;--------------------------------------------------------
                                     361 ; global & static initialisations
                                     362 ;--------------------------------------------------------
@@ -371,14 +371,14 @@
                                     371 	.globl __mcs51_genXRAMCLEAR
                                     372 	.globl __mcs51_genRAMCLEAR
                                     373 	.area GSFINAL (CODE)
-      000000 02r00r03         [24]  374 	ljmp	__sdcc_program_startup
+      00005F 02 00 03         [24]  374 	ljmp	__sdcc_program_startup
                                     375 ;--------------------------------------------------------
                                     376 ; Home
                                     377 ;--------------------------------------------------------
                                     378 	.area HOME    (CODE)
                                     379 	.area HOME    (CODE)
       000003                        380 __sdcc_program_startup:
-      000003 02r00r00         [24]  381 	ljmp	_main
+      000003 02 00 62         [24]  381 	ljmp	_main
                                     382 ;	return from main will return to caller
                                     383 ;--------------------------------------------------------
                                     384 ; code
@@ -391,7 +391,7 @@
                                     391 ;	-----------------------------------------
                                     392 ;	 function main
                                     393 ;	-----------------------------------------
-      000000                        394 _main:
+      000062                        394 _main:
                            000007   395 	ar7 = 0x07
                            000006   396 	ar6 = 0x06
                            000005   397 	ar5 = 0x05
@@ -401,46 +401,46 @@
                            000001   401 	ar1 = 0x01
                            000000   402 	ar0 = 0x00
                                     403 ;	./src/temperature/temperature.c:15: P2 = 0x00; //关闭所有数码管
-      000000 75 A0 00         [24]  404 	mov	_P2,#0x00
+      000062 75 A0 00         [24]  404 	mov	_P2,#0x00
                                     405 ;	./src/temperature/temperature.c:16: P06 = 1;
                                     406 ;	assignBit
-      000003 D2 86            [12]  407 	setb	_P06
+      000065 D2 86            [12]  407 	setb	_P06
                                     408 ;	./src/temperature/temperature.c:17: P06 = 0;                            //锁存段
                                     409 ;	assignBit
-      000005 C2 86            [12]  410 	clr	_P06
+      000067 C2 86            [12]  410 	clr	_P06
                                     411 ;	./src/temperature/temperature.c:18: Init_1602();                        //1602 初始ZaoDianShui化
-      000007 12r00r00         [24]  412 	lcall	_Init_1602
+      000069 12 00 D2         [24]  412 	lcall	_Init_1602
                                     413 ;	./src/temperature/temperature.c:19: Disp_1602_str(1, 3, "ZhaiZhuZhu");  //第 1 行第 3 列开始显示"RongYi Mini-51"
-      00000A 75*00r00         [24]  414 	mov	_Disp_1602_str_PARM_3,#___str_0
-      00000D 75*01s00         [24]  415 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
-      000010 75*02 80         [24]  416 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-      000013 75*00 03         [24]  417 	mov	_Disp_1602_str_PARM_2,#0x03
-      000016 75 82 01         [24]  418 	mov	dpl,#0x01
-      000019 12r00r00         [24]  419 	lcall	_Disp_1602_str
+      00006C 75 09 49         [24]  414 	mov	_Disp_1602_str_PARM_3,#___str_0
+      00006F 75 0A 01         [24]  415 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
+      000072 75 0B 80         [24]  416 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
+      000075 75 08 03         [24]  417 	mov	_Disp_1602_str_PARM_2,#0x03
+      000078 75 82 01         [24]  418 	mov	dpl,#0x01
+      00007B 12 00 EA         [24]  419 	lcall	_Disp_1602_str
                                     420 ;	./src/temperature/temperature.c:20: Disp_1602_str(2, 3, "ZaoDianShui"); //第 2 行第 3 列开始显示"LCD1602 Test!"
-      00001C 75*00r0B         [24]  421 	mov	_Disp_1602_str_PARM_3,#___str_1
-      00001F 75*01s00         [24]  422 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
-      000022 75*02 80         [24]  423 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-      000025 75*00 03         [24]  424 	mov	_Disp_1602_str_PARM_2,#0x03
-      000028 75 82 02         [24]  425 	mov	dpl,#0x02
-      00002B 12r00r00         [24]  426 	lcall	_Disp_1602_str
+      00007E 75 09 54         [24]  421 	mov	_Disp_1602_str_PARM_3,#___str_1
+      000081 75 0A 01         [24]  422 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
+      000084 75 0B 80         [24]  423 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
+      000087 75 08 03         [24]  424 	mov	_Disp_1602_str_PARM_2,#0x03
+      00008A 75 82 02         [24]  425 	mov	dpl,#0x02
+      00008D 12 00 EA         [24]  426 	lcall	_Disp_1602_str
                                     427 ;	./src/temperature/temperature.c:21: while (1)
-      00002E                        428 00102$:
+      000090                        428 00102$:
                                     429 ;	./src/temperature/temperature.c:23: }
-      00002E 80 FE            [24]  430 	sjmp	00102$
+      000090 80 FE            [24]  430 	sjmp	00102$
                                     431 	.area CSEG    (CODE)
                                     432 	.area CONST   (CODE)
                                     433 	.area CONST   (CODE)
-      000000                        434 ___str_0:
-      000000 5A 68 61 69 5A 68 75   435 	.ascii "ZhaiZhuZhu"
+      000149                        434 ___str_0:
+      000149 5A 68 61 69 5A 68 75   435 	.ascii "ZhaiZhuZhu"
              5A 68 75
-      00000A 00                     436 	.db 0x00
+      000153 00                     436 	.db 0x00
                                     437 	.area CSEG    (CODE)
                                     438 	.area CONST   (CODE)
-      00000B                        439 ___str_1:
-      00000B 5A 61 6F 44 69 61 6E   440 	.ascii "ZaoDianShui"
+      000154                        439 ___str_1:
+      000154 5A 61 6F 44 69 61 6E   440 	.ascii "ZaoDianShui"
              53 68 75 69
-      000016 00                     441 	.db 0x00
+      00015F 00                     441 	.db 0x00
                                     442 	.area CSEG    (CODE)
                                     443 	.area XINIT   (CODE)
                                     444 	.area CABS    (ABS,CODE)

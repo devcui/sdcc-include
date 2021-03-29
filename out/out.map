@@ -94,55 +94,55 @@ Area                                    Addr        Size        Decimal Bytes (A
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
      00000000  .__.ABS.                           _startup
-     00000080  _P0                                lcd
-     00000080  _P00                               lcd
-     00000081  _P01                               lcd
-     00000081  _SP                                lcd
-     00000082  _DPL                               lcd
-     00000082  _P02                               lcd
-     00000083  _DPH                               lcd
-     00000083  _P03                               lcd
-     00000084  _P04                               lcd
-     00000085  _P05                               lcd
-     00000086  _P06                               lcd
-     00000087  _P07                               lcd
-     00000087  _PCON                              lcd
-     00000088  _IT0                               lcd
-     00000088  _TCON                              lcd
-     00000089  _IE0                               lcd
-     00000089  _TMOD                              lcd
-     0000008A  _IT1                               lcd
-     0000008A  _TL0                               lcd
-     0000008B  _IE1                               lcd
-     0000008B  _TL1                               lcd
-     0000008C  _TH0                               lcd
-     0000008C  _TR0                               lcd
-     0000008D  _TF0                               lcd
-     0000008D  _TH1                               lcd
-     0000008E  _AUXR                              lcd
-     0000008E  _TR1                               lcd
-     0000008F  _TF1                               lcd
-     00000090  _P1                                lcd
-     00000090  _P10                               lcd
-     00000090  _T2                                lcd
-     00000091  _P11                               lcd
-     00000091  _T2EX                              lcd
-     00000092  _P12                               lcd
-     00000093  _P13                               lcd
-     00000094  _P14                               lcd
-     00000095  _P15                               lcd
-     00000096  _P16                               lcd
-     00000097  _P17                               lcd
-     00000098  _RI                                lcd
-     00000098  _SCON                              lcd
-     00000099  _SBUF                              lcd
-     00000099  _TI                                lcd
-     0000009A  _RB8                               lcd
-     0000009B  _TB8                               lcd
-     0000009C  _REN                               lcd
-     0000009D  _SM2                               lcd
-     0000009E  _SM1                               lcd
-     0000009F  _FE                                lcd
+     00000080  _P0                                1602
+     00000080  _P00                               1602
+     00000081  _P01                               1602
+     00000081  _SP                                1602
+     00000082  _DPL                               1602
+     00000082  _P02                               1602
+     00000083  _DPH                               1602
+     00000083  _P03                               1602
+     00000084  _P04                               1602
+     00000085  _P05                               1602
+     00000086  _P06                               1602
+     00000087  _P07                               1602
+     00000087  _PCON                              1602
+     00000088  _IT0                               1602
+     00000088  _TCON                              1602
+     00000089  _IE0                               1602
+     00000089  _TMOD                              1602
+     0000008A  _IT1                               1602
+     0000008A  _TL0                               1602
+     0000008B  _IE1                               1602
+     0000008B  _TL1                               1602
+     0000008C  _TH0                               1602
+     0000008C  _TR0                               1602
+     0000008D  _TF0                               1602
+     0000008D  _TH1                               1602
+     0000008E  _AUXR                              1602
+     0000008E  _TR1                               1602
+     0000008F  _TF1                               1602
+     00000090  _P1                                1602
+     00000090  _P10                               1602
+     00000090  _T2                                1602
+     00000091  _P11                               1602
+     00000091  _T2EX                              1602
+     00000092  _P12                               1602
+     00000093  _P13                               1602
+     00000094  _P14                               1602
+     00000095  _P15                               1602
+     00000096  _P16                               1602
+     00000097  _P17                               1602
+     00000098  _RI                                1602
+     00000098  _SCON                              1602
+     00000099  _SBUF                              1602
+     00000099  _TI                                1602
+     0000009A  _RB8                               1602
+     0000009B  _TB8                               1602
+     0000009C  _REN                               1602
+     0000009D  _SM2                               1602
+     0000009E  _SM1                               1602
+     0000009F  _FE                                1602
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -152,57 +152,57 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000009F  _SM0                               lcd
-     000000A0  _P2                                lcd
-     000000A0  _P20                               lcd
+     0000009F  _SM0                               1602
+     000000A0  _P2                                1602
+     000000A0  _P20                               1602
      000000A0  __XPAGE                            
-     000000A1  _P21                               lcd
-     000000A2  _AUXR1                             lcd
-     000000A2  _P22                               lcd
-     000000A3  _P23                               lcd
-     000000A4  _P24                               lcd
-     000000A5  _P25                               lcd
-     000000A6  _P26                               lcd
-     000000A7  _P27                               lcd
-     000000A8  _EX0                               lcd
-     000000A8  _IE                                lcd
-     000000A9  _ET0                               lcd
-     000000A9  _SADDR                             lcd
-     000000AA  _EX1                               lcd
-     000000AB  _ET1                               lcd
-     000000AC  _ES                                lcd
-     000000AD  _ET2                               lcd
-     000000AE  _EC                                lcd
-     000000AF  _EA                                lcd
-     000000B0  _P3                                lcd
-     000000B0  _P30                               lcd
-     000000B0  _RXD                               lcd
-     000000B1  _P31                               lcd
-     000000B1  _TXD                               lcd
-     000000B2  _INT0                              lcd
-     000000B2  _P32                               lcd
-     000000B3  _INT1                              lcd
-     000000B3  _P33                               lcd
-     000000B4  _EN_1602                           lcd
-     000000B4  _P34                               lcd
-     000000B4  _T0                                lcd
-     000000B5  _P35                               lcd
-     000000B5  _RW_1602                           lcd
-     000000B5  _T1                                lcd
-     000000B6  _P36                               lcd
-     000000B6  _RS_1602                           lcd
-     000000B6  _WR                                lcd
-     000000B7  _IPH                               lcd
-     000000B7  _P37                               lcd
-     000000B7  _RD                                lcd
-     000000B8  _IP                                lcd
-     000000B8  _PX0                               lcd
-     000000B9  _PT0                               lcd
-     000000B9  _SADEN                             lcd
-     000000BA  _PX1                               lcd
-     000000BB  _PT1                               lcd
-     000000BC  _PS                                lcd
-     000000BD  _PT2                               lcd
+     000000A1  _P21                               1602
+     000000A2  _AUXR1                             1602
+     000000A2  _P22                               1602
+     000000A3  _P23                               1602
+     000000A4  _P24                               1602
+     000000A5  _P25                               1602
+     000000A6  _P26                               1602
+     000000A7  _P27                               1602
+     000000A8  _EX0                               1602
+     000000A8  _IE                                1602
+     000000A9  _ET0                               1602
+     000000A9  _SADDR                             1602
+     000000AA  _EX1                               1602
+     000000AB  _ET1                               1602
+     000000AC  _ES                                1602
+     000000AD  _ET2                               1602
+     000000AE  _EC                                1602
+     000000AF  _EA                                1602
+     000000B0  _P3                                1602
+     000000B0  _P30                               1602
+     000000B0  _RXD                               1602
+     000000B1  _P31                               1602
+     000000B1  _TXD                               1602
+     000000B2  _INT0                              1602
+     000000B2  _P32                               1602
+     000000B3  _INT1                              1602
+     000000B3  _P33                               1602
+     000000B4  _EN_1602                           1602
+     000000B4  _P34                               1602
+     000000B4  _T0                                1602
+     000000B5  _P35                               1602
+     000000B5  _RW_1602                           1602
+     000000B5  _T1                                1602
+     000000B6  _P36                               1602
+     000000B6  _RS_1602                           1602
+     000000B6  _WR                                1602
+     000000B7  _IPH                               1602
+     000000B7  _P37                               1602
+     000000B7  _RD                                1602
+     000000B8  _IP                                1602
+     000000B8  _PX0                               1602
+     000000B9  _PT0                               1602
+     000000B9  _SADEN                             1602
+     000000BA  _PX1                               1602
+     000000BB  _PT1                               1602
+     000000BC  _PS                                1602
+     000000BD  _PT2                               1602
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
@@ -212,46 +212,46 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     000000C0  _XICON                             lcd
-     000000C8  _CP_RL2                            lcd
-     000000C8  _T2CON                             lcd
-     000000C9  _C_T2                              lcd
-     000000C9  _T2MOD                             lcd
-     000000CA  _RCAP2L                            lcd
-     000000CA  _TR2                               lcd
-     000000CB  _EXEN2                             lcd
-     000000CB  _RCAP2H                            lcd
-     000000CC  _TCLK                              lcd
-     000000CC  _TL2                               lcd
-     000000CD  _RCLK                              lcd
-     000000CD  _TH2                               lcd
-     000000CE  _EXF2                              lcd
-     000000CF  _TF2                               lcd
-     000000D0  _P                                 lcd
-     000000D0  _PSW                               lcd
-     000000D2  _OV                                lcd
-     000000D3  _RS0                               lcd
-     000000D4  _RS1                               lcd
-     000000D5  _F0                                lcd
-     000000D6  _AC                                lcd
-     000000D7  _CY                                lcd
-     000000E0  _ACC                               lcd
-     000000E1  _WDT_CONTR                         lcd
-     000000E2  _ISP_DATA                          lcd
-     000000E3  _ISP_ADDRH                         lcd
-     000000E4  _ISP_ADDRL                         lcd
-     000000E5  _ISP_CMD                           lcd
-     000000E6  _ISP_TRIG                          lcd
-     000000E7  _ISP_CONTR                         lcd
-     000000E8  _P4                                lcd
-     000000E8  _P40                               lcd
-     000000E9  _P41                               lcd
-     000000EA  _P42                               lcd
-     000000EB  _P43                               lcd
-     000000EC  _P44                               lcd
-     000000ED  _P45                               lcd
-     000000EE  _P46                               lcd
-     000000F0  _B                                 lcd
+     000000C0  _XICON                             1602
+     000000C8  _CP_RL2                            1602
+     000000C8  _T2CON                             1602
+     000000C9  _C_T2                              1602
+     000000C9  _T2MOD                             1602
+     000000CA  _RCAP2L                            1602
+     000000CA  _TR2                               1602
+     000000CB  _EXEN2                             1602
+     000000CB  _RCAP2H                            1602
+     000000CC  _TCLK                              1602
+     000000CC  _TL2                               1602
+     000000CD  _RCLK                              1602
+     000000CD  _TH2                               1602
+     000000CE  _EXF2                              1602
+     000000CF  _TF2                               1602
+     000000D0  _P                                 1602
+     000000D0  _PSW                               1602
+     000000D2  _OV                                1602
+     000000D3  _RS0                               1602
+     000000D4  _RS1                               1602
+     000000D5  _F0                                1602
+     000000D6  _AC                                1602
+     000000D7  _CY                                1602
+     000000E0  _ACC                               1602
+     000000E1  _WDT_CONTR                         1602
+     000000E2  _ISP_DATA                          1602
+     000000E3  _ISP_ADDRH                         1602
+     000000E4  _ISP_ADDRL                         1602
+     000000E5  _ISP_CMD                           1602
+     000000E6  _ISP_TRIG                          1602
+     000000E7  _ISP_CONTR                         1602
+     000000E8  _P4                                1602
+     000000E8  _P40                               1602
+     000000E9  _P41                               1602
+     000000EA  _P42                               1602
+     000000EB  _P43                               1602
+     000000EC  _P44                               1602
+     000000ED  _P45                               1602
+     000000EE  _P46                               1602
+     000000F0  _B                                 1602
      000000F5  _B_5                               _gptrget
      000000F6  _B_6                               _gptrget
      000000F7  _B_7                               _gptrget
@@ -273,8 +273,8 @@ DSEG                                00000000    00000080 =         128. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00000008  _Disp_1602_str_PARM_2              lcd
-     00000009  _Disp_1602_str_PARM_3              lcd
+     00000008  _Disp_1602_str_PARM_2              1602
+     00000009  _Disp_1602_str_PARM_3              1602
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
@@ -285,7 +285,7 @@ SSEG                                0000000C    000000F4 =         244. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000000C  __start__stack                     lcd
+     0000000C  __start__stack                     temperature
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
 Hexadecimal  [32-Bits]
@@ -296,7 +296,7 @@ HOME                                00000000    00000006 =           6. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00000003  __sdcc_program_startup             lcd
+C:   00000003  __sdcc_program_startup             temperature
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
@@ -359,13 +359,13 @@ CSEG                                00000062    000000E7 =         231. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-C:   00000062  _RD_sta                            lcd
-C:   0000006E  _Ready                             lcd
-C:   0000007A  _WR_Cmd                            lcd
-C:   0000008E  _WR_Dat                            lcd
-C:   000000A2  _Init_1602                         lcd
-C:   000000BA  _Disp_1602_str                     lcd
-C:   000000F9  _main                              lcd
+C:   00000062  _main                              temperature
+C:   00000092  _RD_sta                            1602
+C:   0000009E  _Ready                             1602
+C:   000000AA  _WR_Cmd                            1602
+C:   000000BE  _WR_Dat                            1602
+C:   000000D2  _Init_1602                         1602
+C:   000000EA  _Disp_1602_str                     1602
 C:   00000129  __gptrget                          _gptrget
 C:   00000145  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
@@ -381,8 +381,8 @@ CONST                               00000149    00000017 =          23. bytes (R
 
 Files Linked                              [ module(s) ]
 
-/Users/devcui/Projects/sdcc-include/out/out.rel
-                                          [  ]
+./src/temperature/lib/temperature.rel     [  ]
+./src/temperature/lib/1602.rel            [  ]
 
 
 Libraries Linked                          [ object file ]
