@@ -8,7 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _timer0
 	.globl _main
+	.globl _GetT_18B20
 	.globl _Disp_1602_str
 	.globl _Init_1602
 	.globl _CP_RL2
@@ -147,6 +149,9 @@
 	.globl _WDT_CONTR
 	.globl _XICON
 	.globl _P4
+	.globl _count
+	.globl _str
+	.globl _Temp
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -302,6 +307,12 @@ _CP_RL2	=	0x00c8
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_Temp::
+	.ds 2
+_str::
+	.ds 10
+_count::
+	.ds 2
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -357,6 +368,9 @@ __start__stack:
 	.area HOME    (CODE)
 __interrupt_vect:
 	ljmp	__sdcc_gsinit_startup
+	reti
+	.ds	7
+	ljmp	_timer0
 ;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
@@ -370,6 +384,12 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	./src/temperature/temperature.c:22: unsigned char str[10] = {0};
+	mov	_str,#0x00
+;	./src/temperature/temperature.c:23: unsigned int count = 0;
+	clr	a
+	mov	_count,a
+	mov	(_count + 1),a
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -387,7 +407,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	./src/temperature/temperature.c:14: void main(){
+;	./src/temperature/temperature.c:25: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -400,44 +420,170 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/temperature/temperature.c:15: P2 = 0x00; //关闭所有数码管
-	mov	_P2,#0x00
-;	./src/temperature/temperature.c:16: P06 = 1;
+;	./src/temperature/temperature.c:28: TMOD = 0x01;
+	mov	_TMOD,#0x01
+;	./src/temperature/temperature.c:30: TL0 = T_1ms;
+	mov	_TL0,#0x67
+;	./src/temperature/temperature.c:31: TH0 = T_1ms >> 8;
+	mov	_TH0,#0xfc
+;	./src/temperature/temperature.c:33: TR0 = 1;
 ;	assignBit
-	setb	_P06
-;	./src/temperature/temperature.c:17: P06 = 0;                            //锁存段
+	setb	_TR0
+;	./src/temperature/temperature.c:35: ET0 = 1;
 ;	assignBit
-	clr	_P06
-;	./src/temperature/temperature.c:18: Init_1602();                        //1602 初始ZaoDianShui化
+	setb	_ET0
+;	./src/temperature/temperature.c:37: EA = 1;
+;	assignBit
+	setb	_EA
+;	./src/temperature/temperature.c:40: Init_1602();
 	lcall	_Init_1602
-;	./src/temperature/temperature.c:19: Disp_1602_str(1, 3, "ZhaiZhuZhu");  //第 1 行第 3 列开始显示"RongYi Mini-51"
+;	./src/temperature/temperature.c:42: Disp_1602_str(1, 3, "temperature");
 	mov	_Disp_1602_str_PARM_3,#___str_0
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x03
 	mov	dpl,#0x01
 	lcall	_Disp_1602_str
-;	./src/temperature/temperature.c:20: Disp_1602_str(2, 3, "ZaoDianShui"); //第 2 行第 3 列开始显示"LCD1602 Test!"
-	mov	_Disp_1602_str_PARM_3,#___str_1
-	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
-	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
+;	./src/temperature/temperature.c:44: while (1)
+00107$:
+;	./src/temperature/temperature.c:47: if (count >= 1000)
+	clr	c
+	mov	a,_count
+	subb	a,#0xe8
+	mov	a,(_count + 1)
+	subb	a,#0x03
+	jc	00107$
+;	./src/temperature/temperature.c:50: EA = 0;
+;	assignBit
+	clr	_EA
+;	./src/temperature/temperature.c:52: count = 0;
+	clr	a
+	mov	_count,a
+	mov	(_count + 1),a
+;	./src/temperature/temperature.c:54: Temp = GetT_18B20();
+	lcall	_GetT_18B20
+;	./src/temperature/temperature.c:57: str[0] = (Temp >> 4) / 10 + '0'; // 右移4位，获得温度整数部分
+	mov	_Temp,dpl
+	mov	a,dph
+	mov	(_Temp + 1),a
+	swap	a
+	xch	a,dpl
+	swap	a
+	anl	a,#0x0f
+	xrl	a,dpl
+	xch	a,dpl
+	anl	a,#0x0f
+	xch	a,dpl
+	xrl	a,dpl
+	xch	a,dpl
+	mov	dph,a
+	mov	__divuint_PARM_2,#0x0a
+	mov	(__divuint_PARM_2 + 1),#0x00
+	lcall	__divuint
+	mov	r6,dpl
+	mov	a,#0x30
+	add	a,r6
+	mov	_str,a
+;	./src/temperature/temperature.c:59: str[1] = (Temp >> 4) % 10 + '0';
+	mov	dpl,_Temp
+	mov	a,(_Temp + 1)
+	swap	a
+	xch	a,dpl
+	swap	a
+	anl	a,#0x0f
+	xrl	a,dpl
+	xch	a,dpl
+	anl	a,#0x0f
+	xch	a,dpl
+	xrl	a,dpl
+	xch	a,dpl
+	mov	dph,a
+	mov	__moduint_PARM_2,#0x0a
+	mov	(__moduint_PARM_2 + 1),#0x00
+	lcall	__moduint
+	mov	r6,dpl
+	mov	a,#0x30
+	add	a,r6
+	mov	(_str + 0x0001),a
+;	./src/temperature/temperature.c:60: str[2] = '.';
+	mov	(_str + 0x0002),#0x2e
+;	./src/temperature/temperature.c:64: if ((Temp >> 3) % 10)
+	mov	dpl,_Temp
+	mov	a,(_Temp + 1)
+	swap	a
+	rl	a
+	xch	a,dpl
+	swap	a
+	rl	a
+	anl	a,#0x1f
+	xrl	a,dpl
+	xch	a,dpl
+	anl	a,#0x1f
+	xch	a,dpl
+	xrl	a,dpl
+	xch	a,dpl
+	mov	dph,a
+	mov	__moduint_PARM_2,#0x0a
+	mov	(__moduint_PARM_2 + 1),#0x00
+	lcall	__moduint
+	mov	a,dpl
+	mov	b,dph
+	orl	a,b
+	jz	00102$
+;	./src/temperature/temperature.c:66: str[3] = '5';
+	mov	(_str + 0x0003),#0x35
+	sjmp	00103$
+00102$:
+;	./src/temperature/temperature.c:71: str[3] = '0';
+	mov	(_str + 0x0003),#0x30
+00103$:
+;	./src/temperature/temperature.c:73: str[4] = '\0';
+	mov	(_str + 0x0004),#0x00
+;	./src/temperature/temperature.c:74: Disp_1602_str(2, 3, str);
+	mov	_Disp_1602_str_PARM_3,#_str
+	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
+	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
 	mov	_Disp_1602_str_PARM_2,#0x03
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/temperature/temperature.c:21: while (1)
-00102$:
-;	./src/temperature/temperature.c:23: }
-	sjmp	00102$
+;	./src/temperature/temperature.c:76: EA = 1;
+;	assignBit
+	setb	_EA
+;	./src/temperature/temperature.c:79: }
+	ljmp	00107$
+;------------------------------------------------------------
+;Allocation info for local variables in function 'timer0'
+;------------------------------------------------------------
+;	./src/temperature/temperature.c:82: void timer0() __interrupt(1)
+;	-----------------------------------------
+;	 function timer0
+;	-----------------------------------------
+_timer0:
+	push	acc
+	push	psw
+;	./src/temperature/temperature.c:85: TL0 = T_1ms;
+	mov	_TL0,#0x67
+;	./src/temperature/temperature.c:86: TH0 = T_1ms >> 8;
+	mov	_TH0,#0xfc
+;	./src/temperature/temperature.c:87: count++;
+	inc	_count
+	clr	a
+	cjne	a,_count,00103$
+	inc	(_count + 1)
+00103$:
+;	./src/temperature/temperature.c:88: }
+	pop	psw
+	pop	acc
+	reti
+;	eliminated unneeded mov psw,# (no regs used in bank)
+;	eliminated unneeded push/pop dpl
+;	eliminated unneeded push/pop dph
+;	eliminated unneeded push/pop b
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area CONST   (CODE)
 ___str_0:
-	.ascii "ZhaiZhuZhu"
-	.db 0x00
-	.area CSEG    (CODE)
-	.area CONST   (CODE)
-___str_1:
-	.ascii "ZaoDianShui"
+	.ascii "temperature"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

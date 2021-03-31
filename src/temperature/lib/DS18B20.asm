@@ -2,15 +2,13 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 4.0.0 #11528 (Mac OS X x86_64)
 ;--------------------------------------------------------
-	.module temperature
+	.module DS18B20
 	.optsdcc -mmcs51 --model-small
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
-	.globl _Disp_1602_str
-	.globl _Init_1602
+	.globl _DS18B20
 	.globl _CP_RL2
 	.globl _C_T2
 	.globl _TR2
@@ -147,6 +145,11 @@
 	.globl _WDT_CONTR
 	.globl _XICON
 	.globl _P4
+	.globl _DelayT_10us
+	.globl _InitDS18B20
+	.globl _WrByte_18B20
+	.globl _RdByte_18B20
+	.globl _GetT_18B20
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -293,6 +296,7 @@ _EXEN2	=	0x00cb
 _TR2	=	0x00ca
 _C_T2	=	0x00c9
 _CP_RL2	=	0x00c8
+_DS18B20	=	0x00b7
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
@@ -302,16 +306,12 @@ _CP_RL2	=	0x00c8
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_RdByte_18B20_data_65536_16:
+	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
-;--------------------------------------------------------
-; Stack segment in internal ram 
-;--------------------------------------------------------
-	.area	SSEG
-__start__stack:
-	.ds	1
-
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
 ;--------------------------------------------------------
@@ -352,46 +352,31 @@ __start__stack:
 	.area GSFINAL (CODE)
 	.area CSEG    (CODE)
 ;--------------------------------------------------------
-; interrupt vector 
-;--------------------------------------------------------
-	.area HOME    (CODE)
-__interrupt_vect:
-	ljmp	__sdcc_gsinit_startup
-;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area GSINIT  (CODE)
 	.area GSFINAL (CODE)
 	.area GSINIT  (CODE)
-	.globl __sdcc_gsinit_startup
-	.globl __sdcc_program_startup
-	.globl __start__stack
-	.globl __mcs51_genXINIT
-	.globl __mcs51_genXRAMCLEAR
-	.globl __mcs51_genRAMCLEAR
-	.area GSFINAL (CODE)
-	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
 ; Home
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area HOME    (CODE)
-__sdcc_program_startup:
-	ljmp	_main
-;	return from main will return to caller
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'DelayT_10us'
 ;------------------------------------------------------------
-;	./src/temperature/temperature.c:14: void main(){
+;count                     Allocated to registers 
+;------------------------------------------------------------
+;	./src/temperature/include/DS18B20.c:18: void DelayT_10us(unsigned char count)
 ;	-----------------------------------------
-;	 function main
+;	 function DelayT_10us
 ;	-----------------------------------------
-_main:
+_DelayT_10us:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -400,45 +385,240 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/temperature/temperature.c:15: P2 = 0x00; //关闭所有数码管
-	mov	_P2,#0x00
-;	./src/temperature/temperature.c:16: P06 = 1;
+	mov	r7,dpl
+;	./src/temperature/include/DS18B20.c:20: while (count--)
+00101$:
+	mov	ar6,r7
+	dec	r7
+	mov	a,r6
+	jz	00104$
+;	./src/temperature/include/DS18B20.c:22: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:23: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:24: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:25: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:27: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:28: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:29: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:30: NOP();
+	NOP	
+	sjmp	00101$
+00104$:
+;	./src/temperature/include/DS18B20.c:32: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'InitDS18B20'
+;------------------------------------------------------------
+;	./src/temperature/include/DS18B20.c:34: void InitDS18B20(void)
+;	-----------------------------------------
+;	 function InitDS18B20
+;	-----------------------------------------
+_InitDS18B20:
+;	./src/temperature/include/DS18B20.c:37: DS18B20 = 0;
 ;	assignBit
-	setb	_P06
-;	./src/temperature/temperature.c:17: P06 = 0;                            //锁存段
+	clr	_DS18B20
+;	./src/temperature/include/DS18B20.c:39: DelayT_10us(50);
+	mov	dpl,#0x32
+	lcall	_DelayT_10us
+;	./src/temperature/include/DS18B20.c:41: DS18B20 = 1;
 ;	assignBit
-	clr	_P06
-;	./src/temperature/temperature.c:18: Init_1602();                        //1602 初始ZaoDianShui化
-	lcall	_Init_1602
-;	./src/temperature/temperature.c:19: Disp_1602_str(1, 3, "ZhaiZhuZhu");  //第 1 行第 3 列开始显示"RongYi Mini-51"
-	mov	_Disp_1602_str_PARM_3,#___str_0
-	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
-	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-	mov	_Disp_1602_str_PARM_2,#0x03
-	mov	dpl,#0x01
-	lcall	_Disp_1602_str
-;	./src/temperature/temperature.c:20: Disp_1602_str(2, 3, "ZaoDianShui"); //第 2 行第 3 列开始显示"LCD1602 Test!"
-	mov	_Disp_1602_str_PARM_3,#___str_1
-	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
-	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-	mov	_Disp_1602_str_PARM_2,#0x03
-	mov	dpl,#0x02
-	lcall	_Disp_1602_str
-;	./src/temperature/temperature.c:21: while (1)
-00102$:
-;	./src/temperature/temperature.c:23: }
-	sjmp	00102$
+	setb	_DS18B20
+;	./src/temperature/include/DS18B20.c:43: DelayT_10us(6);
+	mov	dpl,#0x06
+	lcall	_DelayT_10us
+;	./src/temperature/include/DS18B20.c:45: while (DS18B20 != 1)
+00101$:
+	jnb	_DS18B20,00101$
+;	./src/temperature/include/DS18B20.c:48: DelayT_10us(50);
+	mov	dpl,#0x32
+;	./src/temperature/include/DS18B20.c:49: }
+	ljmp	_DelayT_10us
+;------------------------------------------------------------
+;Allocation info for local variables in function 'WrByte_18B20'
+;------------------------------------------------------------
+;dat                       Allocated to registers r7 
+;flag                      Allocated to registers r4 
+;j                         Allocated to registers r5 r6 
+;------------------------------------------------------------
+;	./src/temperature/include/DS18B20.c:51: void WrByte_18B20(unsigned char dat)
+;	-----------------------------------------
+;	 function WrByte_18B20
+;	-----------------------------------------
+_WrByte_18B20:
+	mov	r7,dpl
+;	./src/temperature/include/DS18B20.c:54: for (int j = 1; j <= 8; j++)
+	mov	r5,#0x01
+	mov	r6,#0x00
+00103$:
+	clr	c
+	mov	a,#0x08
+	subb	a,r5
+	mov	a,#(0x00 ^ 0x80)
+	mov	b,r6
+	xrl	b,#0x80
+	subb	a,b
+	jc	00105$
+;	./src/temperature/include/DS18B20.c:57: flag = dat & 0x01;
+	mov	a,#0x01
+	anl	a,r7
+	mov	r4,a
+;	./src/temperature/include/DS18B20.c:59: dat >>= 1;
+	mov	a,r7
+	clr	c
+	rrc	a
+	mov	r7,a
+;	./src/temperature/include/DS18B20.c:61: DS18B20 = 0;
+;	assignBit
+	clr	_DS18B20
+;	./src/temperature/include/DS18B20.c:63: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:64: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:66: DS18B20 = flag;
+;	assignBit
+	mov	a,r4
+	add	a,#0xff
+	mov	_DS18B20,c
+;	./src/temperature/include/DS18B20.c:68: DelayT_10us(6);
+	mov	dpl,#0x06
+	push	ar7
+	push	ar6
+	push	ar5
+	lcall	_DelayT_10us
+	pop	ar5
+	pop	ar6
+	pop	ar7
+;	./src/temperature/include/DS18B20.c:70: DS18B20 = 1;
+;	assignBit
+	setb	_DS18B20
+;	./src/temperature/include/DS18B20.c:54: for (int j = 1; j <= 8; j++)
+	inc	r5
+	cjne	r5,#0x00,00103$
+	inc	r6
+	sjmp	00103$
+00105$:
+;	./src/temperature/include/DS18B20.c:72: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'RdByte_18B20'
+;------------------------------------------------------------
+;data                      Allocated with name '_RdByte_18B20_data_65536_16'
+;flag                      Allocated to registers r6 
+;j                         Allocated to registers r7 
+;------------------------------------------------------------
+;	./src/temperature/include/DS18B20.c:74: unsigned char RdByte_18B20(void)
+;	-----------------------------------------
+;	 function RdByte_18B20
+;	-----------------------------------------
+_RdByte_18B20:
+;	./src/temperature/include/DS18B20.c:77: for (unsigned char j = 1; j <= 8; j++)
+	mov	r7,#0x01
+00103$:
+	mov	a,r7
+	add	a,#0xff - 0x08
+	jc	00101$
+;	./src/temperature/include/DS18B20.c:80: DS18B20 = 0;
+;	assignBit
+	clr	_DS18B20
+;	./src/temperature/include/DS18B20.c:82: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:83: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:87: DS18B20 = 1;
+;	assignBit
+	setb	_DS18B20
+;	./src/temperature/include/DS18B20.c:89: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:90: NOP();
+	NOP	
+;	./src/temperature/include/DS18B20.c:92: flag = DS18B20;
+	mov	c,_DS18B20
+	clr	a
+	rlc	a
+	mov	r6,a
+;	./src/temperature/include/DS18B20.c:94: DelayT_10us(6);
+	mov	dpl,#0x06
+	push	ar7
+	push	ar6
+	lcall	_DelayT_10us
+	pop	ar6
+	pop	ar7
+;	./src/temperature/include/DS18B20.c:96: data = (data >> 1) | (flag << 7);
+	mov	a,_RdByte_18B20_data_65536_16
+	clr	c
+	rrc	a
+	mov	r5,a
+	mov	a,r6
+	rr	a
+	anl	a,#0x80
+	mov	r6,a
+	orl	a,r5
+	mov	_RdByte_18B20_data_65536_16,a
+;	./src/temperature/include/DS18B20.c:77: for (unsigned char j = 1; j <= 8; j++)
+	inc	r7
+	sjmp	00103$
+00101$:
+;	./src/temperature/include/DS18B20.c:98: return data;
+	mov	dpl,_RdByte_18B20_data_65536_16
+;	./src/temperature/include/DS18B20.c:99: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'GetT_18B20'
+;------------------------------------------------------------
+;Temp_L                    Allocated to registers r7 
+;Temp_H                    Allocated to registers r6 
+;Temp                      Allocated to registers 
+;------------------------------------------------------------
+;	./src/temperature/include/DS18B20.c:102: unsigned int GetT_18B20(void)
+;	-----------------------------------------
+;	 function GetT_18B20
+;	-----------------------------------------
+_GetT_18B20:
+;	./src/temperature/include/DS18B20.c:106: InitDS18B20();
+	lcall	_InitDS18B20
+;	./src/temperature/include/DS18B20.c:107: WrByte_18B20(0xCC);
+	mov	dpl,#0xcc
+	lcall	_WrByte_18B20
+;	./src/temperature/include/DS18B20.c:108: WrByte_18B20(0x44);
+	mov	dpl,#0x44
+	lcall	_WrByte_18B20
+;	./src/temperature/include/DS18B20.c:109: InitDS18B20();
+	lcall	_InitDS18B20
+;	./src/temperature/include/DS18B20.c:110: WrByte_18B20(0xCC);
+	mov	dpl,#0xcc
+	lcall	_WrByte_18B20
+;	./src/temperature/include/DS18B20.c:111: WrByte_18B20(0xBE);
+	mov	dpl,#0xbe
+	lcall	_WrByte_18B20
+;	./src/temperature/include/DS18B20.c:113: Temp_L = RdByte_18B20();
+	lcall	_RdByte_18B20
+	mov	r7,dpl
+;	./src/temperature/include/DS18B20.c:115: Temp_H = RdByte_18B20();
+	push	ar7
+	lcall	_RdByte_18B20
+	mov	r6,dpl
+	pop	ar7
+;	./src/temperature/include/DS18B20.c:117: Temp = ((unsigned int)Temp_H << 8) + Temp_L;
+	mov	ar5,r6
+	clr	a
+	mov	r6,a
+	mov	r4,a
+	mov	a,r7
+	add	a,r6
+	mov	dpl,a
+	mov	a,r4
+	addc	a,r5
+	mov	dph,a
+;	./src/temperature/include/DS18B20.c:118: return Temp;
+;	./src/temperature/include/DS18B20.c:119: }
+	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
-	.area CONST   (CODE)
-___str_0:
-	.ascii "ZhaiZhuZhu"
-	.db 0x00
-	.area CSEG    (CODE)
-	.area CONST   (CODE)
-___str_1:
-	.ascii "ZaoDianShui"
-	.db 0x00
-	.area CSEG    (CODE)
 	.area XINIT   (CODE)
 	.area CABS    (ABS,CODE)

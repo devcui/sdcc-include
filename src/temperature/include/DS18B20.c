@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-30 15:52:42
- * @LastEditTime: 2021-03-31 10:22:41
+ * @LastEditTime: 2021-03-31 22:35:09
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/temperature/include/DS18B20.c
@@ -19,17 +19,15 @@ void DelayT_10us(unsigned char count)
 {
     while (count--)
     {
-        _nop_();
-        _nop_();
-        _nop_();
-        _nop_();
-        _nop_();
+        NOP();
+        NOP();
+        NOP();
+        NOP();
 
-        _nop_();
-        _nop_();
-        _nop_();
-        _nop_();
-        _nop_();
+        NOP();
+        NOP();
+        NOP();
+        NOP();
     }
 }
 
@@ -38,7 +36,7 @@ void InitDS18B20(void)
     // 拉低
     DS18B20 = 0;
     // 持续600us
-    DelayT_10us(60);
+    DelayT_10us(50);
     // 拉高
     DS18B20 = 1;
     // 持续60us
@@ -46,8 +44,8 @@ void InitDS18B20(void)
     // 直到DS18B20高阻抗被拉高
     while (DS18B20 != 1)
         ;
-    // 持续60us
-    DelayT_10us(6);
+    // 持续600us
+    DelayT_10us(50);
 }
 
 void WrByte_18B20(unsigned char dat)
@@ -62,12 +60,12 @@ void WrByte_18B20(unsigned char dat)
         // 拉低
         DS18B20 = 0;
         // >1us
-        _nop_();
-        _nop_();
+        NOP();
+        NOP();
         // 给数据位
         DS18B20 = flag;
         // 延时60us
-        DelayT_10us(60);
+        DelayT_10us(6);
         // 写入完成后拉高
         DS18B20 = 1;
     }
@@ -81,21 +79,21 @@ unsigned char RdByte_18B20(void)
         // 主机将DS18B20拉低
         DS18B20 = 0;
         // 延时2us
-        _nop_();
-        _nop_();
+        NOP();
+        NOP();
         // 主机将DS18B20拉高
         // 这里和温度计并无关系，是RYMCU 51单片机设计
         // 读取数据时需要拉高
         DS18B20 = 1;
         // 延时2us
-        _nop_();
-        _nop_();
+        NOP();
+        NOP();
         // 回到正常时序图，读取数据给flag
         flag = DS18B20;
         // 延时60us结束周期
         DelayT_10us(6);
         // 读出的值最低位在前面
-        data = (data >> 1) | (flag << 7)
+        data = (data >> 1) | (flag << 7);
     }
     return data;
 }

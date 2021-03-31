@@ -14,7 +14,8 @@
 -l libint
 -l liblong
 -l libfloat
-./src/temperature/lib/temperature.rel
 ./src/temperature/lib/1602.rel
+./src/temperature/lib/DS18B20.rel
+./src/temperature/lib/temperature.rel
 
 -e

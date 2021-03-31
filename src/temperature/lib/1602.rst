@@ -381,11 +381,11 @@
                                     381 ;------------------------------------------------------------
                                     382 ;sta                       Allocated to registers 
                                     383 ;------------------------------------------------------------
-                                    384 ;	./src/temperature/include/1602.c:17: unsigned char RD_sta() //读状态函数
+                                    384 ;	./src/temperature/include/1602.c:18: unsigned char RD_sta() //读状态函数
                                     385 ;	-----------------------------------------
                                     386 ;	 function RD_sta
                                     387 ;	-----------------------------------------
-      000092                        388 _RD_sta:
+      000075                        388 _RD_sta:
                            000007   389 	ar7 = 0x07
                            000006   390 	ar6 = 0x06
                            000005   391 	ar5 = 0x05
@@ -394,123 +394,123 @@
                            000002   394 	ar2 = 0x02
                            000001   395 	ar1 = 0x01
                            000000   396 	ar0 = 0x00
-                                    397 ;	./src/temperature/include/1602.c:20: RS_1602 = 0;
+                                    397 ;	./src/temperature/include/1602.c:21: RS_1602 = 0;
                                     398 ;	assignBit
-      000092 C2 B6            [12]  399 	clr	_RS_1602
-                                    400 ;	./src/temperature/include/1602.c:21: RW_1602 = 1; //进入读 1602 状态模式
+      000075 C2 B6            [12]  399 	clr	_RS_1602
+                                    400 ;	./src/temperature/include/1602.c:22: RW_1602 = 1; //进入读 1602 状态模式
                                     401 ;	assignBit
-      000094 D2 B5            [12]  402 	setb	_RW_1602
-                                    403 ;	./src/temperature/include/1602.c:22: EN_1602 = 1; //拉高使能信号
+      000077 D2 B5            [12]  402 	setb	_RW_1602
+                                    403 ;	./src/temperature/include/1602.c:23: EN_1602 = 1; //拉高使能信号
                                     404 ;	assignBit
-      000096 D2 B4            [12]  405 	setb	_EN_1602
-                                    406 ;	./src/temperature/include/1602.c:23: sta = P2;    //将 1602 状态数据读取
-      000098 85 A0 82         [24]  407 	mov	dpl,_P2
-                                    408 ;	./src/temperature/include/1602.c:24: EN_1602 = 0; //拉低使能，完成读操作
+      000079 D2 B4            [12]  405 	setb	_EN_1602
+                                    406 ;	./src/temperature/include/1602.c:24: sta = P2;    //将 1602 状态数据读取
+      00007B 85 A0 82         [24]  407 	mov	dpl,_P2
+                                    408 ;	./src/temperature/include/1602.c:25: EN_1602 = 0; //拉低使能，完成读操作
                                     409 ;	assignBit
-      00009B C2 B4            [12]  410 	clr	_EN_1602
-                                    411 ;	./src/temperature/include/1602.c:25: return sta;  //将状态值返
-                                    412 ;	./src/temperature/include/1602.c:26: }
-      00009D 22               [24]  413 	ret
+      00007E C2 B4            [12]  410 	clr	_EN_1602
+                                    411 ;	./src/temperature/include/1602.c:26: return sta;  //将状态值返
+                                    412 ;	./src/temperature/include/1602.c:27: }
+      000080 22               [24]  413 	ret
                                     414 ;------------------------------------------------------------
                                     415 ;Allocation info for local variables in function 'Ready'
                                     416 ;------------------------------------------------------------
-                                    417 ;	./src/temperature/include/1602.c:28: void Ready() //空闲检测函数
+                                    417 ;	./src/temperature/include/1602.c:29: void Ready() //空闲检测函数
                                     418 ;	-----------------------------------------
                                     419 ;	 function Ready
                                     420 ;	-----------------------------------------
-      00009E                        421 _Ready:
-                                    422 ;	./src/temperature/include/1602.c:30: P2 = 0xFF;
-      00009E 75 A0 FF         [24]  423 	mov	_P2,#0xff
-                                    424 ;	./src/temperature/include/1602.c:31: while (RD_sta() & 0x80)
-      0000A1                        425 00101$:
-      0000A1 12 00 92         [24]  426 	lcall	_RD_sta
-      0000A4 E5 82            [12]  427 	mov	a,dpl
-      0000A6 20 E7 F8         [24]  428 	jb	acc.7,00101$
-                                    429 ;	./src/temperature/include/1602.c:33: }
-      0000A9 22               [24]  430 	ret
+      000081                        421 _Ready:
+                                    422 ;	./src/temperature/include/1602.c:31: P2 = 0xFF;
+      000081 75 A0 FF         [24]  423 	mov	_P2,#0xff
+                                    424 ;	./src/temperature/include/1602.c:32: while (RD_sta() & 0x80)
+      000084                        425 00101$:
+      000084 12 00 75         [24]  426 	lcall	_RD_sta
+      000087 E5 82            [12]  427 	mov	a,dpl
+      000089 20 E7 F8         [24]  428 	jb	acc.7,00101$
+                                    429 ;	./src/temperature/include/1602.c:34: }
+      00008C 22               [24]  430 	ret
                                     431 ;------------------------------------------------------------
                                     432 ;Allocation info for local variables in function 'WR_Cmd'
                                     433 ;------------------------------------------------------------
                                     434 ;cmd                       Allocated to registers r7 
                                     435 ;------------------------------------------------------------
-                                    436 ;	./src/temperature/include/1602.c:35: void WR_Cmd(unsigned char cmd) //写指令函数
+                                    436 ;	./src/temperature/include/1602.c:36: void WR_Cmd(unsigned char cmd) //写指令函数
                                     437 ;	-----------------------------------------
                                     438 ;	 function WR_Cmd
                                     439 ;	-----------------------------------------
-      0000AA                        440 _WR_Cmd:
-      0000AA AF 82            [24]  441 	mov	r7,dpl
-                                    442 ;	./src/temperature/include/1602.c:37: Ready(); //检测 1602 是否处于空闲状态
-      0000AC C0 07            [24]  443 	push	ar7
-      0000AE 12 00 9E         [24]  444 	lcall	_Ready
-      0000B1 D0 07            [24]  445 	pop	ar7
-                                    446 ;	./src/temperature/include/1602.c:38: RS_1602 = 0;
+      00008D                        440 _WR_Cmd:
+      00008D AF 82            [24]  441 	mov	r7,dpl
+                                    442 ;	./src/temperature/include/1602.c:38: Ready(); //检测 1602 是否处于空闲状态
+      00008F C0 07            [24]  443 	push	ar7
+      000091 12 00 81         [24]  444 	lcall	_Ready
+      000094 D0 07            [24]  445 	pop	ar7
+                                    446 ;	./src/temperature/include/1602.c:39: RS_1602 = 0;
                                     447 ;	assignBit
-      0000B3 C2 B6            [12]  448 	clr	_RS_1602
-                                    449 ;	./src/temperature/include/1602.c:39: RW_1602 = 0; //进入写指令模式
+      000096 C2 B6            [12]  448 	clr	_RS_1602
+                                    449 ;	./src/temperature/include/1602.c:40: RW_1602 = 0; //进入写指令模式
                                     450 ;	assignBit
-      0000B5 C2 B5            [12]  451 	clr	_RW_1602
-                                    452 ;	./src/temperature/include/1602.c:40: P2 = cmd;    //将指令数据输出
-      0000B7 8F A0            [24]  453 	mov	_P2,r7
-                                    454 ;	./src/temperature/include/1602.c:41: EN_1602 = 1; //拉高使能信号
+      000098 C2 B5            [12]  451 	clr	_RW_1602
+                                    452 ;	./src/temperature/include/1602.c:41: P2 = cmd;    //将指令数据输出
+      00009A 8F A0            [24]  453 	mov	_P2,r7
+                                    454 ;	./src/temperature/include/1602.c:42: EN_1602 = 1; //拉高使能信号
                                     455 ;	assignBit
-      0000B9 D2 B4            [12]  456 	setb	_EN_1602
-                                    457 ;	./src/temperature/include/1602.c:42: EN_1602 = 0; //拉低使能，完成写操作
+      00009C D2 B4            [12]  456 	setb	_EN_1602
+                                    457 ;	./src/temperature/include/1602.c:43: EN_1602 = 0; //拉低使能，完成写操作
                                     458 ;	assignBit
-      0000BB C2 B4            [12]  459 	clr	_EN_1602
-                                    460 ;	./src/temperature/include/1602.c:43: }
-      0000BD 22               [24]  461 	ret
+      00009E C2 B4            [12]  459 	clr	_EN_1602
+                                    460 ;	./src/temperature/include/1602.c:44: }
+      0000A0 22               [24]  461 	ret
                                     462 ;------------------------------------------------------------
                                     463 ;Allocation info for local variables in function 'WR_Dat'
                                     464 ;------------------------------------------------------------
                                     465 ;dat                       Allocated to registers r7 
                                     466 ;------------------------------------------------------------
-                                    467 ;	./src/temperature/include/1602.c:45: void WR_Dat(unsigned char dat) //写数据函数
+                                    467 ;	./src/temperature/include/1602.c:46: void WR_Dat(unsigned char dat) //写数据函数
                                     468 ;	-----------------------------------------
                                     469 ;	 function WR_Dat
                                     470 ;	-----------------------------------------
-      0000BE                        471 _WR_Dat:
-      0000BE AF 82            [24]  472 	mov	r7,dpl
-                                    473 ;	./src/temperature/include/1602.c:47: Ready(); //检测 1602 是否处于空闲状态
-      0000C0 C0 07            [24]  474 	push	ar7
-      0000C2 12 00 9E         [24]  475 	lcall	_Ready
-      0000C5 D0 07            [24]  476 	pop	ar7
-                                    477 ;	./src/temperature/include/1602.c:48: RS_1602 = 1;
+      0000A1                        471 _WR_Dat:
+      0000A1 AF 82            [24]  472 	mov	r7,dpl
+                                    473 ;	./src/temperature/include/1602.c:48: Ready(); //检测 1602 是否处于空闲状态
+      0000A3 C0 07            [24]  474 	push	ar7
+      0000A5 12 00 81         [24]  475 	lcall	_Ready
+      0000A8 D0 07            [24]  476 	pop	ar7
+                                    477 ;	./src/temperature/include/1602.c:49: RS_1602 = 1;
                                     478 ;	assignBit
-      0000C7 D2 B6            [12]  479 	setb	_RS_1602
-                                    480 ;	./src/temperature/include/1602.c:49: RW_1602 = 0; //进入写数据模式
+      0000AA D2 B6            [12]  479 	setb	_RS_1602
+                                    480 ;	./src/temperature/include/1602.c:50: RW_1602 = 0; //进入写数据模式
                                     481 ;	assignBit
-      0000C9 C2 B5            [12]  482 	clr	_RW_1602
-                                    483 ;	./src/temperature/include/1602.c:51: P2 = dat; //将数据输出
-      0000CB 8F A0            [24]  484 	mov	_P2,r7
-                                    485 ;	./src/temperature/include/1602.c:53: EN_1602 = 1; //拉高使能信号
+      0000AC C2 B5            [12]  482 	clr	_RW_1602
+                                    483 ;	./src/temperature/include/1602.c:52: P2 = dat; //将数据输出
+      0000AE 8F A0            [24]  484 	mov	_P2,r7
+                                    485 ;	./src/temperature/include/1602.c:54: EN_1602 = 1; //拉高使能信号
                                     486 ;	assignBit
-      0000CD D2 B4            [12]  487 	setb	_EN_1602
-                                    488 ;	./src/temperature/include/1602.c:54: EN_1602 = 0; //拉低使能，完成写操作
+      0000B0 D2 B4            [12]  487 	setb	_EN_1602
+                                    488 ;	./src/temperature/include/1602.c:55: EN_1602 = 0; //拉低使能，完成写操作
                                     489 ;	assignBit
-      0000CF C2 B4            [12]  490 	clr	_EN_1602
-                                    491 ;	./src/temperature/include/1602.c:55: }
-      0000D1 22               [24]  492 	ret
+      0000B2 C2 B4            [12]  490 	clr	_EN_1602
+                                    491 ;	./src/temperature/include/1602.c:56: }
+      0000B4 22               [24]  492 	ret
                                     493 ;------------------------------------------------------------
                                     494 ;Allocation info for local variables in function 'Init_1602'
                                     495 ;------------------------------------------------------------
-                                    496 ;	./src/temperature/include/1602.c:57: void Init_1602() //1602 初始化函
+                                    496 ;	./src/temperature/include/1602.c:58: void Init_1602() //1602 初始化函
                                     497 ;	-----------------------------------------
                                     498 ;	 function Init_1602
                                     499 ;	-----------------------------------------
-      0000D2                        500 _Init_1602:
-                                    501 ;	./src/temperature/include/1602.c:59: WR_Cmd(0x38); //设置 16x2 显示，5x7 点阵，8 位数据接口
-      0000D2 75 82 38         [24]  502 	mov	dpl,#0x38
-      0000D5 12 00 AA         [24]  503 	lcall	_WR_Cmd
-                                    504 ;	./src/temperature/include/1602.c:60: WR_Cmd(0x0C); //开显示，关闭光标
-      0000D8 75 82 0C         [24]  505 	mov	dpl,#0x0c
-      0000DB 12 00 AA         [24]  506 	lcall	_WR_Cmd
-                                    507 ;	./src/temperature/include/1602.c:61: WR_Cmd(0x06); //读或写完一个字符后，地址指针、光标均加 1
-      0000DE 75 82 06         [24]  508 	mov	dpl,#0x06
-      0000E1 12 00 AA         [24]  509 	lcall	_WR_Cmd
-                                    510 ;	./src/temperature/include/1602.c:62: WR_Cmd(0x01); //数据指针清零、所示显示清零
-      0000E4 75 82 01         [24]  511 	mov	dpl,#0x01
-                                    512 ;	./src/temperature/include/1602.c:63: }
-      0000E7 02 00 AA         [24]  513 	ljmp	_WR_Cmd
+      0000B5                        500 _Init_1602:
+                                    501 ;	./src/temperature/include/1602.c:60: WR_Cmd(0x38); //设置 16x2 显示，5x7 点阵，8 位数据接口
+      0000B5 75 82 38         [24]  502 	mov	dpl,#0x38
+      0000B8 12 00 8D         [24]  503 	lcall	_WR_Cmd
+                                    504 ;	./src/temperature/include/1602.c:61: WR_Cmd(0x0C); //开显示，关闭光标
+      0000BB 75 82 0C         [24]  505 	mov	dpl,#0x0c
+      0000BE 12 00 8D         [24]  506 	lcall	_WR_Cmd
+                                    507 ;	./src/temperature/include/1602.c:62: WR_Cmd(0x06); //读或写完一个字符后，地址指针、光标均加 1
+      0000C1 75 82 06         [24]  508 	mov	dpl,#0x06
+      0000C4 12 00 8D         [24]  509 	lcall	_WR_Cmd
+                                    510 ;	./src/temperature/include/1602.c:63: WR_Cmd(0x01); //数据指针清零、所示显示清零
+      0000C7 75 82 01         [24]  511 	mov	dpl,#0x01
+                                    512 ;	./src/temperature/include/1602.c:64: }
+      0000CA 02 00 8D         [24]  513 	ljmp	_WR_Cmd
                                     514 ;------------------------------------------------------------
                                     515 ;Allocation info for local variables in function 'Disp_1602_str'
                                     516 ;------------------------------------------------------------
@@ -519,54 +519,54 @@
                                     519 ;row                       Allocated to registers r7 
                                     520 ;addr                      Allocated to registers r7 
                                     521 ;------------------------------------------------------------
-                                    522 ;	./src/temperature/include/1602.c:65: void Disp_1602_str(unsigned char row, unsigned char column, char *str)
+                                    522 ;	./src/temperature/include/1602.c:66: void Disp_1602_str(unsigned char row, unsigned char column, char *str)
                                     523 ;	-----------------------------------------
                                     524 ;	 function Disp_1602_str
                                     525 ;	-----------------------------------------
-      0000EA                        526 _Disp_1602_str:
-      0000EA AF 82            [24]  527 	mov	r7,dpl
-                                    528 ;	./src/temperature/include/1602.c:69: addr = (row - 1) * 0x40 + (column - 1); //组合成地址
-      0000EC 1F               [12]  529 	dec	r7
-      0000ED EF               [12]  530 	mov	a,r7
-      0000EE 03               [12]  531 	rr	a
-      0000EF 03               [12]  532 	rr	a
-      0000F0 54 C0            [12]  533 	anl	a,#0xc0
-      0000F2 FF               [12]  534 	mov	r7,a
-      0000F3 E5 08            [12]  535 	mov	a,_Disp_1602_str_PARM_2
-      0000F5 14               [12]  536 	dec	a
-      0000F6 2F               [12]  537 	add	a,r7
-                                    538 ;	./src/temperature/include/1602.c:70: WR_Cmd(0x80 + addr);                    //写地址命令
-      0000F7 24 80            [12]  539 	add	a,#0x80
-      0000F9 F5 82            [12]  540 	mov	dpl,a
-      0000FB 12 00 AA         [24]  541 	lcall	_WR_Cmd
-                                    542 ;	./src/temperature/include/1602.c:72: while (*str) //判断 str 字符串是否已结束
-      0000FE AD 09            [24]  543 	mov	r5,_Disp_1602_str_PARM_3
-      000100 AE 0A            [24]  544 	mov	r6,(_Disp_1602_str_PARM_3 + 1)
-      000102 AF 0B            [24]  545 	mov	r7,(_Disp_1602_str_PARM_3 + 2)
-      000104                        546 00101$:
-      000104 8D 82            [24]  547 	mov	dpl,r5
-      000106 8E 83            [24]  548 	mov	dph,r6
-      000108 8F F0            [24]  549 	mov	b,r7
-      00010A 12 01 29         [24]  550 	lcall	__gptrget
-      00010D FC               [12]  551 	mov	r4,a
-      00010E 60 18            [24]  552 	jz	00104$
-                                    553 ;	./src/temperature/include/1602.c:74: WR_Dat(*str++); //将 str 字符串数据依次写入
-      000110 8C 82            [24]  554 	mov	dpl,r4
-      000112 0D               [12]  555 	inc	r5
-      000113 BD 00 01         [24]  556 	cjne	r5,#0x00,00116$
-      000116 0E               [12]  557 	inc	r6
-      000117                        558 00116$:
-      000117 C0 07            [24]  559 	push	ar7
-      000119 C0 06            [24]  560 	push	ar6
-      00011B C0 05            [24]  561 	push	ar5
-      00011D 12 00 BE         [24]  562 	lcall	_WR_Dat
-      000120 D0 05            [24]  563 	pop	ar5
-      000122 D0 06            [24]  564 	pop	ar6
-      000124 D0 07            [24]  565 	pop	ar7
-      000126 80 DC            [24]  566 	sjmp	00101$
-      000128                        567 00104$:
-                                    568 ;	./src/temperature/include/1602.c:76: }
-      000128 22               [24]  569 	ret
+      0000CD                        526 _Disp_1602_str:
+      0000CD AF 82            [24]  527 	mov	r7,dpl
+                                    528 ;	./src/temperature/include/1602.c:70: addr = (row - 1) * 0x40 + (column - 1); //组合成地址
+      0000CF 1F               [12]  529 	dec	r7
+      0000D0 EF               [12]  530 	mov	a,r7
+      0000D1 03               [12]  531 	rr	a
+      0000D2 03               [12]  532 	rr	a
+      0000D3 54 C0            [12]  533 	anl	a,#0xc0
+      0000D5 FF               [12]  534 	mov	r7,a
+      0000D6 E5 08            [12]  535 	mov	a,_Disp_1602_str_PARM_2
+      0000D8 14               [12]  536 	dec	a
+      0000D9 2F               [12]  537 	add	a,r7
+                                    538 ;	./src/temperature/include/1602.c:71: WR_Cmd(0x80 + addr);                    //写地址命令
+      0000DA 24 80            [12]  539 	add	a,#0x80
+      0000DC F5 82            [12]  540 	mov	dpl,a
+      0000DE 12 00 8D         [24]  541 	lcall	_WR_Cmd
+                                    542 ;	./src/temperature/include/1602.c:73: while (*str) //判断 str 字符串是否已结束
+      0000E1 AD 09            [24]  543 	mov	r5,_Disp_1602_str_PARM_3
+      0000E3 AE 0A            [24]  544 	mov	r6,(_Disp_1602_str_PARM_3 + 1)
+      0000E5 AF 0B            [24]  545 	mov	r7,(_Disp_1602_str_PARM_3 + 2)
+      0000E7                        546 00101$:
+      0000E7 8D 82            [24]  547 	mov	dpl,r5
+      0000E9 8E 83            [24]  548 	mov	dph,r6
+      0000EB 8F F0            [24]  549 	mov	b,r7
+      0000ED 12 03 56         [24]  550 	lcall	__gptrget
+      0000F0 FC               [12]  551 	mov	r4,a
+      0000F1 60 18            [24]  552 	jz	00104$
+                                    553 ;	./src/temperature/include/1602.c:75: WR_Dat(*str++); //将 str 字符串数据依次写入
+      0000F3 8C 82            [24]  554 	mov	dpl,r4
+      0000F5 0D               [12]  555 	inc	r5
+      0000F6 BD 00 01         [24]  556 	cjne	r5,#0x00,00116$
+      0000F9 0E               [12]  557 	inc	r6
+      0000FA                        558 00116$:
+      0000FA C0 07            [24]  559 	push	ar7
+      0000FC C0 06            [24]  560 	push	ar6
+      0000FE C0 05            [24]  561 	push	ar5
+      000100 12 00 A1         [24]  562 	lcall	_WR_Dat
+      000103 D0 05            [24]  563 	pop	ar5
+      000105 D0 06            [24]  564 	pop	ar6
+      000107 D0 07            [24]  565 	pop	ar7
+      000109 80 DC            [24]  566 	sjmp	00101$
+      00010B                        567 00104$:
+                                    568 ;	./src/temperature/include/1602.c:77: }
+      00010B 22               [24]  569 	ret
                                     570 	.area CSEG    (CODE)
                                     571 	.area CONST   (CODE)
                                     572 	.area XINIT   (CODE)
