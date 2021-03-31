@@ -2,12 +2,13 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-29 22:39:41
- * @LastEditTime: 2021-03-29 23:34:39
+ * @LastEditTime: 2021-03-30 15:57:33
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/temperature/include/1602.c
  * @LICENSE: NONE
  */
+#include "../../../include/STC89xx.h"
 #include "./1602.h"
 
 SBIT(RS_1602, _P3, 6);

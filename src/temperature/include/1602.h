@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-29 22:34:24
- * @LastEditTime: 2021-03-29 23:34:29
+ * @LastEditTime: 2021-03-30 15:57:25
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/temperature/include/1602.h
@@ -11,11 +11,7 @@
 
 
 #ifndef __1602_H__
-#define __1602_h__
-#include "../../../include/STC89xx.h"
-//1602，RS、R/W，E 引脚定义
-
-
+#define __1602_H__
 extern unsigned char RD_sta();
 extern void Ready();
 extern void WR_Cmd(unsigned char cmd);

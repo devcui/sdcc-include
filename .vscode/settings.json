@@ -2,6 +2,7 @@
     "files.associations": {
         "compiler.h": "c",
         "1602.h": "c",
-        "stc89xx.h": "c"
+        "stc89xx.h": "c",
+        "lint.h": "c"
     }
 }
