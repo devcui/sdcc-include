@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-30 15:52:42
- * @LastEditTime: 2021-03-31 09:58:43
+ * @LastEditTime: 2021-03-31 10:22:41
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/temperature/include/DS18B20.c
@@ -98,4 +98,24 @@ unsigned char RdByte_18B20(void)
         data = (data >> 1) | (flag << 7)
     }
     return data;
+}
+
+// 处理数据获取温度
+unsigned int GetT_18B20(void)
+{
+    unsigned char Temp_L, Temp_H;
+    unsigned int Temp;
+    InitDS18B20();
+    WrByte_18B20(0xCC);
+    WrByte_18B20(0x44);
+    InitDS18B20();
+    WrByte_18B20(0xCC);
+    WrByte_18B20(0xBE);
+    // 读一个8位
+    Temp_L = RdByte_18B20();
+    // 读第二个8位
+    Temp_H = RdByte_18B20();
+    // 两个8位组合成16位
+    Temp = ((unsigned int)Temp_H << 8) + Temp_L;
+    return Temp;
 }

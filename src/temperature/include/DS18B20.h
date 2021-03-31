@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-03-30 15:52:36
- * @LastEditTime: 2021-03-30 16:47:16
+ * @LastEditTime: 2021-03-31 10:13:05
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/temperature/include/DS18B20.h
@@ -19,4 +19,6 @@ extern void InitDS18B20(void);
 extern void WrByte_18B20(unsigned char dat);
 // 读取1字节
 extern unsigned char RdByte_18B20(void);
+// 处理数据获取温度
+extern unsigned int GetT_18B20(void);
 #endif
