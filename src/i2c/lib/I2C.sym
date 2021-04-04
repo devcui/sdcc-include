@@ -310,7 +310,7 @@ Symbol Table
     _RS0                                                        =  0000D3 G
     _RS1                                                        =  0000D4 G
     _RXD                                                        =  0000B0 G
- 16 _RdACK_I2C                                                     00006D GR
+ 16 _RdACK_I2C                                                     00006B GR
     _SADDR                                                      =  0000A9 G
     _SADEN                                                      =  0000B9 G
     _SBUF                                                       =  000099 G
@@ -322,7 +322,7 @@ Symbol Table
     _SM2                                                        =  00009D G
     _SP                                                         =  000081 G
  16 _Start_I2C                                                     000005 GR
- 16 _Stop_I2C                                                      00001B GR
+ 16 _Stop_I2C                                                      000019 GR
     _T0                                                         =  0000B4 G
     _T1                                                         =  0000B5 G
     _T2                                                         =  000090 G
@@ -349,7 +349,7 @@ Symbol Table
     _TXD                                                        =  0000B1 G
     _WDT_CONTR                                                  =  0000E1 G
     _WR                                                         =  0000B6 G
- 16 _Wr_I2C                                                        00002F GR
+ 16 _Wr_I2C                                                        00002D GR
     _XICON                                                      =  0000C0 G
     a                                                           =  0000E0 L
     a.0                                                         =  0000E0 L
@@ -583,7 +583,7 @@ Area Table
   13 GSINIT5                                    size      0   flags   20
   14 GSINIT                                     size      0   flags   20
   15 GSFINAL                                    size      0   flags   20
-  16 CSEG                                       size     C0   flags   20
+  16 CSEG                                       size     BE   flags   20
   17 CONST                                      size      0   flags   20
   18 XINIT                                      size      0   flags   20
   19 CABS                                       size      0   flags   28

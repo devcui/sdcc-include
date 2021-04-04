@@ -9,6 +9,9 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
+	.globl _delayms
+	.globl _RdByte_AT24C256
+	.globl _WrByte_AT24C256
 	.globl _Disp_1602_str
 	.globl _Init_1602
 	.globl _CP_RL2
@@ -302,9 +305,12 @@ _CP_RL2	=	0x00c8
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_main_dat_65536_16:
+	.ds 10
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -385,13 +391,17 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'delayms'
 ;------------------------------------------------------------
-;	./src/i2c/main.c:17: void main()
+;z                         Allocated to registers 
+;x                         Allocated to registers r6 r7 
+;y                         Allocated to registers r4 r5 
+;------------------------------------------------------------
+;	./src/i2c/main.c:18: void delayms(unsigned int z){
 ;	-----------------------------------------
-;	 function main
+;	 function delayms
 ;	-----------------------------------------
-_main:
+_delayms:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -400,24 +410,138 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/i2c/main.c:20: Init_1602();
+	mov	r6,dpl
+	mov	r7,dph
+;	./src/i2c/main.c:20: for(x=z;x>0;x--){
+00106$:
+	mov	a,r6
+	orl	a,r7
+	jz	00108$
+;	./src/i2c/main.c:21: for(y=78;y>0;y--);
+	mov	r4,#0x4e
+	mov	r5,#0x00
+00104$:
+	mov	a,r4
+	add	a,#0xff
+	mov	r2,a
+	mov	a,r5
+	addc	a,#0xff
+	mov	r3,a
+	mov	ar4,r2
+	mov	ar5,r3
+	mov	a,r2
+	orl	a,r3
+	jnz	00104$
+;	./src/i2c/main.c:20: for(x=z;x>0;x--){
+	dec	r6
+	cjne	r6,#0xff,00133$
+	dec	r7
+00133$:
+	sjmp	00106$
+00108$:
+;	./src/i2c/main.c:23: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'main'
+;------------------------------------------------------------
+;d                         Allocated to registers r7 
+;dat                       Allocated with name '_main_dat_65536_16'
+;------------------------------------------------------------
+;	./src/i2c/main.c:25: void main()
+;	-----------------------------------------
+;	 function main
+;	-----------------------------------------
+_main:
+;	./src/i2c/main.c:28: unsigned char dat[10] = "";
+	mov	_main_dat_65536_16,#0x00
+	mov	(_main_dat_65536_16 + 0x0001),#0x00
+	mov	(_main_dat_65536_16 + 0x0002),#0x00
+	mov	(_main_dat_65536_16 + 0x0003),#0x00
+	mov	(_main_dat_65536_16 + 0x0004),#0x00
+	mov	(_main_dat_65536_16 + 0x0005),#0x00
+	mov	(_main_dat_65536_16 + 0x0006),#0x00
+	mov	(_main_dat_65536_16 + 0x0007),#0x00
+	mov	(_main_dat_65536_16 + 0x0008),#0x00
+	mov	(_main_dat_65536_16 + 0x0009),#0x00
+;	./src/i2c/main.c:29: Init_1602();
 	lcall	_Init_1602
-;	./src/i2c/main.c:22: Disp_1602_str(2, 3, "  HHHHH");
-	mov	_Disp_1602_str_PARM_3,#___str_0
-	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
+;	./src/i2c/main.c:30: WrByte_AT24C256(0x0000, 1);
+	mov	_WrByte_AT24C256_PARM_2,#0x01
+	mov	dptr,#0x0000
+	lcall	_WrByte_AT24C256
+;	./src/i2c/main.c:31: Disp_1602_str(1, 2, "ACT24C0X TEST!");
+	mov	_Disp_1602_str_PARM_3,#___str_1
+	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
+	mov	_Disp_1602_str_PARM_2,#0x02
+	mov	dpl,#0x01
+	lcall	_Disp_1602_str
+;	./src/i2c/main.c:32: delayms(10);
+	mov	dptr,#0x000a
+	lcall	_delayms
+;	./src/i2c/main.c:33: d = RdByte_AT24C256(0x0000);
+	mov	dptr,#0x0000
+	lcall	_RdByte_AT24C256
+	mov	r7,dpl
+;	./src/i2c/main.c:34: dat[0] = d / 100 + '0';
+	mov	r6,#0x00
+	mov	__divsint_PARM_2,#0x64
+;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
+	mov	(__divsint_PARM_2 + 1),r6
+	mov	dpl,r7
+	mov	dph,r6
+	push	ar7
+	push	ar6
+	lcall	__divsint
+	mov	r4,dpl
+	pop	ar6
+	pop	ar7
+	mov	a,#0x30
+	add	a,r4
+	mov	_main_dat_65536_16,a
+;	./src/i2c/main.c:35: dat[1] = d % 100 / 10 + '0';
+	mov	__modsint_PARM_2,#0x64
+	mov	(__modsint_PARM_2 + 1),#0x00
+	mov	dpl,r7
+	mov	dph,r6
+	push	ar7
+	push	ar6
+	lcall	__modsint
+	mov	__divsint_PARM_2,#0x0a
+	mov	(__divsint_PARM_2 + 1),#0x00
+	lcall	__divsint
+	mov	r4,dpl
+	pop	ar6
+	pop	ar7
+	mov	a,#0x30
+	add	a,r4
+	mov	(_main_dat_65536_16 + 0x0001),a
+;	./src/i2c/main.c:36: dat[2] = d % 10 + '0';
+	mov	__modsint_PARM_2,#0x0a
+	mov	(__modsint_PARM_2 + 1),#0x00
+	mov	dpl,r7
+	mov	dph,r6
+	lcall	__modsint
+	mov	r6,dpl
+	mov	a,#0x30
+	add	a,r6
+	mov	(_main_dat_65536_16 + 0x0002),a
+;	./src/i2c/main.c:37: Disp_1602_str(2, 3, dat);
+	mov	_Disp_1602_str_PARM_3,#_main_dat_65536_16
+	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
+	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
 	mov	_Disp_1602_str_PARM_2,#0x03
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/i2c/main.c:24: while (1)
+;	./src/i2c/main.c:38: while (1)
 00102$:
-;	./src/i2c/main.c:26: }
+;	./src/i2c/main.c:40: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area CONST   (CODE)
-___str_0:
-	.ascii "  HHHHH"
+___str_1:
+	.ascii "ACT24C0X TEST!"
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

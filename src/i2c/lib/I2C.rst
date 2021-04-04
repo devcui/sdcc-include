@@ -373,7 +373,7 @@
                                     373 ;	-----------------------------------------
                                     374 ;	 function Delay_I2C
                                     375 ;	-----------------------------------------
-      000182                        376 _Delay_I2C:
+      000243                        376 _Delay_I2C:
                            000007   377 	ar7 = 0x07
                            000006   378 	ar6 = 0x06
                            000005   379 	ar5 = 0x05
@@ -383,15 +383,15 @@
                            000001   383 	ar1 = 0x01
                            000000   384 	ar0 = 0x00
                                     385 ;	./src/i2c/include/I2C.c:21: NOP();
-      000182 00               [12]  386 	NOP	
+      000243 00               [12]  386 	NOP	
                                     387 ;	./src/i2c/include/I2C.c:22: NOP();
-      000183 00               [12]  388 	NOP	
+      000244 00               [12]  388 	NOP	
                                     389 ;	./src/i2c/include/I2C.c:23: NOP();
-      000184 00               [12]  390 	NOP	
+      000245 00               [12]  390 	NOP	
                                     391 ;	./src/i2c/include/I2C.c:24: NOP();
-      000185 00               [12]  392 	NOP	
+      000246 00               [12]  392 	NOP	
                                     393 ;	./src/i2c/include/I2C.c:25: }
-      000186 22               [24]  394 	ret
+      000247 22               [24]  394 	ret
                                     395 ;------------------------------------------------------------
                                     396 ;Allocation info for local variables in function 'Start_I2C'
                                     397 ;------------------------------------------------------------
@@ -399,219 +399,218 @@
                                     399 ;	-----------------------------------------
                                     400 ;	 function Start_I2C
                                     401 ;	-----------------------------------------
-      000187                        402 _Start_I2C:
+      000248                        402 _Start_I2C:
                                     403 ;	./src/i2c/include/I2C.c:30: SCL_I2C = 0;
                                     404 ;	assignBit
-      000187 C2 81            [12]  405 	clr	_SCL_I2C
+      000248 C2 81            [12]  405 	clr	_SCL_I2C
                                     406 ;	./src/i2c/include/I2C.c:31: SDA_I2C = 1;
                                     407 ;	assignBit
-      000189 D2 82            [12]  408 	setb	_SDA_I2C
+      00024A D2 82            [12]  408 	setb	_SDA_I2C
                                     409 ;	./src/i2c/include/I2C.c:32: Delay_I2C();
-      00018B 12 01 82         [24]  410 	lcall	_Delay_I2C
+      00024C 12 02 43         [24]  410 	lcall	_Delay_I2C
                                     411 ;	./src/i2c/include/I2C.c:33: SCL_I2C = 1;
                                     412 ;	assignBit
-      00018E D2 81            [12]  413 	setb	_SCL_I2C
+      00024F D2 81            [12]  413 	setb	_SCL_I2C
                                     414 ;	./src/i2c/include/I2C.c:34: Delay_I2C();
-      000190 12 01 82         [24]  415 	lcall	_Delay_I2C
+      000251 12 02 43         [24]  415 	lcall	_Delay_I2C
                                     416 ;	./src/i2c/include/I2C.c:36: SDA_I2C = 0;
                                     417 ;	assignBit
-      000193 C2 82            [12]  418 	clr	_SDA_I2C
+      000254 C2 82            [12]  418 	clr	_SDA_I2C
                                     419 ;	./src/i2c/include/I2C.c:37: Delay_I2C();
-      000195 12 01 82         [24]  420 	lcall	_Delay_I2C
+      000256 12 02 43         [24]  420 	lcall	_Delay_I2C
                                     421 ;	./src/i2c/include/I2C.c:39: SCL_I2C = 0;
                                     422 ;	assignBit
-      000198 C2 81            [12]  423 	clr	_SCL_I2C
-                                    424 ;	./src/i2c/include/I2C.c:40: Delay_I2C();
-                                    425 ;	./src/i2c/include/I2C.c:41: }
-      00019A 02 01 82         [24]  426 	ljmp	_Delay_I2C
-                                    427 ;------------------------------------------------------------
-                                    428 ;Allocation info for local variables in function 'Stop_I2C'
-                                    429 ;------------------------------------------------------------
-                                    430 ;	./src/i2c/include/I2C.c:43: void Stop_I2C(void)
-                                    431 ;	-----------------------------------------
-                                    432 ;	 function Stop_I2C
-                                    433 ;	-----------------------------------------
-      00019D                        434 _Stop_I2C:
-                                    435 ;	./src/i2c/include/I2C.c:46: SCL_I2C = 0;
-                                    436 ;	assignBit
-      00019D C2 81            [12]  437 	clr	_SCL_I2C
-                                    438 ;	./src/i2c/include/I2C.c:47: SDA_I2C = 0;
-                                    439 ;	assignBit
-      00019F C2 82            [12]  440 	clr	_SDA_I2C
-                                    441 ;	./src/i2c/include/I2C.c:48: Delay_I2C();
-      0001A1 12 01 82         [24]  442 	lcall	_Delay_I2C
-                                    443 ;	./src/i2c/include/I2C.c:50: SCL_I2C = 1;
-                                    444 ;	assignBit
-      0001A4 D2 81            [12]  445 	setb	_SCL_I2C
-                                    446 ;	./src/i2c/include/I2C.c:51: Delay_I2C();
-      0001A6 12 01 82         [24]  447 	lcall	_Delay_I2C
-                                    448 ;	./src/i2c/include/I2C.c:53: SDA_I2C = 1;
-                                    449 ;	assignBit
-      0001A9 D2 82            [12]  450 	setb	_SDA_I2C
-                                    451 ;	./src/i2c/include/I2C.c:54: Delay_I2C();
-      0001AB 12 01 82         [24]  452 	lcall	_Delay_I2C
-                                    453 ;	./src/i2c/include/I2C.c:55: SCL_I2C = 0;
-                                    454 ;	assignBit
-      0001AE C2 81            [12]  455 	clr	_SCL_I2C
-                                    456 ;	./src/i2c/include/I2C.c:56: }
-      0001B0 22               [24]  457 	ret
-                                    458 ;------------------------------------------------------------
-                                    459 ;Allocation info for local variables in function 'Wr_I2C'
-                                    460 ;------------------------------------------------------------
-                                    461 ;dat                       Allocated to registers r7 
-                                    462 ;ack                       Allocated to registers r7 
-                                    463 ;mask                      Allocated to registers r6 
-                                    464 ;------------------------------------------------------------
-                                    465 ;	./src/i2c/include/I2C.c:58: unsigned char Wr_I2C(unsigned char dat)
-                                    466 ;	-----------------------------------------
-                                    467 ;	 function Wr_I2C
-                                    468 ;	-----------------------------------------
-      0001B1                        469 _Wr_I2C:
-      0001B1 AF 82            [24]  470 	mov	r7,dpl
-                                    471 ;	./src/i2c/include/I2C.c:70: for (mask = 0x80; mask != 0; mask >>= 1)
-      0001B3 7E 80            [12]  472 	mov	r6,#0x80
-      0001B5                        473 00105$:
-                                    474 ;	./src/i2c/include/I2C.c:77: if ((mask & dat) == 0)
-      0001B5 EF               [12]  475 	mov	a,r7
-      0001B6 5E               [12]  476 	anl	a,r6
-      0001B7 70 04            [24]  477 	jnz	00102$
-                                    478 ;	./src/i2c/include/I2C.c:79: SDA_I2C = 0;
-                                    479 ;	assignBit
-      0001B9 C2 82            [12]  480 	clr	_SDA_I2C
-      0001BB 80 02            [24]  481 	sjmp	00103$
-      0001BD                        482 00102$:
-                                    483 ;	./src/i2c/include/I2C.c:83: SDA_I2C = 1;
-                                    484 ;	assignBit
-      0001BD D2 82            [12]  485 	setb	_SDA_I2C
-      0001BF                        486 00103$:
-                                    487 ;	./src/i2c/include/I2C.c:86: Delay_I2C();
-      0001BF C0 07            [24]  488 	push	ar7
-      0001C1 C0 06            [24]  489 	push	ar6
-      0001C3 12 01 82         [24]  490 	lcall	_Delay_I2C
-                                    491 ;	./src/i2c/include/I2C.c:88: SCL_I2C = 1;
-                                    492 ;	assignBit
-      0001C6 D2 81            [12]  493 	setb	_SCL_I2C
-                                    494 ;	./src/i2c/include/I2C.c:90: Delay_I2C();
-      0001C8 12 01 82         [24]  495 	lcall	_Delay_I2C
-      0001CB D0 06            [24]  496 	pop	ar6
-      0001CD D0 07            [24]  497 	pop	ar7
-                                    498 ;	./src/i2c/include/I2C.c:93: SCL_I2C = 0;
-                                    499 ;	assignBit
-      0001CF C2 81            [12]  500 	clr	_SCL_I2C
-                                    501 ;	./src/i2c/include/I2C.c:70: for (mask = 0x80; mask != 0; mask >>= 1)
-      0001D1 EE               [12]  502 	mov	a,r6
-      0001D2 C3               [12]  503 	clr	c
-      0001D3 13               [12]  504 	rrc	a
-      0001D4 FE               [12]  505 	mov	r6,a
-      0001D5 70 DE            [24]  506 	jnz	00105$
-                                    507 ;	./src/i2c/include/I2C.c:96: SDA_I2C = 1;
-                                    508 ;	assignBit
-      0001D7 D2 82            [12]  509 	setb	_SDA_I2C
-                                    510 ;	./src/i2c/include/I2C.c:97: Delay_I2C();
-      0001D9 12 01 82         [24]  511 	lcall	_Delay_I2C
-                                    512 ;	./src/i2c/include/I2C.c:99: SCL_I2C = 1;
-                                    513 ;	assignBit
-      0001DC D2 81            [12]  514 	setb	_SCL_I2C
-                                    515 ;	./src/i2c/include/I2C.c:101: ack = SDA_I2C;
-      0001DE A2 82            [12]  516 	mov	c,_SDA_I2C
-      0001E0 E4               [12]  517 	clr	a
-      0001E1 33               [12]  518 	rlc	a
-      0001E2 FF               [12]  519 	mov	r7,a
-                                    520 ;	./src/i2c/include/I2C.c:102: Delay_I2C();
-      0001E3 C0 07            [24]  521 	push	ar7
-      0001E5 12 01 82         [24]  522 	lcall	_Delay_I2C
-      0001E8 D0 07            [24]  523 	pop	ar7
-                                    524 ;	./src/i2c/include/I2C.c:104: SCL_I2C = 0;
-                                    525 ;	assignBit
-      0001EA C2 81            [12]  526 	clr	_SCL_I2C
-                                    527 ;	./src/i2c/include/I2C.c:105: return ack;
-      0001EC 8F 82            [24]  528 	mov	dpl,r7
-                                    529 ;	./src/i2c/include/I2C.c:106: }
-      0001EE 22               [24]  530 	ret
-                                    531 ;------------------------------------------------------------
-                                    532 ;Allocation info for local variables in function 'RdACK_I2C'
-                                    533 ;------------------------------------------------------------
-                                    534 ;ack                       Allocated to registers r7 
-                                    535 ;mask                      Allocated to registers r5 
-                                    536 ;dat                       Allocated to registers r6 
-                                    537 ;------------------------------------------------------------
-                                    538 ;	./src/i2c/include/I2C.c:110: unsigned char RdACK_I2C(unsigned char ack)
-                                    539 ;	-----------------------------------------
-                                    540 ;	 function RdACK_I2C
-                                    541 ;	-----------------------------------------
-      0001EF                        542 _RdACK_I2C:
-      0001EF AF 82            [24]  543 	mov	r7,dpl
-                                    544 ;	./src/i2c/include/I2C.c:113: unsigned char dat = 0;
-      0001F1 7E 00            [12]  545 	mov	r6,#0x00
-                                    546 ;	./src/i2c/include/I2C.c:115: SDA_I2C = 1;
-                                    547 ;	assignBit
-      0001F3 D2 82            [12]  548 	setb	_SDA_I2C
-                                    549 ;	./src/i2c/include/I2C.c:116: for (mask = 0x80; mask != 0; mask >>= 1)
-      0001F5 7D 80            [12]  550 	mov	r5,#0x80
-      0001F7                        551 00105$:
-                                    552 ;	./src/i2c/include/I2C.c:119: Delay_I2C();
-      0001F7 C0 07            [24]  553 	push	ar7
-      0001F9 C0 06            [24]  554 	push	ar6
-      0001FB C0 05            [24]  555 	push	ar5
-      0001FD 12 01 82         [24]  556 	lcall	_Delay_I2C
-      000200 D0 05            [24]  557 	pop	ar5
-      000202 D0 06            [24]  558 	pop	ar6
-      000204 D0 07            [24]  559 	pop	ar7
-                                    560 ;	./src/i2c/include/I2C.c:121: SCL_I2C = 1;
-                                    561 ;	assignBit
-      000206 D2 81            [12]  562 	setb	_SCL_I2C
-                                    563 ;	./src/i2c/include/I2C.c:122: if (SDA_I2C == 0)
-      000208 20 82 07         [24]  564 	jb	_SDA_I2C,00102$
-                                    565 ;	./src/i2c/include/I2C.c:131: dat &= ~mask;
-      00020B ED               [12]  566 	mov	a,r5
-      00020C F4               [12]  567 	cpl	a
-      00020D FC               [12]  568 	mov	r4,a
-      00020E 52 06            [12]  569 	anl	ar6,a
-      000210 80 03            [24]  570 	sjmp	00103$
-      000212                        571 00102$:
-                                    572 ;	./src/i2c/include/I2C.c:142: dat |= mask;
-      000212 ED               [12]  573 	mov	a,r5
-      000213 42 06            [12]  574 	orl	ar6,a
-      000215                        575 00103$:
-                                    576 ;	./src/i2c/include/I2C.c:145: Delay_I2C();
-      000215 C0 07            [24]  577 	push	ar7
-      000217 C0 06            [24]  578 	push	ar6
-      000219 C0 05            [24]  579 	push	ar5
-      00021B 12 01 82         [24]  580 	lcall	_Delay_I2C
-      00021E D0 05            [24]  581 	pop	ar5
-      000220 D0 06            [24]  582 	pop	ar6
-      000222 D0 07            [24]  583 	pop	ar7
-                                    584 ;	./src/i2c/include/I2C.c:147: SCL_I2C = 0;
-                                    585 ;	assignBit
-      000224 C2 81            [12]  586 	clr	_SCL_I2C
-                                    587 ;	./src/i2c/include/I2C.c:116: for (mask = 0x80; mask != 0; mask >>= 1)
-      000226 ED               [12]  588 	mov	a,r5
-      000227 C3               [12]  589 	clr	c
-      000228 13               [12]  590 	rrc	a
-      000229 FD               [12]  591 	mov	r5,a
-      00022A 70 CB            [24]  592 	jnz	00105$
-                                    593 ;	./src/i2c/include/I2C.c:150: SDA_I2C = ack;
-                                    594 ;	assignBit
-      00022C EF               [12]  595 	mov	a,r7
-      00022D 24 FF            [12]  596 	add	a,#0xff
-      00022F 92 82            [24]  597 	mov	_SDA_I2C,c
-                                    598 ;	./src/i2c/include/I2C.c:152: Delay_I2C();
-      000231 C0 06            [24]  599 	push	ar6
-      000233 12 01 82         [24]  600 	lcall	_Delay_I2C
-                                    601 ;	./src/i2c/include/I2C.c:154: SCL_I2C = 1;
-                                    602 ;	assignBit
-      000236 D2 81            [12]  603 	setb	_SCL_I2C
-                                    604 ;	./src/i2c/include/I2C.c:156: Delay_I2C();
-      000238 12 01 82         [24]  605 	lcall	_Delay_I2C
-      00023B D0 06            [24]  606 	pop	ar6
-                                    607 ;	./src/i2c/include/I2C.c:158: SCL_I2C = 0;
-                                    608 ;	assignBit
-      00023D C2 81            [12]  609 	clr	_SCL_I2C
-                                    610 ;	./src/i2c/include/I2C.c:159: return dat;
-      00023F 8E 82            [24]  611 	mov	dpl,r6
-                                    612 ;	./src/i2c/include/I2C.c:160: }
-      000241 22               [24]  613 	ret
-                                    614 	.area CSEG    (CODE)
-                                    615 	.area CONST   (CODE)
-                                    616 	.area XINIT   (CODE)
-                                    617 	.area CABS    (ABS,CODE)
+      000259 C2 81            [12]  423 	clr	_SCL_I2C
+                                    424 ;	./src/i2c/include/I2C.c:40: }
+      00025B 22               [24]  425 	ret
+                                    426 ;------------------------------------------------------------
+                                    427 ;Allocation info for local variables in function 'Stop_I2C'
+                                    428 ;------------------------------------------------------------
+                                    429 ;	./src/i2c/include/I2C.c:42: void Stop_I2C(void)
+                                    430 ;	-----------------------------------------
+                                    431 ;	 function Stop_I2C
+                                    432 ;	-----------------------------------------
+      00025C                        433 _Stop_I2C:
+                                    434 ;	./src/i2c/include/I2C.c:45: SCL_I2C = 0;
+                                    435 ;	assignBit
+      00025C C2 81            [12]  436 	clr	_SCL_I2C
+                                    437 ;	./src/i2c/include/I2C.c:46: SDA_I2C = 0;
+                                    438 ;	assignBit
+      00025E C2 82            [12]  439 	clr	_SDA_I2C
+                                    440 ;	./src/i2c/include/I2C.c:47: Delay_I2C();
+      000260 12 02 43         [24]  441 	lcall	_Delay_I2C
+                                    442 ;	./src/i2c/include/I2C.c:49: SCL_I2C = 1;
+                                    443 ;	assignBit
+      000263 D2 81            [12]  444 	setb	_SCL_I2C
+                                    445 ;	./src/i2c/include/I2C.c:50: Delay_I2C();
+      000265 12 02 43         [24]  446 	lcall	_Delay_I2C
+                                    447 ;	./src/i2c/include/I2C.c:52: SDA_I2C = 1;
+                                    448 ;	assignBit
+      000268 D2 82            [12]  449 	setb	_SDA_I2C
+                                    450 ;	./src/i2c/include/I2C.c:53: Delay_I2C();
+      00026A 12 02 43         [24]  451 	lcall	_Delay_I2C
+                                    452 ;	./src/i2c/include/I2C.c:54: SCL_I2C = 0;
+                                    453 ;	assignBit
+      00026D C2 81            [12]  454 	clr	_SCL_I2C
+                                    455 ;	./src/i2c/include/I2C.c:55: }
+      00026F 22               [24]  456 	ret
+                                    457 ;------------------------------------------------------------
+                                    458 ;Allocation info for local variables in function 'Wr_I2C'
+                                    459 ;------------------------------------------------------------
+                                    460 ;dat                       Allocated to registers r7 
+                                    461 ;ack                       Allocated to registers r7 
+                                    462 ;mask                      Allocated to registers r6 
+                                    463 ;------------------------------------------------------------
+                                    464 ;	./src/i2c/include/I2C.c:57: unsigned char Wr_I2C(unsigned char dat)
+                                    465 ;	-----------------------------------------
+                                    466 ;	 function Wr_I2C
+                                    467 ;	-----------------------------------------
+      000270                        468 _Wr_I2C:
+      000270 AF 82            [24]  469 	mov	r7,dpl
+                                    470 ;	./src/i2c/include/I2C.c:69: for (mask = 0x80; mask != 0; mask >>= 1)
+      000272 7E 80            [12]  471 	mov	r6,#0x80
+      000274                        472 00105$:
+                                    473 ;	./src/i2c/include/I2C.c:76: if ((mask & dat) == 0)
+      000274 EF               [12]  474 	mov	a,r7
+      000275 5E               [12]  475 	anl	a,r6
+      000276 70 04            [24]  476 	jnz	00102$
+                                    477 ;	./src/i2c/include/I2C.c:78: SDA_I2C = 0;
+                                    478 ;	assignBit
+      000278 C2 82            [12]  479 	clr	_SDA_I2C
+      00027A 80 02            [24]  480 	sjmp	00103$
+      00027C                        481 00102$:
+                                    482 ;	./src/i2c/include/I2C.c:82: SDA_I2C = 1;
+                                    483 ;	assignBit
+      00027C D2 82            [12]  484 	setb	_SDA_I2C
+      00027E                        485 00103$:
+                                    486 ;	./src/i2c/include/I2C.c:85: Delay_I2C();
+      00027E C0 07            [24]  487 	push	ar7
+      000280 C0 06            [24]  488 	push	ar6
+      000282 12 02 43         [24]  489 	lcall	_Delay_I2C
+                                    490 ;	./src/i2c/include/I2C.c:87: SCL_I2C = 1;
+                                    491 ;	assignBit
+      000285 D2 81            [12]  492 	setb	_SCL_I2C
+                                    493 ;	./src/i2c/include/I2C.c:89: Delay_I2C();
+      000287 12 02 43         [24]  494 	lcall	_Delay_I2C
+      00028A D0 06            [24]  495 	pop	ar6
+      00028C D0 07            [24]  496 	pop	ar7
+                                    497 ;	./src/i2c/include/I2C.c:92: SCL_I2C = 0;
+                                    498 ;	assignBit
+      00028E C2 81            [12]  499 	clr	_SCL_I2C
+                                    500 ;	./src/i2c/include/I2C.c:69: for (mask = 0x80; mask != 0; mask >>= 1)
+      000290 EE               [12]  501 	mov	a,r6
+      000291 C3               [12]  502 	clr	c
+      000292 13               [12]  503 	rrc	a
+      000293 FE               [12]  504 	mov	r6,a
+      000294 70 DE            [24]  505 	jnz	00105$
+                                    506 ;	./src/i2c/include/I2C.c:95: SDA_I2C = 1;
+                                    507 ;	assignBit
+      000296 D2 82            [12]  508 	setb	_SDA_I2C
+                                    509 ;	./src/i2c/include/I2C.c:96: Delay_I2C();
+      000298 12 02 43         [24]  510 	lcall	_Delay_I2C
+                                    511 ;	./src/i2c/include/I2C.c:98: SCL_I2C = 1;
+                                    512 ;	assignBit
+      00029B D2 81            [12]  513 	setb	_SCL_I2C
+                                    514 ;	./src/i2c/include/I2C.c:100: ack = SDA_I2C;
+      00029D A2 82            [12]  515 	mov	c,_SDA_I2C
+      00029F E4               [12]  516 	clr	a
+      0002A0 33               [12]  517 	rlc	a
+      0002A1 FF               [12]  518 	mov	r7,a
+                                    519 ;	./src/i2c/include/I2C.c:101: Delay_I2C();
+      0002A2 C0 07            [24]  520 	push	ar7
+      0002A4 12 02 43         [24]  521 	lcall	_Delay_I2C
+      0002A7 D0 07            [24]  522 	pop	ar7
+                                    523 ;	./src/i2c/include/I2C.c:103: SCL_I2C = 0;
+                                    524 ;	assignBit
+      0002A9 C2 81            [12]  525 	clr	_SCL_I2C
+                                    526 ;	./src/i2c/include/I2C.c:104: return ack;
+      0002AB 8F 82            [24]  527 	mov	dpl,r7
+                                    528 ;	./src/i2c/include/I2C.c:105: }
+      0002AD 22               [24]  529 	ret
+                                    530 ;------------------------------------------------------------
+                                    531 ;Allocation info for local variables in function 'RdACK_I2C'
+                                    532 ;------------------------------------------------------------
+                                    533 ;ack                       Allocated to registers r7 
+                                    534 ;mask                      Allocated to registers r5 
+                                    535 ;dat                       Allocated to registers r6 
+                                    536 ;------------------------------------------------------------
+                                    537 ;	./src/i2c/include/I2C.c:109: unsigned char RdACK_I2C(unsigned char ack)
+                                    538 ;	-----------------------------------------
+                                    539 ;	 function RdACK_I2C
+                                    540 ;	-----------------------------------------
+      0002AE                        541 _RdACK_I2C:
+      0002AE AF 82            [24]  542 	mov	r7,dpl
+                                    543 ;	./src/i2c/include/I2C.c:112: unsigned char dat = 0;
+      0002B0 7E 00            [12]  544 	mov	r6,#0x00
+                                    545 ;	./src/i2c/include/I2C.c:114: SDA_I2C = 1;
+                                    546 ;	assignBit
+      0002B2 D2 82            [12]  547 	setb	_SDA_I2C
+                                    548 ;	./src/i2c/include/I2C.c:115: for (mask = 0x80; mask != 0; mask >>= 1)
+      0002B4 7D 80            [12]  549 	mov	r5,#0x80
+      0002B6                        550 00105$:
+                                    551 ;	./src/i2c/include/I2C.c:118: Delay_I2C();
+      0002B6 C0 07            [24]  552 	push	ar7
+      0002B8 C0 06            [24]  553 	push	ar6
+      0002BA C0 05            [24]  554 	push	ar5
+      0002BC 12 02 43         [24]  555 	lcall	_Delay_I2C
+      0002BF D0 05            [24]  556 	pop	ar5
+      0002C1 D0 06            [24]  557 	pop	ar6
+      0002C3 D0 07            [24]  558 	pop	ar7
+                                    559 ;	./src/i2c/include/I2C.c:120: SCL_I2C = 1;
+                                    560 ;	assignBit
+      0002C5 D2 81            [12]  561 	setb	_SCL_I2C
+                                    562 ;	./src/i2c/include/I2C.c:121: if (SDA_I2C == 0)
+      0002C7 20 82 07         [24]  563 	jb	_SDA_I2C,00102$
+                                    564 ;	./src/i2c/include/I2C.c:130: dat &= ~mask;
+      0002CA ED               [12]  565 	mov	a,r5
+      0002CB F4               [12]  566 	cpl	a
+      0002CC FC               [12]  567 	mov	r4,a
+      0002CD 52 06            [12]  568 	anl	ar6,a
+      0002CF 80 03            [24]  569 	sjmp	00103$
+      0002D1                        570 00102$:
+                                    571 ;	./src/i2c/include/I2C.c:141: dat |= mask;
+      0002D1 ED               [12]  572 	mov	a,r5
+      0002D2 42 06            [12]  573 	orl	ar6,a
+      0002D4                        574 00103$:
+                                    575 ;	./src/i2c/include/I2C.c:144: Delay_I2C();
+      0002D4 C0 07            [24]  576 	push	ar7
+      0002D6 C0 06            [24]  577 	push	ar6
+      0002D8 C0 05            [24]  578 	push	ar5
+      0002DA 12 02 43         [24]  579 	lcall	_Delay_I2C
+      0002DD D0 05            [24]  580 	pop	ar5
+      0002DF D0 06            [24]  581 	pop	ar6
+      0002E1 D0 07            [24]  582 	pop	ar7
+                                    583 ;	./src/i2c/include/I2C.c:146: SCL_I2C = 0;
+                                    584 ;	assignBit
+      0002E3 C2 81            [12]  585 	clr	_SCL_I2C
+                                    586 ;	./src/i2c/include/I2C.c:115: for (mask = 0x80; mask != 0; mask >>= 1)
+      0002E5 ED               [12]  587 	mov	a,r5
+      0002E6 C3               [12]  588 	clr	c
+      0002E7 13               [12]  589 	rrc	a
+      0002E8 FD               [12]  590 	mov	r5,a
+      0002E9 70 CB            [24]  591 	jnz	00105$
+                                    592 ;	./src/i2c/include/I2C.c:149: SDA_I2C = ack;
+                                    593 ;	assignBit
+      0002EB EF               [12]  594 	mov	a,r7
+      0002EC 24 FF            [12]  595 	add	a,#0xff
+      0002EE 92 82            [24]  596 	mov	_SDA_I2C,c
+                                    597 ;	./src/i2c/include/I2C.c:151: Delay_I2C();
+      0002F0 C0 06            [24]  598 	push	ar6
+      0002F2 12 02 43         [24]  599 	lcall	_Delay_I2C
+                                    600 ;	./src/i2c/include/I2C.c:153: SCL_I2C = 1;
+                                    601 ;	assignBit
+      0002F5 D2 81            [12]  602 	setb	_SCL_I2C
+                                    603 ;	./src/i2c/include/I2C.c:155: Delay_I2C();
+      0002F7 12 02 43         [24]  604 	lcall	_Delay_I2C
+      0002FA D0 06            [24]  605 	pop	ar6
+                                    606 ;	./src/i2c/include/I2C.c:157: SCL_I2C = 0;
+                                    607 ;	assignBit
+      0002FC C2 81            [12]  608 	clr	_SCL_I2C
+                                    609 ;	./src/i2c/include/I2C.c:158: return dat;
+      0002FE 8E 82            [24]  610 	mov	dpl,r6
+                                    611 ;	./src/i2c/include/I2C.c:159: }
+      000300 22               [24]  612 	ret
+                                    613 	.area CSEG    (CODE)
+                                    614 	.area CONST   (CODE)
+                                    615 	.area XINIT   (CODE)
+                                    616 	.area CABS    (ABS,CODE)

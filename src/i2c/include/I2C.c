@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-02 11:50:35
- * @LastEditTime: 2021-04-04 20:10:03
+ * @LastEditTime: 2021-04-04 21:06:05
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/i2c/include/I2C.c
@@ -37,7 +37,6 @@ void Start_I2C(void)
     Delay_I2C();
     // 再将SCL拉低
     SCL_I2C = 0;
-    Delay_I2C();
 }
 
 void Stop_I2C(void)
