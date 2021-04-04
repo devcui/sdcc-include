@@ -12,184 +12,423 @@
                                      12 	.globl _Wr_I2C
                                      13 	.globl _Stop_I2C
                                      14 	.globl _Start_I2C
-                                     15 	.globl _WrByte_AT24C256_PARM_2
-                                     16 	.globl _WrByte_AT24C256
-                                     17 	.globl _RdByte_AT24C256
-                                     18 ;--------------------------------------------------------
-                                     19 ; special function registers
-                                     20 ;--------------------------------------------------------
-                                     21 	.area RSEG    (ABS,DATA)
-      000000                         22 	.org 0x0000
-                                     23 ;--------------------------------------------------------
-                                     24 ; special function bits
-                                     25 ;--------------------------------------------------------
-                                     26 	.area RSEG    (ABS,DATA)
-      000000                         27 	.org 0x0000
-                                     28 ;--------------------------------------------------------
-                                     29 ; overlayable register banks
-                                     30 ;--------------------------------------------------------
-                                     31 	.area REG_BANK_0	(REL,OVR,DATA)
-      000000                         32 	.ds 8
-                                     33 ;--------------------------------------------------------
-                                     34 ; internal ram data
-                                     35 ;--------------------------------------------------------
-                                     36 	.area DSEG    (DATA)
-      000016                         37 _WrByte_AT24C256_PARM_2:
-      000016                         38 	.ds 1
+                                     15 	.globl _RdStr_AT24CPAGE_PARM_3
+                                     16 	.globl _RdStr_AT24CPAGE_PARM_2
+                                     17 	.globl _WrStr_AT24CPAGE_PARM_3
+                                     18 	.globl _WrStr_AT24CPAGE_PARM_2
+                                     19 	.globl _WrByte_AT24C256_PARM_2
+                                     20 	.globl _WrByte_AT24C256
+                                     21 	.globl _RdByte_AT24C256
+                                     22 	.globl _WrStr_AT24CPAGE
+                                     23 	.globl _RdStr_AT24CPAGE
+                                     24 ;--------------------------------------------------------
+                                     25 ; special function registers
+                                     26 ;--------------------------------------------------------
+                                     27 	.area RSEG    (ABS,DATA)
+      000000                         28 	.org 0x0000
+                                     29 ;--------------------------------------------------------
+                                     30 ; special function bits
+                                     31 ;--------------------------------------------------------
+                                     32 	.area RSEG    (ABS,DATA)
+      000000                         33 	.org 0x0000
+                                     34 ;--------------------------------------------------------
+                                     35 ; overlayable register banks
+                                     36 ;--------------------------------------------------------
+                                     37 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         38 	.ds 8
                                      39 ;--------------------------------------------------------
-                                     40 ; overlayable items in internal ram 
+                                     40 ; internal ram data
                                      41 ;--------------------------------------------------------
-                                     42 ;--------------------------------------------------------
-                                     43 ; indirectly addressable internal ram data
-                                     44 ;--------------------------------------------------------
-                                     45 	.area ISEG    (DATA)
-                                     46 ;--------------------------------------------------------
-                                     47 ; absolute internal ram data
-                                     48 ;--------------------------------------------------------
-                                     49 	.area IABS    (ABS,DATA)
-                                     50 	.area IABS    (ABS,DATA)
-                                     51 ;--------------------------------------------------------
-                                     52 ; bit data
-                                     53 ;--------------------------------------------------------
-                                     54 	.area BSEG    (BIT)
+                                     42 	.area DSEG    (DATA)
+      000031                         43 _WrByte_AT24C256_PARM_2:
+      000031                         44 	.ds 1
+      000032                         45 _WrStr_AT24CPAGE_PARM_2:
+      000032                         46 	.ds 2
+      000034                         47 _WrStr_AT24CPAGE_PARM_3:
+      000034                         48 	.ds 1
+      000035                         49 _WrStr_AT24CPAGE_sloc0_1_0:
+      000035                         50 	.ds 2
+      000037                         51 _RdStr_AT24CPAGE_PARM_2:
+      000037                         52 	.ds 2
+      000039                         53 _RdStr_AT24CPAGE_PARM_3:
+      000039                         54 	.ds 1
                                      55 ;--------------------------------------------------------
-                                     56 ; paged external ram data
+                                     56 ; overlayable items in internal ram 
                                      57 ;--------------------------------------------------------
-                                     58 	.area PSEG    (PAG,XDATA)
-                                     59 ;--------------------------------------------------------
-                                     60 ; external ram data
-                                     61 ;--------------------------------------------------------
-                                     62 	.area XSEG    (XDATA)
-                                     63 ;--------------------------------------------------------
-                                     64 ; absolute external ram data
-                                     65 ;--------------------------------------------------------
-                                     66 	.area XABS    (ABS,XDATA)
+                                     58 ;--------------------------------------------------------
+                                     59 ; indirectly addressable internal ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area ISEG    (DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; absolute internal ram data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area IABS    (ABS,DATA)
+                                     66 	.area IABS    (ABS,DATA)
                                      67 ;--------------------------------------------------------
-                                     68 ; external initialized ram data
+                                     68 ; bit data
                                      69 ;--------------------------------------------------------
-                                     70 	.area XISEG   (XDATA)
-                                     71 	.area HOME    (CODE)
-                                     72 	.area GSINIT0 (CODE)
-                                     73 	.area GSINIT1 (CODE)
-                                     74 	.area GSINIT2 (CODE)
-                                     75 	.area GSINIT3 (CODE)
-                                     76 	.area GSINIT4 (CODE)
-                                     77 	.area GSINIT5 (CODE)
-                                     78 	.area GSINIT  (CODE)
-                                     79 	.area GSFINAL (CODE)
-                                     80 	.area CSEG    (CODE)
+                                     70 	.area BSEG    (BIT)
+                                     71 ;--------------------------------------------------------
+                                     72 ; paged external ram data
+                                     73 ;--------------------------------------------------------
+                                     74 	.area PSEG    (PAG,XDATA)
+                                     75 ;--------------------------------------------------------
+                                     76 ; external ram data
+                                     77 ;--------------------------------------------------------
+                                     78 	.area XSEG    (XDATA)
+                                     79 ;--------------------------------------------------------
+                                     80 ; absolute external ram data
                                      81 ;--------------------------------------------------------
-                                     82 ; global & static initialisations
+                                     82 	.area XABS    (ABS,XDATA)
                                      83 ;--------------------------------------------------------
-                                     84 	.area HOME    (CODE)
-                                     85 	.area GSINIT  (CODE)
-                                     86 	.area GSFINAL (CODE)
-                                     87 	.area GSINIT  (CODE)
-                                     88 ;--------------------------------------------------------
-                                     89 ; Home
-                                     90 ;--------------------------------------------------------
-                                     91 	.area HOME    (CODE)
-                                     92 	.area HOME    (CODE)
-                                     93 ;--------------------------------------------------------
-                                     94 ; code
-                                     95 ;--------------------------------------------------------
+                                     84 ; external initialized ram data
+                                     85 ;--------------------------------------------------------
+                                     86 	.area XISEG   (XDATA)
+                                     87 	.area HOME    (CODE)
+                                     88 	.area GSINIT0 (CODE)
+                                     89 	.area GSINIT1 (CODE)
+                                     90 	.area GSINIT2 (CODE)
+                                     91 	.area GSINIT3 (CODE)
+                                     92 	.area GSINIT4 (CODE)
+                                     93 	.area GSINIT5 (CODE)
+                                     94 	.area GSINIT  (CODE)
+                                     95 	.area GSFINAL (CODE)
                                      96 	.area CSEG    (CODE)
-                                     97 ;------------------------------------------------------------
-                                     98 ;Allocation info for local variables in function 'WrByte_AT24C256'
-                                     99 ;------------------------------------------------------------
-                                    100 ;dat                       Allocated with name '_WrByte_AT24C256_PARM_2'
-                                    101 ;addr                      Allocated to registers r6 r7 
-                                    102 ;------------------------------------------------------------
-                                    103 ;	./src/i2c/include/AT24C256.c:14: void WrByte_AT24C256(unsigned int addr, unsigned char dat)
-                                    104 ;	-----------------------------------------
-                                    105 ;	 function WrByte_AT24C256
-                                    106 ;	-----------------------------------------
-      0001C6                        107 _WrByte_AT24C256:
-                           000007   108 	ar7 = 0x07
-                           000006   109 	ar6 = 0x06
-                           000005   110 	ar5 = 0x05
-                           000004   111 	ar4 = 0x04
-                           000003   112 	ar3 = 0x03
-                           000002   113 	ar2 = 0x02
-                           000001   114 	ar1 = 0x01
-                           000000   115 	ar0 = 0x00
-      0001C6 AE 82            [24]  116 	mov	r6,dpl
-      0001C8 AF 83            [24]  117 	mov	r7,dph
-                                    118 ;	./src/i2c/include/AT24C256.c:17: Start_I2C();
-      0001CA C0 07            [24]  119 	push	ar7
-      0001CC C0 06            [24]  120 	push	ar6
-      0001CE 12 02 3D         [24]  121 	lcall	_Start_I2C
-                                    122 ;	./src/i2c/include/AT24C256.c:19: Wr_I2C(0xA0);
-      0001D1 75 82 A0         [24]  123 	mov	dpl,#0xa0
-      0001D4 12 02 65         [24]  124 	lcall	_Wr_I2C
-      0001D7 D0 06            [24]  125 	pop	ar6
-      0001D9 D0 07            [24]  126 	pop	ar7
-                                    127 ;	./src/i2c/include/AT24C256.c:21: Wr_I2C(addr >> 8);
-      0001DB 8F 82            [24]  128 	mov	dpl,r7
-      0001DD C0 07            [24]  129 	push	ar7
-      0001DF C0 06            [24]  130 	push	ar6
-      0001E1 12 02 65         [24]  131 	lcall	_Wr_I2C
-      0001E4 D0 06            [24]  132 	pop	ar6
-      0001E6 D0 07            [24]  133 	pop	ar7
-                                    134 ;	./src/i2c/include/AT24C256.c:23: Wr_I2C(addr);
-      0001E8 8E 82            [24]  135 	mov	dpl,r6
-      0001EA 12 02 65         [24]  136 	lcall	_Wr_I2C
-                                    137 ;	./src/i2c/include/AT24C256.c:25: Wr_I2C(dat);
-      0001ED 85 16 82         [24]  138 	mov	dpl,_WrByte_AT24C256_PARM_2
-      0001F0 12 02 65         [24]  139 	lcall	_Wr_I2C
-                                    140 ;	./src/i2c/include/AT24C256.c:27: Stop_I2C();
-                                    141 ;	./src/i2c/include/AT24C256.c:28: }
-      0001F3 02 02 51         [24]  142 	ljmp	_Stop_I2C
-                                    143 ;------------------------------------------------------------
-                                    144 ;Allocation info for local variables in function 'RdByte_AT24C256'
-                                    145 ;------------------------------------------------------------
-                                    146 ;addr                      Allocated to registers r6 r7 
-                                    147 ;dat                       Allocated to registers r7 
-                                    148 ;------------------------------------------------------------
-                                    149 ;	./src/i2c/include/AT24C256.c:30: unsigned char RdByte_AT24C256(unsigned int addr)
-                                    150 ;	-----------------------------------------
-                                    151 ;	 function RdByte_AT24C256
-                                    152 ;	-----------------------------------------
-      0001F6                        153 _RdByte_AT24C256:
-      0001F6 AE 82            [24]  154 	mov	r6,dpl
-      0001F8 AF 83            [24]  155 	mov	r7,dph
-                                    156 ;	./src/i2c/include/AT24C256.c:34: Start_I2C();
-      0001FA C0 07            [24]  157 	push	ar7
-      0001FC C0 06            [24]  158 	push	ar6
-      0001FE 12 02 3D         [24]  159 	lcall	_Start_I2C
-                                    160 ;	./src/i2c/include/AT24C256.c:35: Wr_I2C(0xA0);
-      000201 75 82 A0         [24]  161 	mov	dpl,#0xa0
-      000204 12 02 65         [24]  162 	lcall	_Wr_I2C
-      000207 D0 06            [24]  163 	pop	ar6
-      000209 D0 07            [24]  164 	pop	ar7
-                                    165 ;	./src/i2c/include/AT24C256.c:36: Wr_I2C(addr >> 8);
-      00020B 8F 82            [24]  166 	mov	dpl,r7
-      00020D C0 07            [24]  167 	push	ar7
-      00020F C0 06            [24]  168 	push	ar6
-      000211 12 02 65         [24]  169 	lcall	_Wr_I2C
-      000214 D0 06            [24]  170 	pop	ar6
-      000216 D0 07            [24]  171 	pop	ar7
-                                    172 ;	./src/i2c/include/AT24C256.c:37: Wr_I2C(addr);
-      000218 8E 82            [24]  173 	mov	dpl,r6
-      00021A 12 02 65         [24]  174 	lcall	_Wr_I2C
-                                    175 ;	./src/i2c/include/AT24C256.c:39: Start_I2C();
-      00021D 12 02 3D         [24]  176 	lcall	_Start_I2C
-                                    177 ;	./src/i2c/include/AT24C256.c:41: Wr_I2C(0xA1);
-      000220 75 82 A1         [24]  178 	mov	dpl,#0xa1
-      000223 12 02 65         [24]  179 	lcall	_Wr_I2C
-                                    180 ;	./src/i2c/include/AT24C256.c:43: dat = RdACK_I2C(1);
-      000226 75 82 01         [24]  181 	mov	dpl,#0x01
-      000229 12 02 A3         [24]  182 	lcall	_RdACK_I2C
-      00022C AF 82            [24]  183 	mov	r7,dpl
-                                    184 ;	./src/i2c/include/AT24C256.c:45: Stop_I2C();
-      00022E C0 07            [24]  185 	push	ar7
-      000230 12 02 51         [24]  186 	lcall	_Stop_I2C
-      000233 D0 07            [24]  187 	pop	ar7
-                                    188 ;	./src/i2c/include/AT24C256.c:46: return dat;
-      000235 8F 82            [24]  189 	mov	dpl,r7
-                                    190 ;	./src/i2c/include/AT24C256.c:47: }
-      000237 22               [24]  191 	ret
-                                    192 	.area CSEG    (CODE)
-                                    193 	.area CONST   (CODE)
-                                    194 	.area XINIT   (CODE)
-                                    195 	.area CABS    (ABS,CODE)
+                                     97 ;--------------------------------------------------------
+                                     98 ; global & static initialisations
+                                     99 ;--------------------------------------------------------
+                                    100 	.area HOME    (CODE)
+                                    101 	.area GSINIT  (CODE)
+                                    102 	.area GSFINAL (CODE)
+                                    103 	.area GSINIT  (CODE)
+                                    104 ;--------------------------------------------------------
+                                    105 ; Home
+                                    106 ;--------------------------------------------------------
+                                    107 	.area HOME    (CODE)
+                                    108 	.area HOME    (CODE)
+                                    109 ;--------------------------------------------------------
+                                    110 ; code
+                                    111 ;--------------------------------------------------------
+                                    112 	.area CSEG    (CODE)
+                                    113 ;------------------------------------------------------------
+                                    114 ;Allocation info for local variables in function 'WrByte_AT24C256'
+                                    115 ;------------------------------------------------------------
+                                    116 ;dat                       Allocated with name '_WrByte_AT24C256_PARM_2'
+                                    117 ;addr                      Allocated to registers r6 r7 
+                                    118 ;------------------------------------------------------------
+                                    119 ;	./src/i2c/include/AT24C256.c:14: void WrByte_AT24C256(unsigned int addr, unsigned char dat)
+                                    120 ;	-----------------------------------------
+                                    121 ;	 function WrByte_AT24C256
+                                    122 ;	-----------------------------------------
+      000167                        123 _WrByte_AT24C256:
+                           000007   124 	ar7 = 0x07
+                           000006   125 	ar6 = 0x06
+                           000005   126 	ar5 = 0x05
+                           000004   127 	ar4 = 0x04
+                           000003   128 	ar3 = 0x03
+                           000002   129 	ar2 = 0x02
+                           000001   130 	ar1 = 0x01
+                           000000   131 	ar0 = 0x00
+      000167 AE 82            [24]  132 	mov	r6,dpl
+      000169 AF 83            [24]  133 	mov	r7,dph
+                                    134 ;	./src/i2c/include/AT24C256.c:17: Start_I2C();
+      00016B C0 07            [24]  135 	push	ar7
+      00016D C0 06            [24]  136 	push	ar6
+      00016F 12 03 32         [24]  137 	lcall	_Start_I2C
+                                    138 ;	./src/i2c/include/AT24C256.c:19: Wr_I2C(0xA0);
+      000172 75 82 A0         [24]  139 	mov	dpl,#0xa0
+      000175 12 03 5A         [24]  140 	lcall	_Wr_I2C
+      000178 D0 06            [24]  141 	pop	ar6
+      00017A D0 07            [24]  142 	pop	ar7
+                                    143 ;	./src/i2c/include/AT24C256.c:21: Wr_I2C(addr >> 8);
+      00017C 8F 82            [24]  144 	mov	dpl,r7
+      00017E C0 07            [24]  145 	push	ar7
+      000180 C0 06            [24]  146 	push	ar6
+      000182 12 03 5A         [24]  147 	lcall	_Wr_I2C
+      000185 D0 06            [24]  148 	pop	ar6
+      000187 D0 07            [24]  149 	pop	ar7
+                                    150 ;	./src/i2c/include/AT24C256.c:23: Wr_I2C(addr);
+      000189 8E 82            [24]  151 	mov	dpl,r6
+      00018B 12 03 5A         [24]  152 	lcall	_Wr_I2C
+                                    153 ;	./src/i2c/include/AT24C256.c:25: Wr_I2C(dat);
+      00018E 85 31 82         [24]  154 	mov	dpl,_WrByte_AT24C256_PARM_2
+      000191 12 03 5A         [24]  155 	lcall	_Wr_I2C
+                                    156 ;	./src/i2c/include/AT24C256.c:27: Stop_I2C();
+                                    157 ;	./src/i2c/include/AT24C256.c:28: }
+      000194 02 03 46         [24]  158 	ljmp	_Stop_I2C
+                                    159 ;------------------------------------------------------------
+                                    160 ;Allocation info for local variables in function 'RdByte_AT24C256'
+                                    161 ;------------------------------------------------------------
+                                    162 ;addr                      Allocated to registers r6 r7 
+                                    163 ;dat                       Allocated to registers r7 
+                                    164 ;------------------------------------------------------------
+                                    165 ;	./src/i2c/include/AT24C256.c:30: unsigned char RdByte_AT24C256(unsigned int addr)
+                                    166 ;	-----------------------------------------
+                                    167 ;	 function RdByte_AT24C256
+                                    168 ;	-----------------------------------------
+      000197                        169 _RdByte_AT24C256:
+      000197 AE 82            [24]  170 	mov	r6,dpl
+      000199 AF 83            [24]  171 	mov	r7,dph
+                                    172 ;	./src/i2c/include/AT24C256.c:34: Start_I2C();
+      00019B C0 07            [24]  173 	push	ar7
+      00019D C0 06            [24]  174 	push	ar6
+      00019F 12 03 32         [24]  175 	lcall	_Start_I2C
+                                    176 ;	./src/i2c/include/AT24C256.c:35: Wr_I2C(0xA0);
+      0001A2 75 82 A0         [24]  177 	mov	dpl,#0xa0
+      0001A5 12 03 5A         [24]  178 	lcall	_Wr_I2C
+      0001A8 D0 06            [24]  179 	pop	ar6
+      0001AA D0 07            [24]  180 	pop	ar7
+                                    181 ;	./src/i2c/include/AT24C256.c:36: Wr_I2C(addr >> 8);
+      0001AC 8F 82            [24]  182 	mov	dpl,r7
+      0001AE C0 07            [24]  183 	push	ar7
+      0001B0 C0 06            [24]  184 	push	ar6
+      0001B2 12 03 5A         [24]  185 	lcall	_Wr_I2C
+      0001B5 D0 06            [24]  186 	pop	ar6
+      0001B7 D0 07            [24]  187 	pop	ar7
+                                    188 ;	./src/i2c/include/AT24C256.c:37: Wr_I2C(addr);
+      0001B9 8E 82            [24]  189 	mov	dpl,r6
+      0001BB 12 03 5A         [24]  190 	lcall	_Wr_I2C
+                                    191 ;	./src/i2c/include/AT24C256.c:39: Start_I2C();
+      0001BE 12 03 32         [24]  192 	lcall	_Start_I2C
+                                    193 ;	./src/i2c/include/AT24C256.c:41: Wr_I2C(0xA1);
+      0001C1 75 82 A1         [24]  194 	mov	dpl,#0xa1
+      0001C4 12 03 5A         [24]  195 	lcall	_Wr_I2C
+                                    196 ;	./src/i2c/include/AT24C256.c:43: dat = RdACK_I2C(1);
+      0001C7 75 82 01         [24]  197 	mov	dpl,#0x01
+      0001CA 12 03 98         [24]  198 	lcall	_RdACK_I2C
+      0001CD AF 82            [24]  199 	mov	r7,dpl
+                                    200 ;	./src/i2c/include/AT24C256.c:45: Stop_I2C();
+      0001CF C0 07            [24]  201 	push	ar7
+      0001D1 12 03 46         [24]  202 	lcall	_Stop_I2C
+      0001D4 D0 07            [24]  203 	pop	ar7
+                                    204 ;	./src/i2c/include/AT24C256.c:46: return dat;
+      0001D6 8F 82            [24]  205 	mov	dpl,r7
+                                    206 ;	./src/i2c/include/AT24C256.c:47: }
+      0001D8 22               [24]  207 	ret
+                                    208 ;------------------------------------------------------------
+                                    209 ;Allocation info for local variables in function 'WrStr_AT24CPAGE'
+                                    210 ;------------------------------------------------------------
+                                    211 ;addr                      Allocated with name '_WrStr_AT24CPAGE_PARM_2'
+                                    212 ;len                       Allocated with name '_WrStr_AT24CPAGE_PARM_3'
+                                    213 ;str                       Allocated to registers r5 r6 r7 
+                                    214 ;sloc0                     Allocated with name '_WrStr_AT24CPAGE_sloc0_1_0'
+                                    215 ;------------------------------------------------------------
+                                    216 ;	./src/i2c/include/AT24C256.c:49: void WrStr_AT24CPAGE(unsigned char *str, unsigned int addr, unsigned char len)
+                                    217 ;	-----------------------------------------
+                                    218 ;	 function WrStr_AT24CPAGE
+                                    219 ;	-----------------------------------------
+      0001D9                        220 _WrStr_AT24CPAGE:
+      0001D9 AD 82            [24]  221 	mov	r5,dpl
+      0001DB AE 83            [24]  222 	mov	r6,dph
+      0001DD AF F0            [24]  223 	mov	r7,b
+                                    224 ;	./src/i2c/include/AT24C256.c:52: while (len > 0)
+      0001DF                        225 00111$:
+      0001DF E5 34            [12]  226 	mov	a,_WrStr_AT24CPAGE_PARM_3
+      0001E1 70 01            [24]  227 	jnz	00137$
+      0001E3 22               [24]  228 	ret
+      0001E4                        229 00137$:
+                                    230 ;	./src/i2c/include/AT24C256.c:55: while (1)
+      0001E4                        231 00104$:
+                                    232 ;	./src/i2c/include/AT24C256.c:57: Start_I2C();
+      0001E4 C0 07            [24]  233 	push	ar7
+      0001E6 C0 06            [24]  234 	push	ar6
+      0001E8 C0 05            [24]  235 	push	ar5
+      0001EA 12 03 32         [24]  236 	lcall	_Start_I2C
+                                    237 ;	./src/i2c/include/AT24C256.c:59: if (0 == Wr_I2C(0xA0))
+      0001ED 75 82 A0         [24]  238 	mov	dpl,#0xa0
+      0001F0 12 03 5A         [24]  239 	lcall	_Wr_I2C
+      0001F3 E5 82            [12]  240 	mov	a,dpl
+      0001F5 D0 05            [24]  241 	pop	ar5
+      0001F7 D0 06            [24]  242 	pop	ar6
+      0001F9 D0 07            [24]  243 	pop	ar7
+      0001FB 60 11            [24]  244 	jz	00105$
+                                    245 ;	./src/i2c/include/AT24C256.c:65: Stop_I2C();
+      0001FD C0 07            [24]  246 	push	ar7
+      0001FF C0 06            [24]  247 	push	ar6
+      000201 C0 05            [24]  248 	push	ar5
+      000203 12 03 46         [24]  249 	lcall	_Stop_I2C
+      000206 D0 05            [24]  250 	pop	ar5
+      000208 D0 06            [24]  251 	pop	ar6
+      00020A D0 07            [24]  252 	pop	ar7
+      00020C 80 D6            [24]  253 	sjmp	00104$
+      00020E                        254 00105$:
+                                    255 ;	./src/i2c/include/AT24C256.c:68: Wr_I2C(addr >> 8);
+      00020E 85 33 82         [24]  256 	mov	dpl,(_WrStr_AT24CPAGE_PARM_2 + 1)
+      000211 C0 07            [24]  257 	push	ar7
+      000213 C0 06            [24]  258 	push	ar6
+      000215 C0 05            [24]  259 	push	ar5
+      000217 12 03 5A         [24]  260 	lcall	_Wr_I2C
+                                    261 ;	./src/i2c/include/AT24C256.c:70: Wr_I2C(addr);
+      00021A 85 32 82         [24]  262 	mov	dpl,_WrStr_AT24CPAGE_PARM_2
+      00021D 12 03 5A         [24]  263 	lcall	_Wr_I2C
+      000220 D0 05            [24]  264 	pop	ar5
+      000222 D0 06            [24]  265 	pop	ar6
+      000224 D0 07            [24]  266 	pop	ar7
+                                    267 ;	./src/i2c/include/AT24C256.c:72: while (len > 0)
+      000226 8D 02            [24]  268 	mov	ar2,r5
+      000228 8E 03            [24]  269 	mov	ar3,r6
+      00022A 8F 04            [24]  270 	mov	ar4,r7
+      00022C A9 34            [24]  271 	mov	r1,_WrStr_AT24CPAGE_PARM_3
+      00022E 85 32 35         [24]  272 	mov	_WrStr_AT24CPAGE_sloc0_1_0,_WrStr_AT24CPAGE_PARM_2
+      000231 85 33 36         [24]  273 	mov	(_WrStr_AT24CPAGE_sloc0_1_0 + 1),(_WrStr_AT24CPAGE_PARM_2 + 1)
+      000234                        274 00108$:
+      000234 E9               [12]  275 	mov	a,r1
+      000235 60 33            [24]  276 	jz	00121$
+                                    277 ;	./src/i2c/include/AT24C256.c:75: Wr_I2C(*str++);
+      000237 8A 82            [24]  278 	mov	dpl,r2
+      000239 8B 83            [24]  279 	mov	dph,r3
+      00023B 8C F0            [24]  280 	mov	b,r4
+      00023D 12 04 06         [24]  281 	lcall	__gptrget
+      000240 F8               [12]  282 	mov	r0,a
+      000241 A3               [24]  283 	inc	dptr
+      000242 AA 82            [24]  284 	mov	r2,dpl
+      000244 AB 83            [24]  285 	mov	r3,dph
+      000246 88 82            [24]  286 	mov	dpl,r0
+      000248 C0 04            [24]  287 	push	ar4
+      00024A C0 03            [24]  288 	push	ar3
+      00024C C0 02            [24]  289 	push	ar2
+      00024E C0 01            [24]  290 	push	ar1
+      000250 12 03 5A         [24]  291 	lcall	_Wr_I2C
+      000253 D0 01            [24]  292 	pop	ar1
+      000255 D0 02            [24]  293 	pop	ar2
+      000257 D0 03            [24]  294 	pop	ar3
+      000259 D0 04            [24]  295 	pop	ar4
+                                    296 ;	./src/i2c/include/AT24C256.c:77: len--;
+      00025B 19               [12]  297 	dec	r1
+                                    298 ;	./src/i2c/include/AT24C256.c:79: addr++;
+      00025C 05 35            [12]  299 	inc	_WrStr_AT24CPAGE_sloc0_1_0
+      00025E E4               [12]  300 	clr	a
+      00025F B5 35 02         [24]  301 	cjne	a,_WrStr_AT24CPAGE_sloc0_1_0,00140$
+      000262 05 36            [12]  302 	inc	(_WrStr_AT24CPAGE_sloc0_1_0 + 1)
+      000264                        303 00140$:
+                                    304 ;	./src/i2c/include/AT24C256.c:81: if (0 == (addr % 64))
+      000264 E5 35            [12]  305 	mov	a,_WrStr_AT24CPAGE_sloc0_1_0
+      000266 54 3F            [12]  306 	anl	a,#0x3f
+      000268 70 CA            [24]  307 	jnz	00108$
+                                    308 ;	./src/i2c/include/AT24C256.c:85: break;
+      00026A                        309 00121$:
+      00026A 8A 05            [24]  310 	mov	ar5,r2
+      00026C 8B 06            [24]  311 	mov	ar6,r3
+      00026E 8C 07            [24]  312 	mov	ar7,r4
+      000270 89 34            [24]  313 	mov	_WrStr_AT24CPAGE_PARM_3,r1
+      000272 85 35 32         [24]  314 	mov	_WrStr_AT24CPAGE_PARM_2,_WrStr_AT24CPAGE_sloc0_1_0
+      000275 85 36 33         [24]  315 	mov	(_WrStr_AT24CPAGE_PARM_2 + 1),(_WrStr_AT24CPAGE_sloc0_1_0 + 1)
+                                    316 ;	./src/i2c/include/AT24C256.c:88: Stop_I2C();
+      000278 C0 07            [24]  317 	push	ar7
+      00027A C0 06            [24]  318 	push	ar6
+      00027C C0 05            [24]  319 	push	ar5
+      00027E 12 03 46         [24]  320 	lcall	_Stop_I2C
+      000281 D0 05            [24]  321 	pop	ar5
+      000283 D0 06            [24]  322 	pop	ar6
+      000285 D0 07            [24]  323 	pop	ar7
+                                    324 ;	./src/i2c/include/AT24C256.c:90: }
+      000287 02 01 DF         [24]  325 	ljmp	00111$
+                                    326 ;------------------------------------------------------------
+                                    327 ;Allocation info for local variables in function 'RdStr_AT24CPAGE'
+                                    328 ;------------------------------------------------------------
+                                    329 ;addr                      Allocated with name '_RdStr_AT24CPAGE_PARM_2'
+                                    330 ;len                       Allocated with name '_RdStr_AT24CPAGE_PARM_3'
+                                    331 ;str                       Allocated to registers r5 r6 r7 
+                                    332 ;------------------------------------------------------------
+                                    333 ;	./src/i2c/include/AT24C256.c:92: void RdStr_AT24CPAGE(unsigned char *str, unsigned int addr, unsigned char len)
+                                    334 ;	-----------------------------------------
+                                    335 ;	 function RdStr_AT24CPAGE
+                                    336 ;	-----------------------------------------
+      00028A                        337 _RdStr_AT24CPAGE:
+      00028A AD 82            [24]  338 	mov	r5,dpl
+      00028C AE 83            [24]  339 	mov	r6,dph
+      00028E AF F0            [24]  340 	mov	r7,b
+                                    341 ;	./src/i2c/include/AT24C256.c:95: while (1)
+      000290                        342 00104$:
+                                    343 ;	./src/i2c/include/AT24C256.c:97: Start_I2C();
+      000290 C0 07            [24]  344 	push	ar7
+      000292 C0 06            [24]  345 	push	ar6
+      000294 C0 05            [24]  346 	push	ar5
+      000296 12 03 32         [24]  347 	lcall	_Start_I2C
+                                    348 ;	./src/i2c/include/AT24C256.c:99: if (0 == Wr_I2C(0xA0))
+      000299 75 82 A0         [24]  349 	mov	dpl,#0xa0
+      00029C 12 03 5A         [24]  350 	lcall	_Wr_I2C
+      00029F E5 82            [12]  351 	mov	a,dpl
+      0002A1 D0 05            [24]  352 	pop	ar5
+      0002A3 D0 06            [24]  353 	pop	ar6
+      0002A5 D0 07            [24]  354 	pop	ar7
+      0002A7 60 11            [24]  355 	jz	00105$
+                                    356 ;	./src/i2c/include/AT24C256.c:103: Stop_I2C();
+      0002A9 C0 07            [24]  357 	push	ar7
+      0002AB C0 06            [24]  358 	push	ar6
+      0002AD C0 05            [24]  359 	push	ar5
+      0002AF 12 03 46         [24]  360 	lcall	_Stop_I2C
+      0002B2 D0 05            [24]  361 	pop	ar5
+      0002B4 D0 06            [24]  362 	pop	ar6
+      0002B6 D0 07            [24]  363 	pop	ar7
+      0002B8 80 D6            [24]  364 	sjmp	00104$
+      0002BA                        365 00105$:
+                                    366 ;	./src/i2c/include/AT24C256.c:106: Wr_I2C(addr >> 8);
+      0002BA 85 38 82         [24]  367 	mov	dpl,(_RdStr_AT24CPAGE_PARM_2 + 1)
+      0002BD C0 07            [24]  368 	push	ar7
+      0002BF C0 06            [24]  369 	push	ar6
+      0002C1 C0 05            [24]  370 	push	ar5
+      0002C3 12 03 5A         [24]  371 	lcall	_Wr_I2C
+                                    372 ;	./src/i2c/include/AT24C256.c:107: Wr_I2C(addr);
+      0002C6 85 37 82         [24]  373 	mov	dpl,_RdStr_AT24CPAGE_PARM_2
+      0002C9 12 03 5A         [24]  374 	lcall	_Wr_I2C
+                                    375 ;	./src/i2c/include/AT24C256.c:109: Start_I2C();
+      0002CC 12 03 32         [24]  376 	lcall	_Start_I2C
+                                    377 ;	./src/i2c/include/AT24C256.c:111: Wr_I2C(0xA1);
+      0002CF 75 82 A1         [24]  378 	mov	dpl,#0xa1
+      0002D2 12 03 5A         [24]  379 	lcall	_Wr_I2C
+      0002D5 D0 05            [24]  380 	pop	ar5
+      0002D7 D0 06            [24]  381 	pop	ar6
+      0002D9 D0 07            [24]  382 	pop	ar7
+                                    383 ;	./src/i2c/include/AT24C256.c:113: while (len > 1)
+      0002DB AC 39            [24]  384 	mov	r4,_RdStr_AT24CPAGE_PARM_3
+      0002DD                        385 00106$:
+      0002DD EC               [12]  386 	mov	a,r4
+      0002DE 24 FE            [12]  387 	add	a,#0xff - 0x01
+      0002E0 50 2A            [24]  388 	jnc	00108$
+                                    389 ;	./src/i2c/include/AT24C256.c:116: *str++ = RdACK_I2C(0);
+      0002E2 75 82 00         [24]  390 	mov	dpl,#0x00
+      0002E5 C0 07            [24]  391 	push	ar7
+      0002E7 C0 06            [24]  392 	push	ar6
+      0002E9 C0 05            [24]  393 	push	ar5
+      0002EB C0 04            [24]  394 	push	ar4
+      0002ED 12 03 98         [24]  395 	lcall	_RdACK_I2C
+      0002F0 AB 82            [24]  396 	mov	r3,dpl
+      0002F2 D0 04            [24]  397 	pop	ar4
+      0002F4 D0 05            [24]  398 	pop	ar5
+      0002F6 D0 06            [24]  399 	pop	ar6
+      0002F8 D0 07            [24]  400 	pop	ar7
+      0002FA 8D 82            [24]  401 	mov	dpl,r5
+      0002FC 8E 83            [24]  402 	mov	dph,r6
+      0002FE 8F F0            [24]  403 	mov	b,r7
+      000300 EB               [12]  404 	mov	a,r3
+      000301 12 03 EB         [24]  405 	lcall	__gptrput
+      000304 A3               [24]  406 	inc	dptr
+      000305 AD 82            [24]  407 	mov	r5,dpl
+      000307 AE 83            [24]  408 	mov	r6,dph
+                                    409 ;	./src/i2c/include/AT24C256.c:118: len--;
+      000309 1C               [12]  410 	dec	r4
+      00030A 80 D1            [24]  411 	sjmp	00106$
+      00030C                        412 00108$:
+                                    413 ;	./src/i2c/include/AT24C256.c:121: *str = RdACK_I2C(1);
+      00030C 75 82 01         [24]  414 	mov	dpl,#0x01
+      00030F C0 07            [24]  415 	push	ar7
+      000311 C0 06            [24]  416 	push	ar6
+      000313 C0 05            [24]  417 	push	ar5
+      000315 12 03 98         [24]  418 	lcall	_RdACK_I2C
+      000318 AC 82            [24]  419 	mov	r4,dpl
+      00031A D0 05            [24]  420 	pop	ar5
+      00031C D0 06            [24]  421 	pop	ar6
+      00031E D0 07            [24]  422 	pop	ar7
+      000320 8D 82            [24]  423 	mov	dpl,r5
+      000322 8E 83            [24]  424 	mov	dph,r6
+      000324 8F F0            [24]  425 	mov	b,r7
+      000326 EC               [12]  426 	mov	a,r4
+      000327 12 03 EB         [24]  427 	lcall	__gptrput
+                                    428 ;	./src/i2c/include/AT24C256.c:123: Stop_I2C();
+                                    429 ;	./src/i2c/include/AT24C256.c:124: }
+      00032A 02 03 46         [24]  430 	ljmp	_Stop_I2C
+                                    431 	.area CSEG    (CODE)
+                                    432 	.area CONST   (CODE)
+                                    433 	.area XINIT   (CODE)
+                                    434 	.area CABS    (ABS,CODE)

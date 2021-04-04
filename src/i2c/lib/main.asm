@@ -9,9 +9,8 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _main
-	.globl _delayms
-	.globl _RdByte_AT24C256
-	.globl _WrByte_AT24C256
+	.globl _RdStr_AT24CPAGE
+	.globl _WrStr_AT24CPAGE
 	.globl _Disp_1602_str
 	.globl _Init_1602
 	.globl _CP_RL2
@@ -150,6 +149,8 @@
 	.globl _WDT_CONTR
 	.globl _XICON
 	.globl _P4
+	.globl _str
+	.globl _str1
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -305,12 +306,13 @@ _CP_RL2	=	0x00c8
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_main_dat_65536_14:
-	.ds 10
+_str1::
+	.ds 17
+_str::
+	.ds 20
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
-	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; Stack segment in internal ram 
 ;--------------------------------------------------------
@@ -376,6 +378,24 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
+;	./src/i2c/main.c:51: unsigned char str1[] = "AT24C256 WR STR!";
+	mov	_str1,#0x41
+	mov	(_str1 + 0x0001),#0x54
+	mov	(_str1 + 0x0002),#0x32
+	mov	(_str1 + 0x0003),#0x34
+	mov	(_str1 + 0x0004),#0x43
+	mov	(_str1 + 0x0005),#0x32
+	mov	(_str1 + 0x0006),#0x35
+	mov	(_str1 + 0x0007),#0x36
+	mov	(_str1 + 0x0008),#0x20
+	mov	(_str1 + 0x0009),#0x57
+	mov	(_str1 + 0x000a),#0x52
+	mov	(_str1 + 0x000b),#0x20
+	mov	(_str1 + 0x000c),#0x53
+	mov	(_str1 + 0x000d),#0x54
+	mov	(_str1 + 0x000e),#0x52
+	mov	(_str1 + 0x000f),#0x21
+	mov	(_str1 + 0x0010),#0x00
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -391,15 +411,13 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'delayms'
+;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;z                         Allocated to registers 
-;------------------------------------------------------------
-;	./src/i2c/main.c:17: void delayms(unsigned int z)
+;	./src/i2c/main.c:54: void main()
 ;	-----------------------------------------
-;	 function delayms
+;	 function main
 ;	-----------------------------------------
-_delayms:
+_main:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -408,142 +426,34 @@ _delayms:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-	mov	r6,dpl
-	mov	r7,dph
-;	./src/i2c/main.c:19: while (z)
-00101$:
-	mov	a,r6
-	orl	a,r7
-	jz	00104$
-;	./src/i2c/main.c:21: NOP();
-	NOP	
-;	./src/i2c/main.c:22: NOP();
-	NOP	
-;	./src/i2c/main.c:23: NOP();
-	NOP	
-;	./src/i2c/main.c:24: NOP();
-	NOP	
-;	./src/i2c/main.c:25: NOP();
-	NOP	
-;	./src/i2c/main.c:26: NOP();
-	NOP	
-;	./src/i2c/main.c:27: NOP();
-	NOP	
-;	./src/i2c/main.c:28: NOP();
-	NOP	
-;	./src/i2c/main.c:29: NOP();
-	NOP	
-;	./src/i2c/main.c:30: z--;
-	dec	r6
-	cjne	r6,#0xff,00116$
-	dec	r7
-00116$:
-	sjmp	00101$
-00104$:
-;	./src/i2c/main.c:32: }
-	ret
-;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
-;------------------------------------------------------------
-;d                         Allocated to registers r7 
-;dat                       Allocated with name '_main_dat_65536_14'
-;------------------------------------------------------------
-;	./src/i2c/main.c:34: void main()
-;	-----------------------------------------
-;	 function main
-;	-----------------------------------------
-_main:
-;	./src/i2c/main.c:37: unsigned char dat[10] = "";
-	mov	_main_dat_65536_14,#0x00
-	mov	(_main_dat_65536_14 + 0x0001),#0x00
-	mov	(_main_dat_65536_14 + 0x0002),#0x00
-	mov	(_main_dat_65536_14 + 0x0003),#0x00
-	mov	(_main_dat_65536_14 + 0x0004),#0x00
-	mov	(_main_dat_65536_14 + 0x0005),#0x00
-	mov	(_main_dat_65536_14 + 0x0006),#0x00
-	mov	(_main_dat_65536_14 + 0x0007),#0x00
-	mov	(_main_dat_65536_14 + 0x0008),#0x00
-	mov	(_main_dat_65536_14 + 0x0009),#0x00
-;	./src/i2c/main.c:38: Init_1602();
+;	./src/i2c/main.c:56: Init_1602();
 	lcall	_Init_1602
-;	./src/i2c/main.c:39: WrByte_AT24C256(0x0000, 1);
-	mov	_WrByte_AT24C256_PARM_2,#0x01
-	mov	dptr,#0x0000
-	lcall	_WrByte_AT24C256
-;	./src/i2c/main.c:40: Disp_1602_str(1, 2, "ACT24C0X TEST!");
-	mov	_Disp_1602_str_PARM_3,#___str_1
-	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
-	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-	mov	_Disp_1602_str_PARM_2,#0x02
-	mov	dpl,#0x01
-	lcall	_Disp_1602_str
-;	./src/i2c/main.c:41: delayms(1000);
-	mov	dptr,#0x03e8
-	lcall	_delayms
-;	./src/i2c/main.c:42: d = RdByte_AT24C256(0x0000);
-	mov	dptr,#0x0000
-	lcall	_RdByte_AT24C256
-	mov	r7,dpl
-;	./src/i2c/main.c:43: dat[0] = d / 100 + '0';
-	mov	r6,#0x00
-	mov	__divsint_PARM_2,#0x64
-;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
-	mov	(__divsint_PARM_2 + 1),r6
-	mov	dpl,r7
-	mov	dph,r6
-	push	ar7
-	push	ar6
-	lcall	__divsint
-	mov	r4,dpl
-	pop	ar6
-	pop	ar7
-	mov	a,#0x30
-	add	a,r4
-	mov	_main_dat_65536_14,a
-;	./src/i2c/main.c:44: dat[1] = d % 100 / 10 + '0';
-	mov	__modsint_PARM_2,#0x64
-	mov	(__modsint_PARM_2 + 1),#0x00
-	mov	dpl,r7
-	mov	dph,r6
-	push	ar7
-	push	ar6
-	lcall	__modsint
-	mov	__divsint_PARM_2,#0x0a
-	mov	(__divsint_PARM_2 + 1),#0x00
-	lcall	__divsint
-	mov	r4,dpl
-	pop	ar6
-	pop	ar7
-	mov	a,#0x30
-	add	a,r4
-	mov	(_main_dat_65536_14 + 0x0001),a
-;	./src/i2c/main.c:45: dat[2] = d % 10 + '0';
-	mov	__modsint_PARM_2,#0x0a
-	mov	(__modsint_PARM_2 + 1),#0x00
-	mov	dpl,r7
-	mov	dph,r6
-	lcall	__modsint
-	mov	r6,dpl
-	mov	a,#0x30
-	add	a,r6
-	mov	(_main_dat_65536_14 + 0x0002),a
-;	./src/i2c/main.c:46: Disp_1602_str(2, 3, dat);
-	mov	_Disp_1602_str_PARM_3,#_main_dat_65536_14
+;	./src/i2c/main.c:57: WrStr_AT24CPAGE(str1, 0x0500, 16);
+	mov	_WrStr_AT24CPAGE_PARM_2,#0x00
+	mov	(_WrStr_AT24CPAGE_PARM_2 + 1),#0x05
+	mov	_WrStr_AT24CPAGE_PARM_3,#0x10
+	mov	dptr,#_str1
+	mov	b,#0x40
+	lcall	_WrStr_AT24CPAGE
+;	./src/i2c/main.c:58: RdStr_AT24CPAGE(str, 0x0500, 16);
+	mov	_RdStr_AT24CPAGE_PARM_2,#0x00
+	mov	(_RdStr_AT24CPAGE_PARM_2 + 1),#0x05
+	mov	_RdStr_AT24CPAGE_PARM_3,#0x10
+	mov	dptr,#_str
+	mov	b,#0x40
+	lcall	_RdStr_AT24CPAGE
+;	./src/i2c/main.c:59: Disp_1602_str(1,1,str);
+	mov	_Disp_1602_str_PARM_3,#_str
 	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
-	mov	_Disp_1602_str_PARM_2,#0x03
-	mov	dpl,#0x02
+	mov	_Disp_1602_str_PARM_2,#0x01
+	mov	dpl,#0x01
 	lcall	_Disp_1602_str
-;	./src/i2c/main.c:47: while (1)
+;	./src/i2c/main.c:60: while(1);
 00102$:
-;	./src/i2c/main.c:49: }
+;	./src/i2c/main.c:61: }
 	sjmp	00102$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
-	.area CONST   (CODE)
-___str_1:
-	.ascii "ACT24C0X TEST!"
-	.db 0x00
-	.area CSEG    (CODE)
 	.area XINIT   (CODE)
 	.area CABS    (ABS,CODE)
