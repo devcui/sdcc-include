@@ -80,9 +80,9 @@ C:   00000062  s_CSEG
 C:   00000080  l_DSEG                          
 C:   000000E7  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   000003A3  l_CSEG                          
-C:   00000405  s_CONST                         
-C:   00000414  s_XINIT                         
+C:   00000398  l_CSEG                          
+C:   000003FA  s_CONST                         
+C:   00000409  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -372,37 +372,37 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000062    000003A3 =         931. bytes (REL,CON,CODE)
+CSEG                                00000062    00000398 =         920. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000062  _delayms                           main
-C:   00000086  _main                              main
-C:   0000013A  _RD_sta                            1602
-C:   00000146  _Ready                             1602
-C:   00000152  _WR_Cmd                            1602
-C:   00000166  _WR_Dat                            1602
-C:   0000017A  _Init_1602                         1602
-C:   00000192  _Disp_1602_str                     1602
-C:   000001D1  _WrByte_AT24C256                   AT24C256
-C:   00000201  _RdByte_AT24C256                   AT24C256
-C:   00000243  _Delay_I2C                         I2C
-C:   00000248  _Start_I2C                         I2C
-C:   0000025C  _Stop_I2C                          I2C
-C:   00000270  _Wr_I2C                            I2C
-C:   000002AE  _RdACK_I2C                         I2C
-C:   00000301  __moduint                          _moduint
-C:   0000034E  __divuint                          _divuint
-C:   00000377  __gptrget                          _gptrget
-C:   00000393  __modsint                          _modsint
-C:   000003C9  __divsint                          _divsint
-C:   00000401  __sdcc_external_startup            _startup
+C:   0000007B  _main                              main
+C:   0000012F  _RD_sta                            1602
+C:   0000013B  _Ready                             1602
+C:   00000147  _WR_Cmd                            1602
+C:   0000015B  _WR_Dat                            1602
+C:   0000016F  _Init_1602                         1602
+C:   00000187  _Disp_1602_str                     1602
+C:   000001C6  _WrByte_AT24C256                   AT24C256
+C:   000001F6  _RdByte_AT24C256                   AT24C256
+C:   00000238  _Delay_I2C                         I2C
+C:   0000023D  _Start_I2C                         I2C
+C:   00000251  _Stop_I2C                          I2C
+C:   00000265  _Wr_I2C                            I2C
+C:   000002A3  _RdACK_I2C                         I2C
+C:   000002F6  __moduint                          _moduint
+C:   00000343  __divuint                          _divuint
+C:   0000036C  __gptrget                          _gptrget
+C:   00000388  __modsint                          _modsint
+C:   000003BE  __divsint                          _divsint
+C:   000003F6  __sdcc_external_startup            _startup
 ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CONST                               00000405    0000000F =          15. bytes (REL,CON,CODE)
+CONST                               000003FA    0000000F =          15. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------

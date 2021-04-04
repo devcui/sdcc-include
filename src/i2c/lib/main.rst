@@ -305,7 +305,7 @@
                                     305 ; internal ram data
                                     306 ;--------------------------------------------------------
                                     307 	.area DSEG    (DATA)
-      000008                        308 _main_dat_65536_16:
+      000008                        308 _main_dat_65536_14:
       000008                        309 	.ds 10
                                     310 ;--------------------------------------------------------
                                     311 ; overlayable items in internal ram 
@@ -384,7 +384,7 @@
                                     384 	.area HOME    (CODE)
                                     385 	.area HOME    (CODE)
       000003                        386 __sdcc_program_startup:
-      000003 02 00 86         [24]  387 	ljmp	_main
+      000003 02 00 7B         [24]  387 	ljmp	_main
                                     388 ;	return from main will return to caller
                                     389 ;--------------------------------------------------------
                                     390 ; code
@@ -394,156 +394,157 @@
                                     394 ;Allocation info for local variables in function 'delayms'
                                     395 ;------------------------------------------------------------
                                     396 ;z                         Allocated to registers 
-                                    397 ;x                         Allocated to registers r6 r7 
-                                    398 ;y                         Allocated to registers r4 r5 
-                                    399 ;------------------------------------------------------------
-                                    400 ;	./src/i2c/main.c:18: void delayms(unsigned int z){
+                                    397 ;------------------------------------------------------------
+                                    398 ;	./src/i2c/main.c:17: void delayms(unsigned int z)
+                                    399 ;	-----------------------------------------
+                                    400 ;	 function delayms
                                     401 ;	-----------------------------------------
-                                    402 ;	 function delayms
-                                    403 ;	-----------------------------------------
-      000062                        404 _delayms:
-                           000007   405 	ar7 = 0x07
-                           000006   406 	ar6 = 0x06
-                           000005   407 	ar5 = 0x05
-                           000004   408 	ar4 = 0x04
-                           000003   409 	ar3 = 0x03
-                           000002   410 	ar2 = 0x02
-                           000001   411 	ar1 = 0x01
-                           000000   412 	ar0 = 0x00
-      000062 AE 82            [24]  413 	mov	r6,dpl
-      000064 AF 83            [24]  414 	mov	r7,dph
-                                    415 ;	./src/i2c/main.c:20: for(x=z;x>0;x--){
-      000066                        416 00106$:
-      000066 EE               [12]  417 	mov	a,r6
-      000067 4F               [12]  418 	orl	a,r7
-      000068 60 1B            [24]  419 	jz	00108$
-                                    420 ;	./src/i2c/main.c:21: for(y=78;y>0;y--);
-      00006A 7C 4E            [12]  421 	mov	r4,#0x4e
-      00006C 7D 00            [12]  422 	mov	r5,#0x00
-      00006E                        423 00104$:
-      00006E EC               [12]  424 	mov	a,r4
-      00006F 24 FF            [12]  425 	add	a,#0xff
-      000071 FA               [12]  426 	mov	r2,a
-      000072 ED               [12]  427 	mov	a,r5
-      000073 34 FF            [12]  428 	addc	a,#0xff
-      000075 FB               [12]  429 	mov	r3,a
-      000076 8A 04            [24]  430 	mov	ar4,r2
-      000078 8B 05            [24]  431 	mov	ar5,r3
-      00007A EA               [12]  432 	mov	a,r2
-      00007B 4B               [12]  433 	orl	a,r3
-      00007C 70 F0            [24]  434 	jnz	00104$
-                                    435 ;	./src/i2c/main.c:20: for(x=z;x>0;x--){
-      00007E 1E               [12]  436 	dec	r6
-      00007F BE FF 01         [24]  437 	cjne	r6,#0xff,00133$
-      000082 1F               [12]  438 	dec	r7
-      000083                        439 00133$:
-      000083 80 E1            [24]  440 	sjmp	00106$
-      000085                        441 00108$:
-                                    442 ;	./src/i2c/main.c:23: }
-      000085 22               [24]  443 	ret
-                                    444 ;------------------------------------------------------------
-                                    445 ;Allocation info for local variables in function 'main'
-                                    446 ;------------------------------------------------------------
-                                    447 ;d                         Allocated to registers r7 
-                                    448 ;dat                       Allocated with name '_main_dat_65536_16'
-                                    449 ;------------------------------------------------------------
-                                    450 ;	./src/i2c/main.c:25: void main()
-                                    451 ;	-----------------------------------------
-                                    452 ;	 function main
-                                    453 ;	-----------------------------------------
-      000086                        454 _main:
-                                    455 ;	./src/i2c/main.c:28: unsigned char dat[10] = "";
-      000086 75 08 00         [24]  456 	mov	_main_dat_65536_16,#0x00
-      000089 75 09 00         [24]  457 	mov	(_main_dat_65536_16 + 0x0001),#0x00
-      00008C 75 0A 00         [24]  458 	mov	(_main_dat_65536_16 + 0x0002),#0x00
-      00008F 75 0B 00         [24]  459 	mov	(_main_dat_65536_16 + 0x0003),#0x00
-      000092 75 0C 00         [24]  460 	mov	(_main_dat_65536_16 + 0x0004),#0x00
-      000095 75 0D 00         [24]  461 	mov	(_main_dat_65536_16 + 0x0005),#0x00
-      000098 75 0E 00         [24]  462 	mov	(_main_dat_65536_16 + 0x0006),#0x00
-      00009B 75 0F 00         [24]  463 	mov	(_main_dat_65536_16 + 0x0007),#0x00
-      00009E 75 10 00         [24]  464 	mov	(_main_dat_65536_16 + 0x0008),#0x00
-      0000A1 75 11 00         [24]  465 	mov	(_main_dat_65536_16 + 0x0009),#0x00
-                                    466 ;	./src/i2c/main.c:29: Init_1602();
-      0000A4 12 01 7A         [24]  467 	lcall	_Init_1602
-                                    468 ;	./src/i2c/main.c:30: WrByte_AT24C256(0x0000, 1);
-      0000A7 75 16 01         [24]  469 	mov	_WrByte_AT24C256_PARM_2,#0x01
-      0000AA 90 00 00         [24]  470 	mov	dptr,#0x0000
-      0000AD 12 01 D1         [24]  471 	lcall	_WrByte_AT24C256
-                                    472 ;	./src/i2c/main.c:31: Disp_1602_str(1, 2, "ACT24C0X TEST!");
-      0000B0 75 13 05         [24]  473 	mov	_Disp_1602_str_PARM_3,#___str_1
-      0000B3 75 14 04         [24]  474 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
-      0000B6 75 15 80         [24]  475 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
-      0000B9 75 12 02         [24]  476 	mov	_Disp_1602_str_PARM_2,#0x02
-      0000BC 75 82 01         [24]  477 	mov	dpl,#0x01
-      0000BF 12 01 92         [24]  478 	lcall	_Disp_1602_str
-                                    479 ;	./src/i2c/main.c:32: delayms(10);
-      0000C2 90 00 0A         [24]  480 	mov	dptr,#0x000a
-      0000C5 12 00 62         [24]  481 	lcall	_delayms
-                                    482 ;	./src/i2c/main.c:33: d = RdByte_AT24C256(0x0000);
-      0000C8 90 00 00         [24]  483 	mov	dptr,#0x0000
-      0000CB 12 02 01         [24]  484 	lcall	_RdByte_AT24C256
-      0000CE AF 82            [24]  485 	mov	r7,dpl
-                                    486 ;	./src/i2c/main.c:34: dat[0] = d / 100 + '0';
-      0000D0 7E 00            [12]  487 	mov	r6,#0x00
-      0000D2 75 17 64         [24]  488 	mov	__divsint_PARM_2,#0x64
-                                    489 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
-      0000D5 8E 18            [24]  490 	mov	(__divsint_PARM_2 + 1),r6
-      0000D7 8F 82            [24]  491 	mov	dpl,r7
-      0000D9 8E 83            [24]  492 	mov	dph,r6
-      0000DB C0 07            [24]  493 	push	ar7
-      0000DD C0 06            [24]  494 	push	ar6
-      0000DF 12 03 C9         [24]  495 	lcall	__divsint
-      0000E2 AC 82            [24]  496 	mov	r4,dpl
-      0000E4 D0 06            [24]  497 	pop	ar6
-      0000E6 D0 07            [24]  498 	pop	ar7
-      0000E8 74 30            [12]  499 	mov	a,#0x30
-      0000EA 2C               [12]  500 	add	a,r4
-      0000EB F5 08            [12]  501 	mov	_main_dat_65536_16,a
-                                    502 ;	./src/i2c/main.c:35: dat[1] = d % 100 / 10 + '0';
-      0000ED 75 17 64         [24]  503 	mov	__modsint_PARM_2,#0x64
-      0000F0 75 18 00         [24]  504 	mov	(__modsint_PARM_2 + 1),#0x00
-      0000F3 8F 82            [24]  505 	mov	dpl,r7
-      0000F5 8E 83            [24]  506 	mov	dph,r6
-      0000F7 C0 07            [24]  507 	push	ar7
-      0000F9 C0 06            [24]  508 	push	ar6
-      0000FB 12 03 93         [24]  509 	lcall	__modsint
-      0000FE 75 17 0A         [24]  510 	mov	__divsint_PARM_2,#0x0a
-      000101 75 18 00         [24]  511 	mov	(__divsint_PARM_2 + 1),#0x00
-      000104 12 03 C9         [24]  512 	lcall	__divsint
-      000107 AC 82            [24]  513 	mov	r4,dpl
-      000109 D0 06            [24]  514 	pop	ar6
-      00010B D0 07            [24]  515 	pop	ar7
-      00010D 74 30            [12]  516 	mov	a,#0x30
-      00010F 2C               [12]  517 	add	a,r4
-      000110 F5 09            [12]  518 	mov	(_main_dat_65536_16 + 0x0001),a
-                                    519 ;	./src/i2c/main.c:36: dat[2] = d % 10 + '0';
-      000112 75 17 0A         [24]  520 	mov	__modsint_PARM_2,#0x0a
-      000115 75 18 00         [24]  521 	mov	(__modsint_PARM_2 + 1),#0x00
-      000118 8F 82            [24]  522 	mov	dpl,r7
-      00011A 8E 83            [24]  523 	mov	dph,r6
-      00011C 12 03 93         [24]  524 	lcall	__modsint
-      00011F AE 82            [24]  525 	mov	r6,dpl
-      000121 74 30            [12]  526 	mov	a,#0x30
-      000123 2E               [12]  527 	add	a,r6
-      000124 F5 0A            [12]  528 	mov	(_main_dat_65536_16 + 0x0002),a
-                                    529 ;	./src/i2c/main.c:37: Disp_1602_str(2, 3, dat);
-      000126 75 13 08         [24]  530 	mov	_Disp_1602_str_PARM_3,#_main_dat_65536_16
-      000129 75 14 00         [24]  531 	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
-      00012C 75 15 40         [24]  532 	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
-      00012F 75 12 03         [24]  533 	mov	_Disp_1602_str_PARM_2,#0x03
-      000132 75 82 02         [24]  534 	mov	dpl,#0x02
-      000135 12 01 92         [24]  535 	lcall	_Disp_1602_str
-                                    536 ;	./src/i2c/main.c:38: while (1)
-      000138                        537 00102$:
-                                    538 ;	./src/i2c/main.c:40: }
-      000138 80 FE            [24]  539 	sjmp	00102$
-                                    540 	.area CSEG    (CODE)
-                                    541 	.area CONST   (CODE)
+      000062                        402 _delayms:
+                           000007   403 	ar7 = 0x07
+                           000006   404 	ar6 = 0x06
+                           000005   405 	ar5 = 0x05
+                           000004   406 	ar4 = 0x04
+                           000003   407 	ar3 = 0x03
+                           000002   408 	ar2 = 0x02
+                           000001   409 	ar1 = 0x01
+                           000000   410 	ar0 = 0x00
+      000062 AE 82            [24]  411 	mov	r6,dpl
+      000064 AF 83            [24]  412 	mov	r7,dph
+                                    413 ;	./src/i2c/main.c:19: while (z)
+      000066                        414 00101$:
+      000066 EE               [12]  415 	mov	a,r6
+      000067 4F               [12]  416 	orl	a,r7
+      000068 60 10            [24]  417 	jz	00104$
+                                    418 ;	./src/i2c/main.c:21: NOP();
+      00006A 00               [12]  419 	NOP	
+                                    420 ;	./src/i2c/main.c:22: NOP();
+      00006B 00               [12]  421 	NOP	
+                                    422 ;	./src/i2c/main.c:23: NOP();
+      00006C 00               [12]  423 	NOP	
+                                    424 ;	./src/i2c/main.c:24: NOP();
+      00006D 00               [12]  425 	NOP	
+                                    426 ;	./src/i2c/main.c:25: NOP();
+      00006E 00               [12]  427 	NOP	
+                                    428 ;	./src/i2c/main.c:26: NOP();
+      00006F 00               [12]  429 	NOP	
+                                    430 ;	./src/i2c/main.c:27: NOP();
+      000070 00               [12]  431 	NOP	
+                                    432 ;	./src/i2c/main.c:28: NOP();
+      000071 00               [12]  433 	NOP	
+                                    434 ;	./src/i2c/main.c:29: NOP();
+      000072 00               [12]  435 	NOP	
+                                    436 ;	./src/i2c/main.c:30: z--;
+      000073 1E               [12]  437 	dec	r6
+      000074 BE FF 01         [24]  438 	cjne	r6,#0xff,00116$
+      000077 1F               [12]  439 	dec	r7
+      000078                        440 00116$:
+      000078 80 EC            [24]  441 	sjmp	00101$
+      00007A                        442 00104$:
+                                    443 ;	./src/i2c/main.c:32: }
+      00007A 22               [24]  444 	ret
+                                    445 ;------------------------------------------------------------
+                                    446 ;Allocation info for local variables in function 'main'
+                                    447 ;------------------------------------------------------------
+                                    448 ;d                         Allocated to registers r7 
+                                    449 ;dat                       Allocated with name '_main_dat_65536_14'
+                                    450 ;------------------------------------------------------------
+                                    451 ;	./src/i2c/main.c:34: void main()
+                                    452 ;	-----------------------------------------
+                                    453 ;	 function main
+                                    454 ;	-----------------------------------------
+      00007B                        455 _main:
+                                    456 ;	./src/i2c/main.c:37: unsigned char dat[10] = "";
+      00007B 75 08 00         [24]  457 	mov	_main_dat_65536_14,#0x00
+      00007E 75 09 00         [24]  458 	mov	(_main_dat_65536_14 + 0x0001),#0x00
+      000081 75 0A 00         [24]  459 	mov	(_main_dat_65536_14 + 0x0002),#0x00
+      000084 75 0B 00         [24]  460 	mov	(_main_dat_65536_14 + 0x0003),#0x00
+      000087 75 0C 00         [24]  461 	mov	(_main_dat_65536_14 + 0x0004),#0x00
+      00008A 75 0D 00         [24]  462 	mov	(_main_dat_65536_14 + 0x0005),#0x00
+      00008D 75 0E 00         [24]  463 	mov	(_main_dat_65536_14 + 0x0006),#0x00
+      000090 75 0F 00         [24]  464 	mov	(_main_dat_65536_14 + 0x0007),#0x00
+      000093 75 10 00         [24]  465 	mov	(_main_dat_65536_14 + 0x0008),#0x00
+      000096 75 11 00         [24]  466 	mov	(_main_dat_65536_14 + 0x0009),#0x00
+                                    467 ;	./src/i2c/main.c:38: Init_1602();
+      000099 12 01 6F         [24]  468 	lcall	_Init_1602
+                                    469 ;	./src/i2c/main.c:39: WrByte_AT24C256(0x0000, 1);
+      00009C 75 16 01         [24]  470 	mov	_WrByte_AT24C256_PARM_2,#0x01
+      00009F 90 00 00         [24]  471 	mov	dptr,#0x0000
+      0000A2 12 01 C6         [24]  472 	lcall	_WrByte_AT24C256
+                                    473 ;	./src/i2c/main.c:40: Disp_1602_str(1, 2, "ACT24C0X TEST!");
+      0000A5 75 13 FA         [24]  474 	mov	_Disp_1602_str_PARM_3,#___str_1
+      0000A8 75 14 03         [24]  475 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
+      0000AB 75 15 80         [24]  476 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
+      0000AE 75 12 02         [24]  477 	mov	_Disp_1602_str_PARM_2,#0x02
+      0000B1 75 82 01         [24]  478 	mov	dpl,#0x01
+      0000B4 12 01 87         [24]  479 	lcall	_Disp_1602_str
+                                    480 ;	./src/i2c/main.c:41: delayms(1000);
+      0000B7 90 03 E8         [24]  481 	mov	dptr,#0x03e8
+      0000BA 12 00 62         [24]  482 	lcall	_delayms
+                                    483 ;	./src/i2c/main.c:42: d = RdByte_AT24C256(0x0000);
+      0000BD 90 00 00         [24]  484 	mov	dptr,#0x0000
+      0000C0 12 01 F6         [24]  485 	lcall	_RdByte_AT24C256
+      0000C3 AF 82            [24]  486 	mov	r7,dpl
+                                    487 ;	./src/i2c/main.c:43: dat[0] = d / 100 + '0';
+      0000C5 7E 00            [12]  488 	mov	r6,#0x00
+      0000C7 75 17 64         [24]  489 	mov	__divsint_PARM_2,#0x64
+                                    490 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
+      0000CA 8E 18            [24]  491 	mov	(__divsint_PARM_2 + 1),r6
+      0000CC 8F 82            [24]  492 	mov	dpl,r7
+      0000CE 8E 83            [24]  493 	mov	dph,r6
+      0000D0 C0 07            [24]  494 	push	ar7
+      0000D2 C0 06            [24]  495 	push	ar6
+      0000D4 12 03 BE         [24]  496 	lcall	__divsint
+      0000D7 AC 82            [24]  497 	mov	r4,dpl
+      0000D9 D0 06            [24]  498 	pop	ar6
+      0000DB D0 07            [24]  499 	pop	ar7
+      0000DD 74 30            [12]  500 	mov	a,#0x30
+      0000DF 2C               [12]  501 	add	a,r4
+      0000E0 F5 08            [12]  502 	mov	_main_dat_65536_14,a
+                                    503 ;	./src/i2c/main.c:44: dat[1] = d % 100 / 10 + '0';
+      0000E2 75 17 64         [24]  504 	mov	__modsint_PARM_2,#0x64
+      0000E5 75 18 00         [24]  505 	mov	(__modsint_PARM_2 + 1),#0x00
+      0000E8 8F 82            [24]  506 	mov	dpl,r7
+      0000EA 8E 83            [24]  507 	mov	dph,r6
+      0000EC C0 07            [24]  508 	push	ar7
+      0000EE C0 06            [24]  509 	push	ar6
+      0000F0 12 03 88         [24]  510 	lcall	__modsint
+      0000F3 75 17 0A         [24]  511 	mov	__divsint_PARM_2,#0x0a
+      0000F6 75 18 00         [24]  512 	mov	(__divsint_PARM_2 + 1),#0x00
+      0000F9 12 03 BE         [24]  513 	lcall	__divsint
+      0000FC AC 82            [24]  514 	mov	r4,dpl
+      0000FE D0 06            [24]  515 	pop	ar6
+      000100 D0 07            [24]  516 	pop	ar7
+      000102 74 30            [12]  517 	mov	a,#0x30
+      000104 2C               [12]  518 	add	a,r4
+      000105 F5 09            [12]  519 	mov	(_main_dat_65536_14 + 0x0001),a
+                                    520 ;	./src/i2c/main.c:45: dat[2] = d % 10 + '0';
+      000107 75 17 0A         [24]  521 	mov	__modsint_PARM_2,#0x0a
+      00010A 75 18 00         [24]  522 	mov	(__modsint_PARM_2 + 1),#0x00
+      00010D 8F 82            [24]  523 	mov	dpl,r7
+      00010F 8E 83            [24]  524 	mov	dph,r6
+      000111 12 03 88         [24]  525 	lcall	__modsint
+      000114 AE 82            [24]  526 	mov	r6,dpl
+      000116 74 30            [12]  527 	mov	a,#0x30
+      000118 2E               [12]  528 	add	a,r6
+      000119 F5 0A            [12]  529 	mov	(_main_dat_65536_14 + 0x0002),a
+                                    530 ;	./src/i2c/main.c:46: Disp_1602_str(2, 3, dat);
+      00011B 75 13 08         [24]  531 	mov	_Disp_1602_str_PARM_3,#_main_dat_65536_14
+      00011E 75 14 00         [24]  532 	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
+      000121 75 15 40         [24]  533 	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
+      000124 75 12 03         [24]  534 	mov	_Disp_1602_str_PARM_2,#0x03
+      000127 75 82 02         [24]  535 	mov	dpl,#0x02
+      00012A 12 01 87         [24]  536 	lcall	_Disp_1602_str
+                                    537 ;	./src/i2c/main.c:47: while (1)
+      00012D                        538 00102$:
+                                    539 ;	./src/i2c/main.c:49: }
+      00012D 80 FE            [24]  540 	sjmp	00102$
+                                    541 	.area CSEG    (CODE)
                                     542 	.area CONST   (CODE)
-      000405                        543 ___str_1:
-      000405 41 43 54 32 34 43 30   544 	.ascii "ACT24C0X TEST!"
+                                    543 	.area CONST   (CODE)
+      0003FA                        544 ___str_1:
+      0003FA 41 43 54 32 34 43 30   545 	.ascii "ACT24C0X TEST!"
              58 20 54 45 53 54 21
-      000413 00                     545 	.db 0x00
-                                    546 	.area CSEG    (CODE)
-                                    547 	.area XINIT   (CODE)
-                                    548 	.area CABS    (ABS,CODE)
+      000408 00                     546 	.db 0x00
+                                    547 	.area CSEG    (CODE)
+                                    548 	.area XINIT   (CODE)
+                                    549 	.area CABS    (ABS,CODE)
