@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-04 19:11:55
- * @LastEditTime: 2021-04-04 19:47:05
+ * @LastEditTime: 2021-04-04 20:09:44
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/i2c/include/AT24C256.h

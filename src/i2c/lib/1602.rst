@@ -1,0 +1,573 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.0.0 #11528 (Mac OS X x86_64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module 1602
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _EN_1602
+                                     12 	.globl _RW_1602
+                                     13 	.globl _RS_1602
+                                     14 	.globl _CP_RL2
+                                     15 	.globl _C_T2
+                                     16 	.globl _TR2
+                                     17 	.globl _EXEN2
+                                     18 	.globl _TCLK
+                                     19 	.globl _RCLK
+                                     20 	.globl _EXF2
+                                     21 	.globl _TF2
+                                     22 	.globl _T2
+                                     23 	.globl _T2EX
+                                     24 	.globl _RI
+                                     25 	.globl _TI
+                                     26 	.globl _RB8
+                                     27 	.globl _TB8
+                                     28 	.globl _REN
+                                     29 	.globl _SM2
+                                     30 	.globl _SM1
+                                     31 	.globl _FE
+                                     32 	.globl _SM0
+                                     33 	.globl _RXD
+                                     34 	.globl _TXD
+                                     35 	.globl _INT0
+                                     36 	.globl _INT1
+                                     37 	.globl _T0
+                                     38 	.globl _T1
+                                     39 	.globl _WR
+                                     40 	.globl _RD
+                                     41 	.globl _PX0
+                                     42 	.globl _PT0
+                                     43 	.globl _PX1
+                                     44 	.globl _PT1
+                                     45 	.globl _PS
+                                     46 	.globl _PT2
+                                     47 	.globl _EX0
+                                     48 	.globl _ET0
+                                     49 	.globl _EX1
+                                     50 	.globl _ET1
+                                     51 	.globl _ES
+                                     52 	.globl _ET2
+                                     53 	.globl _EC
+                                     54 	.globl _EA
+                                     55 	.globl _IT0
+                                     56 	.globl _IE0
+                                     57 	.globl _IT1
+                                     58 	.globl _IE1
+                                     59 	.globl _TR0
+                                     60 	.globl _TF0
+                                     61 	.globl _TR1
+                                     62 	.globl _TF1
+                                     63 	.globl _P
+                                     64 	.globl _OV
+                                     65 	.globl _RS0
+                                     66 	.globl _RS1
+                                     67 	.globl _F0
+                                     68 	.globl _AC
+                                     69 	.globl _CY
+                                     70 	.globl _P37
+                                     71 	.globl _P36
+                                     72 	.globl _P35
+                                     73 	.globl _P34
+                                     74 	.globl _P33
+                                     75 	.globl _P32
+                                     76 	.globl _P31
+                                     77 	.globl _P30
+                                     78 	.globl _P27
+                                     79 	.globl _P26
+                                     80 	.globl _P25
+                                     81 	.globl _P24
+                                     82 	.globl _P23
+                                     83 	.globl _P22
+                                     84 	.globl _P21
+                                     85 	.globl _P20
+                                     86 	.globl _P17
+                                     87 	.globl _P16
+                                     88 	.globl _P15
+                                     89 	.globl _P14
+                                     90 	.globl _P13
+                                     91 	.globl _P12
+                                     92 	.globl _P11
+                                     93 	.globl _P10
+                                     94 	.globl _P07
+                                     95 	.globl _P06
+                                     96 	.globl _P05
+                                     97 	.globl _P04
+                                     98 	.globl _P03
+                                     99 	.globl _P02
+                                    100 	.globl _P01
+                                    101 	.globl _P00
+                                    102 	.globl _P40
+                                    103 	.globl _P41
+                                    104 	.globl _P42
+                                    105 	.globl _P43
+                                    106 	.globl _P44
+                                    107 	.globl _P45
+                                    108 	.globl _P46
+                                    109 	.globl _TH2
+                                    110 	.globl _TL2
+                                    111 	.globl _RCAP2H
+                                    112 	.globl _RCAP2L
+                                    113 	.globl _T2MOD
+                                    114 	.globl _T2CON
+                                    115 	.globl _SADEN
+                                    116 	.globl _IPH
+                                    117 	.globl _SADDR
+                                    118 	.globl _AUXR1
+                                    119 	.globl _AUXR
+                                    120 	.globl _SBUF
+                                    121 	.globl _SCON
+                                    122 	.globl _IP
+                                    123 	.globl _IE
+                                    124 	.globl _TH1
+                                    125 	.globl _TH0
+                                    126 	.globl _TL1
+                                    127 	.globl _TL0
+                                    128 	.globl _TMOD
+                                    129 	.globl _TCON
+                                    130 	.globl _PCON
+                                    131 	.globl _DPH
+                                    132 	.globl _DPL
+                                    133 	.globl _SP
+                                    134 	.globl _B
+                                    135 	.globl _ACC
+                                    136 	.globl _PSW
+                                    137 	.globl _P3
+                                    138 	.globl _P2
+                                    139 	.globl _P1
+                                    140 	.globl _P0
+                                    141 	.globl _ISP_CONTR
+                                    142 	.globl _ISP_TRIG
+                                    143 	.globl _ISP_CMD
+                                    144 	.globl _ISP_ADDRL
+                                    145 	.globl _ISP_ADDRH
+                                    146 	.globl _ISP_DATA
+                                    147 	.globl _WDT_CONTR
+                                    148 	.globl _XICON
+                                    149 	.globl _P4
+                                    150 	.globl _Disp_1602_str_PARM_3
+                                    151 	.globl _Disp_1602_str_PARM_2
+                                    152 	.globl _RD_sta
+                                    153 	.globl _Ready
+                                    154 	.globl _WR_Cmd
+                                    155 	.globl _WR_Dat
+                                    156 	.globl _Init_1602
+                                    157 	.globl _Disp_1602_str
+                                    158 ;--------------------------------------------------------
+                                    159 ; special function registers
+                                    160 ;--------------------------------------------------------
+                                    161 	.area RSEG    (ABS,DATA)
+      000000                        162 	.org 0x0000
+                           0000E8   163 _P4	=	0x00e8
+                           0000C0   164 _XICON	=	0x00c0
+                           0000E1   165 _WDT_CONTR	=	0x00e1
+                           0000E2   166 _ISP_DATA	=	0x00e2
+                           0000E3   167 _ISP_ADDRH	=	0x00e3
+                           0000E4   168 _ISP_ADDRL	=	0x00e4
+                           0000E5   169 _ISP_CMD	=	0x00e5
+                           0000E6   170 _ISP_TRIG	=	0x00e6
+                           0000E7   171 _ISP_CONTR	=	0x00e7
+                           000080   172 _P0	=	0x0080
+                           000090   173 _P1	=	0x0090
+                           0000A0   174 _P2	=	0x00a0
+                           0000B0   175 _P3	=	0x00b0
+                           0000D0   176 _PSW	=	0x00d0
+                           0000E0   177 _ACC	=	0x00e0
+                           0000F0   178 _B	=	0x00f0
+                           000081   179 _SP	=	0x0081
+                           000082   180 _DPL	=	0x0082
+                           000083   181 _DPH	=	0x0083
+                           000087   182 _PCON	=	0x0087
+                           000088   183 _TCON	=	0x0088
+                           000089   184 _TMOD	=	0x0089
+                           00008A   185 _TL0	=	0x008a
+                           00008B   186 _TL1	=	0x008b
+                           00008C   187 _TH0	=	0x008c
+                           00008D   188 _TH1	=	0x008d
+                           0000A8   189 _IE	=	0x00a8
+                           0000B8   190 _IP	=	0x00b8
+                           000098   191 _SCON	=	0x0098
+                           000099   192 _SBUF	=	0x0099
+                           00008E   193 _AUXR	=	0x008e
+                           0000A2   194 _AUXR1	=	0x00a2
+                           0000A9   195 _SADDR	=	0x00a9
+                           0000B7   196 _IPH	=	0x00b7
+                           0000B9   197 _SADEN	=	0x00b9
+                           0000C8   198 _T2CON	=	0x00c8
+                           0000C9   199 _T2MOD	=	0x00c9
+                           0000CA   200 _RCAP2L	=	0x00ca
+                           0000CB   201 _RCAP2H	=	0x00cb
+                           0000CC   202 _TL2	=	0x00cc
+                           0000CD   203 _TH2	=	0x00cd
+                                    204 ;--------------------------------------------------------
+                                    205 ; special function bits
+                                    206 ;--------------------------------------------------------
+                                    207 	.area RSEG    (ABS,DATA)
+      000000                        208 	.org 0x0000
+                           0000EE   209 _P46	=	0x00ee
+                           0000ED   210 _P45	=	0x00ed
+                           0000EC   211 _P44	=	0x00ec
+                           0000EB   212 _P43	=	0x00eb
+                           0000EA   213 _P42	=	0x00ea
+                           0000E9   214 _P41	=	0x00e9
+                           0000E8   215 _P40	=	0x00e8
+                           000080   216 _P00	=	0x0080
+                           000081   217 _P01	=	0x0081
+                           000082   218 _P02	=	0x0082
+                           000083   219 _P03	=	0x0083
+                           000084   220 _P04	=	0x0084
+                           000085   221 _P05	=	0x0085
+                           000086   222 _P06	=	0x0086
+                           000087   223 _P07	=	0x0087
+                           000090   224 _P10	=	0x0090
+                           000091   225 _P11	=	0x0091
+                           000092   226 _P12	=	0x0092
+                           000093   227 _P13	=	0x0093
+                           000094   228 _P14	=	0x0094
+                           000095   229 _P15	=	0x0095
+                           000096   230 _P16	=	0x0096
+                           000097   231 _P17	=	0x0097
+                           0000A0   232 _P20	=	0x00a0
+                           0000A1   233 _P21	=	0x00a1
+                           0000A2   234 _P22	=	0x00a2
+                           0000A3   235 _P23	=	0x00a3
+                           0000A4   236 _P24	=	0x00a4
+                           0000A5   237 _P25	=	0x00a5
+                           0000A6   238 _P26	=	0x00a6
+                           0000A7   239 _P27	=	0x00a7
+                           0000B0   240 _P30	=	0x00b0
+                           0000B1   241 _P31	=	0x00b1
+                           0000B2   242 _P32	=	0x00b2
+                           0000B3   243 _P33	=	0x00b3
+                           0000B4   244 _P34	=	0x00b4
+                           0000B5   245 _P35	=	0x00b5
+                           0000B6   246 _P36	=	0x00b6
+                           0000B7   247 _P37	=	0x00b7
+                           0000D7   248 _CY	=	0x00d7
+                           0000D6   249 _AC	=	0x00d6
+                           0000D5   250 _F0	=	0x00d5
+                           0000D4   251 _RS1	=	0x00d4
+                           0000D3   252 _RS0	=	0x00d3
+                           0000D2   253 _OV	=	0x00d2
+                           0000D0   254 _P	=	0x00d0
+                           00008F   255 _TF1	=	0x008f
+                           00008E   256 _TR1	=	0x008e
+                           00008D   257 _TF0	=	0x008d
+                           00008C   258 _TR0	=	0x008c
+                           00008B   259 _IE1	=	0x008b
+                           00008A   260 _IT1	=	0x008a
+                           000089   261 _IE0	=	0x0089
+                           000088   262 _IT0	=	0x0088
+                           0000AF   263 _EA	=	0x00af
+                           0000AE   264 _EC	=	0x00ae
+                           0000AD   265 _ET2	=	0x00ad
+                           0000AC   266 _ES	=	0x00ac
+                           0000AB   267 _ET1	=	0x00ab
+                           0000AA   268 _EX1	=	0x00aa
+                           0000A9   269 _ET0	=	0x00a9
+                           0000A8   270 _EX0	=	0x00a8
+                           0000BD   271 _PT2	=	0x00bd
+                           0000BC   272 _PS	=	0x00bc
+                           0000BB   273 _PT1	=	0x00bb
+                           0000BA   274 _PX1	=	0x00ba
+                           0000B9   275 _PT0	=	0x00b9
+                           0000B8   276 _PX0	=	0x00b8
+                           0000B7   277 _RD	=	0x00b7
+                           0000B6   278 _WR	=	0x00b6
+                           0000B5   279 _T1	=	0x00b5
+                           0000B4   280 _T0	=	0x00b4
+                           0000B3   281 _INT1	=	0x00b3
+                           0000B2   282 _INT0	=	0x00b2
+                           0000B1   283 _TXD	=	0x00b1
+                           0000B0   284 _RXD	=	0x00b0
+                           00009F   285 _SM0	=	0x009f
+                           00009F   286 _FE	=	0x009f
+                           00009E   287 _SM1	=	0x009e
+                           00009D   288 _SM2	=	0x009d
+                           00009C   289 _REN	=	0x009c
+                           00009B   290 _TB8	=	0x009b
+                           00009A   291 _RB8	=	0x009a
+                           000099   292 _TI	=	0x0099
+                           000098   293 _RI	=	0x0098
+                           000091   294 _T2EX	=	0x0091
+                           000090   295 _T2	=	0x0090
+                           0000CF   296 _TF2	=	0x00cf
+                           0000CE   297 _EXF2	=	0x00ce
+                           0000CD   298 _RCLK	=	0x00cd
+                           0000CC   299 _TCLK	=	0x00cc
+                           0000CB   300 _EXEN2	=	0x00cb
+                           0000CA   301 _TR2	=	0x00ca
+                           0000C9   302 _C_T2	=	0x00c9
+                           0000C8   303 _CP_RL2	=	0x00c8
+                           0000B6   304 _RS_1602	=	0x00b6
+                           0000B5   305 _RW_1602	=	0x00b5
+                           0000B4   306 _EN_1602	=	0x00b4
+                                    307 ;--------------------------------------------------------
+                                    308 ; overlayable register banks
+                                    309 ;--------------------------------------------------------
+                                    310 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        311 	.ds 8
+                                    312 ;--------------------------------------------------------
+                                    313 ; internal ram data
+                                    314 ;--------------------------------------------------------
+                                    315 	.area DSEG    (DATA)
+      000008                        316 _Disp_1602_str_PARM_2:
+      000008                        317 	.ds 1
+      000009                        318 _Disp_1602_str_PARM_3:
+      000009                        319 	.ds 3
+                                    320 ;--------------------------------------------------------
+                                    321 ; overlayable items in internal ram 
+                                    322 ;--------------------------------------------------------
+                                    323 	.area	OSEG    (OVR,DATA)
+                                    324 ;--------------------------------------------------------
+                                    325 ; indirectly addressable internal ram data
+                                    326 ;--------------------------------------------------------
+                                    327 	.area ISEG    (DATA)
+                                    328 ;--------------------------------------------------------
+                                    329 ; absolute internal ram data
+                                    330 ;--------------------------------------------------------
+                                    331 	.area IABS    (ABS,DATA)
+                                    332 	.area IABS    (ABS,DATA)
+                                    333 ;--------------------------------------------------------
+                                    334 ; bit data
+                                    335 ;--------------------------------------------------------
+                                    336 	.area BSEG    (BIT)
+                                    337 ;--------------------------------------------------------
+                                    338 ; paged external ram data
+                                    339 ;--------------------------------------------------------
+                                    340 	.area PSEG    (PAG,XDATA)
+                                    341 ;--------------------------------------------------------
+                                    342 ; external ram data
+                                    343 ;--------------------------------------------------------
+                                    344 	.area XSEG    (XDATA)
+                                    345 ;--------------------------------------------------------
+                                    346 ; absolute external ram data
+                                    347 ;--------------------------------------------------------
+                                    348 	.area XABS    (ABS,XDATA)
+                                    349 ;--------------------------------------------------------
+                                    350 ; external initialized ram data
+                                    351 ;--------------------------------------------------------
+                                    352 	.area XISEG   (XDATA)
+                                    353 	.area HOME    (CODE)
+                                    354 	.area GSINIT0 (CODE)
+                                    355 	.area GSINIT1 (CODE)
+                                    356 	.area GSINIT2 (CODE)
+                                    357 	.area GSINIT3 (CODE)
+                                    358 	.area GSINIT4 (CODE)
+                                    359 	.area GSINIT5 (CODE)
+                                    360 	.area GSINIT  (CODE)
+                                    361 	.area GSFINAL (CODE)
+                                    362 	.area CSEG    (CODE)
+                                    363 ;--------------------------------------------------------
+                                    364 ; global & static initialisations
+                                    365 ;--------------------------------------------------------
+                                    366 	.area HOME    (CODE)
+                                    367 	.area GSINIT  (CODE)
+                                    368 	.area GSFINAL (CODE)
+                                    369 	.area GSINIT  (CODE)
+                                    370 ;--------------------------------------------------------
+                                    371 ; Home
+                                    372 ;--------------------------------------------------------
+                                    373 	.area HOME    (CODE)
+                                    374 	.area HOME    (CODE)
+                                    375 ;--------------------------------------------------------
+                                    376 ; code
+                                    377 ;--------------------------------------------------------
+                                    378 	.area CSEG    (CODE)
+                                    379 ;------------------------------------------------------------
+                                    380 ;Allocation info for local variables in function 'RD_sta'
+                                    381 ;------------------------------------------------------------
+                                    382 ;sta                       Allocated to registers 
+                                    383 ;------------------------------------------------------------
+                                    384 ;	./src/i2c/include/1602.c:18: unsigned char RD_sta() //读状态函数
+                                    385 ;	-----------------------------------------
+                                    386 ;	 function RD_sta
+                                    387 ;	-----------------------------------------
+      000079                        388 _RD_sta:
+                           000007   389 	ar7 = 0x07
+                           000006   390 	ar6 = 0x06
+                           000005   391 	ar5 = 0x05
+                           000004   392 	ar4 = 0x04
+                           000003   393 	ar3 = 0x03
+                           000002   394 	ar2 = 0x02
+                           000001   395 	ar1 = 0x01
+                           000000   396 	ar0 = 0x00
+                                    397 ;	./src/i2c/include/1602.c:21: RS_1602 = 0;
+                                    398 ;	assignBit
+      000079 C2 B6            [12]  399 	clr	_RS_1602
+                                    400 ;	./src/i2c/include/1602.c:22: RW_1602 = 1; //进入读 1602 状态模式
+                                    401 ;	assignBit
+      00007B D2 B5            [12]  402 	setb	_RW_1602
+                                    403 ;	./src/i2c/include/1602.c:23: EN_1602 = 1; //拉高使能信号
+                                    404 ;	assignBit
+      00007D D2 B4            [12]  405 	setb	_EN_1602
+                                    406 ;	./src/i2c/include/1602.c:24: sta = P2;    //将 1602 状态数据读取
+      00007F 85 A0 82         [24]  407 	mov	dpl,_P2
+                                    408 ;	./src/i2c/include/1602.c:25: EN_1602 = 0; //拉低使能，完成读操作
+                                    409 ;	assignBit
+      000082 C2 B4            [12]  410 	clr	_EN_1602
+                                    411 ;	./src/i2c/include/1602.c:26: return sta;  //将状态值返
+                                    412 ;	./src/i2c/include/1602.c:27: }
+      000084 22               [24]  413 	ret
+                                    414 ;------------------------------------------------------------
+                                    415 ;Allocation info for local variables in function 'Ready'
+                                    416 ;------------------------------------------------------------
+                                    417 ;	./src/i2c/include/1602.c:29: void Ready() //空闲检测函数
+                                    418 ;	-----------------------------------------
+                                    419 ;	 function Ready
+                                    420 ;	-----------------------------------------
+      000085                        421 _Ready:
+                                    422 ;	./src/i2c/include/1602.c:31: P2 = 0xFF;
+      000085 75 A0 FF         [24]  423 	mov	_P2,#0xff
+                                    424 ;	./src/i2c/include/1602.c:32: while (RD_sta() & 0x80)
+      000088                        425 00101$:
+      000088 12 00 79         [24]  426 	lcall	_RD_sta
+      00008B E5 82            [12]  427 	mov	a,dpl
+      00008D 20 E7 F8         [24]  428 	jb	acc.7,00101$
+                                    429 ;	./src/i2c/include/1602.c:34: }
+      000090 22               [24]  430 	ret
+                                    431 ;------------------------------------------------------------
+                                    432 ;Allocation info for local variables in function 'WR_Cmd'
+                                    433 ;------------------------------------------------------------
+                                    434 ;cmd                       Allocated to registers r7 
+                                    435 ;------------------------------------------------------------
+                                    436 ;	./src/i2c/include/1602.c:36: void WR_Cmd(unsigned char cmd) //写指令函数
+                                    437 ;	-----------------------------------------
+                                    438 ;	 function WR_Cmd
+                                    439 ;	-----------------------------------------
+      000091                        440 _WR_Cmd:
+      000091 AF 82            [24]  441 	mov	r7,dpl
+                                    442 ;	./src/i2c/include/1602.c:38: Ready(); //检测 1602 是否处于空闲状态
+      000093 C0 07            [24]  443 	push	ar7
+      000095 12 00 85         [24]  444 	lcall	_Ready
+      000098 D0 07            [24]  445 	pop	ar7
+                                    446 ;	./src/i2c/include/1602.c:39: RS_1602 = 0;
+                                    447 ;	assignBit
+      00009A C2 B6            [12]  448 	clr	_RS_1602
+                                    449 ;	./src/i2c/include/1602.c:40: RW_1602 = 0; //进入写指令模式
+                                    450 ;	assignBit
+      00009C C2 B5            [12]  451 	clr	_RW_1602
+                                    452 ;	./src/i2c/include/1602.c:41: P2 = cmd;    //将指令数据输出
+      00009E 8F A0            [24]  453 	mov	_P2,r7
+                                    454 ;	./src/i2c/include/1602.c:42: EN_1602 = 1; //拉高使能信号
+                                    455 ;	assignBit
+      0000A0 D2 B4            [12]  456 	setb	_EN_1602
+                                    457 ;	./src/i2c/include/1602.c:43: EN_1602 = 0; //拉低使能，完成写操作
+                                    458 ;	assignBit
+      0000A2 C2 B4            [12]  459 	clr	_EN_1602
+                                    460 ;	./src/i2c/include/1602.c:44: }
+      0000A4 22               [24]  461 	ret
+                                    462 ;------------------------------------------------------------
+                                    463 ;Allocation info for local variables in function 'WR_Dat'
+                                    464 ;------------------------------------------------------------
+                                    465 ;dat                       Allocated to registers r7 
+                                    466 ;------------------------------------------------------------
+                                    467 ;	./src/i2c/include/1602.c:46: void WR_Dat(unsigned char dat) //写数据函数
+                                    468 ;	-----------------------------------------
+                                    469 ;	 function WR_Dat
+                                    470 ;	-----------------------------------------
+      0000A5                        471 _WR_Dat:
+      0000A5 AF 82            [24]  472 	mov	r7,dpl
+                                    473 ;	./src/i2c/include/1602.c:48: Ready(); //检测 1602 是否处于空闲状态
+      0000A7 C0 07            [24]  474 	push	ar7
+      0000A9 12 00 85         [24]  475 	lcall	_Ready
+      0000AC D0 07            [24]  476 	pop	ar7
+                                    477 ;	./src/i2c/include/1602.c:49: RS_1602 = 1;
+                                    478 ;	assignBit
+      0000AE D2 B6            [12]  479 	setb	_RS_1602
+                                    480 ;	./src/i2c/include/1602.c:50: RW_1602 = 0; //进入写数据模式
+                                    481 ;	assignBit
+      0000B0 C2 B5            [12]  482 	clr	_RW_1602
+                                    483 ;	./src/i2c/include/1602.c:52: P2 = dat; //将数据输出
+      0000B2 8F A0            [24]  484 	mov	_P2,r7
+                                    485 ;	./src/i2c/include/1602.c:54: EN_1602 = 1; //拉高使能信号
+                                    486 ;	assignBit
+      0000B4 D2 B4            [12]  487 	setb	_EN_1602
+                                    488 ;	./src/i2c/include/1602.c:55: EN_1602 = 0; //拉低使能，完成写操作
+                                    489 ;	assignBit
+      0000B6 C2 B4            [12]  490 	clr	_EN_1602
+                                    491 ;	./src/i2c/include/1602.c:56: }
+      0000B8 22               [24]  492 	ret
+                                    493 ;------------------------------------------------------------
+                                    494 ;Allocation info for local variables in function 'Init_1602'
+                                    495 ;------------------------------------------------------------
+                                    496 ;	./src/i2c/include/1602.c:58: void Init_1602() //1602 初始化函
+                                    497 ;	-----------------------------------------
+                                    498 ;	 function Init_1602
+                                    499 ;	-----------------------------------------
+      0000B9                        500 _Init_1602:
+                                    501 ;	./src/i2c/include/1602.c:60: WR_Cmd(0x38); //设置 16x2 显示，5x7 点阵，8 位数据接口
+      0000B9 75 82 38         [24]  502 	mov	dpl,#0x38
+      0000BC 12 00 91         [24]  503 	lcall	_WR_Cmd
+                                    504 ;	./src/i2c/include/1602.c:61: WR_Cmd(0x0C); //开显示，关闭光标
+      0000BF 75 82 0C         [24]  505 	mov	dpl,#0x0c
+      0000C2 12 00 91         [24]  506 	lcall	_WR_Cmd
+                                    507 ;	./src/i2c/include/1602.c:62: WR_Cmd(0x06); //读或写完一个字符后，地址指针、光标均加 1
+      0000C5 75 82 06         [24]  508 	mov	dpl,#0x06
+      0000C8 12 00 91         [24]  509 	lcall	_WR_Cmd
+                                    510 ;	./src/i2c/include/1602.c:63: WR_Cmd(0x01); //数据指针清零、所示显示清零
+      0000CB 75 82 01         [24]  511 	mov	dpl,#0x01
+                                    512 ;	./src/i2c/include/1602.c:64: }
+      0000CE 02 00 91         [24]  513 	ljmp	_WR_Cmd
+                                    514 ;------------------------------------------------------------
+                                    515 ;Allocation info for local variables in function 'Disp_1602_str'
+                                    516 ;------------------------------------------------------------
+                                    517 ;column                    Allocated with name '_Disp_1602_str_PARM_2'
+                                    518 ;str                       Allocated with name '_Disp_1602_str_PARM_3'
+                                    519 ;row                       Allocated to registers r7 
+                                    520 ;addr                      Allocated to registers r7 
+                                    521 ;------------------------------------------------------------
+                                    522 ;	./src/i2c/include/1602.c:66: void Disp_1602_str(unsigned char row, unsigned char column, char *str)
+                                    523 ;	-----------------------------------------
+                                    524 ;	 function Disp_1602_str
+                                    525 ;	-----------------------------------------
+      0000D1                        526 _Disp_1602_str:
+      0000D1 AF 82            [24]  527 	mov	r7,dpl
+                                    528 ;	./src/i2c/include/1602.c:70: addr = (row - 1) * 0x40 + (column - 1); //组合成地址
+      0000D3 1F               [12]  529 	dec	r7
+      0000D4 EF               [12]  530 	mov	a,r7
+      0000D5 03               [12]  531 	rr	a
+      0000D6 03               [12]  532 	rr	a
+      0000D7 54 C0            [12]  533 	anl	a,#0xc0
+      0000D9 FF               [12]  534 	mov	r7,a
+      0000DA E5 08            [12]  535 	mov	a,_Disp_1602_str_PARM_2
+      0000DC 14               [12]  536 	dec	a
+      0000DD 2F               [12]  537 	add	a,r7
+                                    538 ;	./src/i2c/include/1602.c:71: WR_Cmd(0x80 + addr);                    //写地址命令
+      0000DE 24 80            [12]  539 	add	a,#0x80
+      0000E0 F5 82            [12]  540 	mov	dpl,a
+      0000E2 12 00 91         [24]  541 	lcall	_WR_Cmd
+                                    542 ;	./src/i2c/include/1602.c:73: while (*str) //判断 str 字符串是否已结束
+      0000E5 AD 09            [24]  543 	mov	r5,_Disp_1602_str_PARM_3
+      0000E7 AE 0A            [24]  544 	mov	r6,(_Disp_1602_str_PARM_3 + 1)
+      0000E9 AF 0B            [24]  545 	mov	r7,(_Disp_1602_str_PARM_3 + 2)
+      0000EB                        546 00101$:
+      0000EB 8D 82            [24]  547 	mov	dpl,r5
+      0000ED 8E 83            [24]  548 	mov	dph,r6
+      0000EF 8F F0            [24]  549 	mov	b,r7
+      0000F1 12 02 42         [24]  550 	lcall	__gptrget
+      0000F4 FC               [12]  551 	mov	r4,a
+      0000F5 60 18            [24]  552 	jz	00104$
+                                    553 ;	./src/i2c/include/1602.c:75: WR_Dat(*str++); //将 str 字符串数据依次写入
+      0000F7 8C 82            [24]  554 	mov	dpl,r4
+      0000F9 0D               [12]  555 	inc	r5
+      0000FA BD 00 01         [24]  556 	cjne	r5,#0x00,00116$
+      0000FD 0E               [12]  557 	inc	r6
+      0000FE                        558 00116$:
+      0000FE C0 07            [24]  559 	push	ar7
+      000100 C0 06            [24]  560 	push	ar6
+      000102 C0 05            [24]  561 	push	ar5
+      000104 12 00 A5         [24]  562 	lcall	_WR_Dat
+      000107 D0 05            [24]  563 	pop	ar5
+      000109 D0 06            [24]  564 	pop	ar6
+      00010B D0 07            [24]  565 	pop	ar7
+      00010D 80 DC            [24]  566 	sjmp	00101$
+      00010F                        567 00104$:
+                                    568 ;	./src/i2c/include/1602.c:77: }
+      00010F 22               [24]  569 	ret
+                                    570 	.area CSEG    (CODE)
+                                    571 	.area CONST   (CODE)
+                                    572 	.area XINIT   (CODE)
+                                    573 	.area CABS    (ABS,CODE)

@@ -3,6 +3,8 @@
         "compiler.h": "c",
         "1602.h": "c",
         "stc89xx.h": "c",
-        "lint.h": "c"
+        "lint.h": "c",
+        "i2c.h": "c",
+        "at24c256.h": "c"
     }
 }

@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-02 11:50:35
- * @LastEditTime: 2021-04-04 17:20:14
+ * @LastEditTime: 2021-04-04 20:10:03
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/i2c/include/I2C.c
@@ -110,7 +110,7 @@ unsigned char Wr_I2C(unsigned char dat)
 unsigned char RdACK_I2C(unsigned char ack)
 {
     unsigned char mask;
-    unsigned char dat;
+    unsigned char dat = 0;
     // 确保主机释放SDA
     SDA_I2C = 1;
     for (mask = 0x80; mask != 0; mask >>= 1)
@@ -133,7 +133,7 @@ unsigned char RdACK_I2C(unsigned char ack)
         else
         {
             // 第二次循环
-            // mask = 0b0100 0000 
+            // mask = 0b0100 0000
             // 读取1
             // 0b0000 0000 | 0b0100 0000 = 0b0100 0000
             // 整体大概意思就是,每次mask向右走一位

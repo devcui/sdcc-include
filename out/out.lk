@@ -14,8 +14,9 @@
 -l libint
 -l liblong
 -l libfloat
-./src/temperature/lib/1602.rel
-./src/temperature/lib/DS18B20.rel
-./src/temperature/lib/temperature.rel
+./src/i2c/lib/main.rel
+./src/i2c/lib/1602.rel
+./src/i2c/lib/AT24C256.rel
+./src/i2c/lib/I2C.rel
 
 -e
