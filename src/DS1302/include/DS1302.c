@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-05 15:51:02
- * @LastEditTime: 2021-04-05 18:13:47
+ * @LastEditTime: 2021-04-05 20:21:53
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/DS1302/include/DS1302.c
@@ -89,11 +89,12 @@ void Init_1302(unsigned char *time)
     // 解除写保护
     WrSingle_1302(0x8E, 0x00);
 
-    for (j = 0; j <= 6; j++)
-    {
-        // 写入7个时钟数据
-        WrSingle_1302(0x80 + 2 * j, time[j]);
-    }
+    // for (j = 0; j <= 6; j++)
+    // {
+    //     // 写入7个时钟数据
+    //     WrSingle_1302(0x80 + 2 * j, time[j]);
+    // }
+    WrBurst_1302(time);
 }
 
 void GetTime(unsigned char *currentTime)
@@ -106,4 +107,39 @@ void GetTime(unsigned char *currentTime)
         *currentTime = RdSingle_1302(0x81 + 2 * j);
         currentTime++;
     }
+}
+
+//突发写模式
+void WrBurst_1302(unsigned char *SetTime)
+{
+    unsigned char j;
+    // 拉高CE
+    CE_LINE = 1;
+    // Burst模式专用指令
+    WrByte_1302(0xBE);
+    for (j = 0; j < 6; j++)
+    {
+        // 写入7位时钟数据
+        WrByte_1302(SetTime[j]);
+    }
+    WrByte_1302(0);
+    // 拉低CE
+    CE_LINE = 0;
+}
+
+void RdBurst_1302(unsigned char *CurrentTime)
+{
+    unsigned char j;
+    // 拉高CE
+    CE_LINE = 1;
+    // Brust模式读专用指令
+    WrByte_1302(0xBF);
+    for (j = 0; j <= 6; j++)
+    {
+        // 读取一个字节数据
+        *CurrentTime = RdByte_1302();
+        CurrentTime++;
+    }
+    // 拉低CE
+    CE_LINE = 0;
 }
