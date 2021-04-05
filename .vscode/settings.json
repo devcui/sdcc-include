@@ -6,6 +6,7 @@
         "lint.h": "c",
         "i2c.h": "c",
         "at24c256.h": "c",
-        "infrared.h": "c"
+        "infrared.h": "c",
+        "ds18b20.h": "c"
     }
 }
