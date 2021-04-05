@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-05 00:49:37
- * @LastEditTime: 2021-04-05 12:23:11
+ * @LastEditTime: 2021-04-05 15:03:23
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/ir/main.c
@@ -11,11 +11,13 @@
 #include "./include/1602.h"
 #include "./include/infrared.h"
 #include "../../include/STC89xx.h"
+#include "../../include/mcs51/lint.h"
 
 unsigned char *Key_Str = 0;
 
 void main()
 {
+    P10 = 1;
     unsigned char Key;
     Init_1602();
     InitIR();
@@ -99,8 +101,21 @@ void main()
             default:
                 Key_Str = "error!";
             }
-            Disp_1602_str(2, 5, " ");
+            Disp_1602_str(2,5,"             ");
             Disp_1602_str(2, 5, Key_Str);
         }
     }
+}
+
+void wait2() __interrupt(2)
+{
+    if (P10 == 0)
+    {
+        P10 = 1;
+    }
+    else
+    {
+        P10 = 0;
+    }
+    WaitRed();
 }

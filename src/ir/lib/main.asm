@@ -8,7 +8,9 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
+	.globl _wait2
 	.globl _main
+	.globl _WaitRed
 	.globl _InitIR
 	.globl _Disp_1602_str
 	.globl _Init_1602
@@ -301,6 +303,20 @@ _CP_RL2	=	0x00c8
 	.area REG_BANK_0	(REL,OVR,DATA)
 	.ds 8
 ;--------------------------------------------------------
+; overlayable bit register bank
+;--------------------------------------------------------
+	.area BIT_BANK	(REL,OVR,DATA)
+bits:
+	.ds 1
+	b0 = bits[0]
+	b1 = bits[1]
+	b2 = bits[2]
+	b3 = bits[3]
+	b4 = bits[4]
+	b5 = bits[5]
+	b6 = bits[6]
+	b7 = bits[7]
+;--------------------------------------------------------
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
@@ -361,6 +377,11 @@ __start__stack:
 	.area HOME    (CODE)
 __interrupt_vect:
 	ljmp	__sdcc_gsinit_startup
+	reti
+	.ds	7
+	reti
+	.ds	7
+	ljmp	_wait2
 ;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
@@ -374,7 +395,7 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	./src/ir/main.c:15: unsigned char *Key_Str = 0;
+;	./src/ir/main.c:16: unsigned char *Key_Str = 0;
 	clr	a
 	mov	_Key_Str,a
 	mov	(_Key_Str + 1),a
@@ -399,7 +420,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Key                       Allocated to registers r7 
 ;------------------------------------------------------------
-;	./src/ir/main.c:17: void main()
+;	./src/ir/main.c:18: void main()
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
@@ -412,34 +433,37 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/ir/main.c:20: Init_1602();
+;	./src/ir/main.c:20: P10 = 1;
+;	assignBit
+	setb	_P10
+;	./src/ir/main.c:22: Init_1602();
 	lcall	_Init_1602
-;	./src/ir/main.c:21: InitIR();
+;	./src/ir/main.c:23: InitIR();
 	lcall	_InitIR
-;	./src/ir/main.c:22: Disp_1602_str(1, 2, "Nebula-Pi IR");
+;	./src/ir/main.c:24: Disp_1602_str(1, 2, "Nebula-Pi IR");
 	mov	_Disp_1602_str_PARM_3,#___str_0
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_0 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x02
 	mov	dpl,#0x01
 	lcall	_Disp_1602_str
-;	./src/ir/main.c:23: Disp_1602_str(2, 1, "KEY: ");
+;	./src/ir/main.c:25: Disp_1602_str(2, 1, "KEY: ");
 	mov	_Disp_1602_str_PARM_3,#___str_1
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_1 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/ir/main.c:24: while (1)
+;	./src/ir/main.c:26: while (1)
 00127$:
-;	./src/ir/main.c:27: if (Flag_IR)
+;	./src/ir/main.c:29: if (Flag_IR)
 	mov	a,_Flag_IR
 	jz	00127$
-;	./src/ir/main.c:30: Flag_IR = 0;
+;	./src/ir/main.c:32: Flag_IR = 0;
 	mov	_Flag_IR,#0x00
-;	./src/ir/main.c:33: Key = (unsigned char)(Data_IR >> 16);
+;	./src/ir/main.c:35: Key = (unsigned char)(Data_IR >> 16);
 	mov	r7,(_Data_IR + 2)
-;	./src/ir/main.c:34: switch (Key)
+;	./src/ir/main.c:36: switch (Key)
 	cjne	r7,#0x07,00224$
 	ljmp	00107$
 00224$:
@@ -504,198 +528,250 @@ _main:
 	ljmp	00115$
 00244$:
 	ljmp	00122$
-;	./src/ir/main.c:36: case 69:
+;	./src/ir/main.c:38: case 69:
 00101$:
-;	./src/ir/main.c:37: Key_Str = "CH-";
+;	./src/ir/main.c:39: Key_Str = "CH-";
 	mov	_Key_Str,#___str_2
 	mov	(_Key_Str + 1),#(___str_2 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:38: break;
+;	./src/ir/main.c:40: break;
 	ljmp	00123$
-;	./src/ir/main.c:39: case 70:
+;	./src/ir/main.c:41: case 70:
 00102$:
-;	./src/ir/main.c:40: Key_Str = "CH";
+;	./src/ir/main.c:42: Key_Str = "CH";
 	mov	_Key_Str,#___str_3
 	mov	(_Key_Str + 1),#(___str_3 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:41: break;
+;	./src/ir/main.c:43: break;
 	ljmp	00123$
-;	./src/ir/main.c:42: case 71:
+;	./src/ir/main.c:44: case 71:
 00103$:
-;	./src/ir/main.c:43: Key_Str = "CH+";
+;	./src/ir/main.c:45: Key_Str = "CH+";
 	mov	_Key_Str,#___str_4
 	mov	(_Key_Str + 1),#(___str_4 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:44: break;
+;	./src/ir/main.c:46: break;
 	ljmp	00123$
-;	./src/ir/main.c:45: case 68:
+;	./src/ir/main.c:47: case 68:
 00104$:
-;	./src/ir/main.c:46: Key_Str = "PREV";
+;	./src/ir/main.c:48: Key_Str = "PREV";
 	mov	_Key_Str,#___str_5
 	mov	(_Key_Str + 1),#(___str_5 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:47: break;
+;	./src/ir/main.c:49: break;
 	ljmp	00123$
-;	./src/ir/main.c:48: case 64:
+;	./src/ir/main.c:50: case 64:
 00105$:
-;	./src/ir/main.c:49: Key_Str = "NEXT";
+;	./src/ir/main.c:51: Key_Str = "NEXT";
 	mov	_Key_Str,#___str_6
 	mov	(_Key_Str + 1),#(___str_6 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:50: break;
+;	./src/ir/main.c:52: break;
 	ljmp	00123$
-;	./src/ir/main.c:51: case 67:
+;	./src/ir/main.c:53: case 67:
 00106$:
-;	./src/ir/main.c:52: Key_Str = "PLAY/PAUSE";
+;	./src/ir/main.c:54: Key_Str = "PLAY/PAUSE";
 	mov	_Key_Str,#___str_7
 	mov	(_Key_Str + 1),#(___str_7 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:53: break;
+;	./src/ir/main.c:55: break;
 	ljmp	00123$
-;	./src/ir/main.c:54: case 7:
+;	./src/ir/main.c:56: case 7:
 00107$:
-;	./src/ir/main.c:55: Key_Str = "-";
+;	./src/ir/main.c:57: Key_Str = "-";
 	mov	_Key_Str,#___str_8
 	mov	(_Key_Str + 1),#(___str_8 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:56: break;
+;	./src/ir/main.c:58: break;
 	ljmp	00123$
-;	./src/ir/main.c:57: case 21:
+;	./src/ir/main.c:59: case 21:
 00108$:
-;	./src/ir/main.c:58: Key_Str = "+";
+;	./src/ir/main.c:60: Key_Str = "+";
 	mov	_Key_Str,#___str_9
 	mov	(_Key_Str + 1),#(___str_9 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:59: break;
+;	./src/ir/main.c:61: break;
 	ljmp	00123$
-;	./src/ir/main.c:60: case 9:
+;	./src/ir/main.c:62: case 9:
 00109$:
-;	./src/ir/main.c:61: Key_Str = "EQ";
+;	./src/ir/main.c:63: Key_Str = "EQ";
 	mov	_Key_Str,#___str_10
 	mov	(_Key_Str + 1),#(___str_10 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:62: break;
+;	./src/ir/main.c:64: break;
 	ljmp	00123$
-;	./src/ir/main.c:63: case 22:
+;	./src/ir/main.c:65: case 22:
 00110$:
-;	./src/ir/main.c:64: Key_Str = "0";
+;	./src/ir/main.c:66: Key_Str = "0";
 	mov	_Key_Str,#___str_11
 	mov	(_Key_Str + 1),#(___str_11 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:65: break;
+;	./src/ir/main.c:67: break;
 	ljmp	00123$
-;	./src/ir/main.c:66: case 25:
+;	./src/ir/main.c:68: case 25:
 00111$:
-;	./src/ir/main.c:67: Key_Str = "100+";
+;	./src/ir/main.c:69: Key_Str = "100+";
 	mov	_Key_Str,#___str_12
 	mov	(_Key_Str + 1),#(___str_12 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:68: break;
+;	./src/ir/main.c:70: break;
 	ljmp	00123$
-;	./src/ir/main.c:69: case 13:
+;	./src/ir/main.c:71: case 13:
 00112$:
-;	./src/ir/main.c:70: Key_Str = "200+";
+;	./src/ir/main.c:72: Key_Str = "200+";
 	mov	_Key_Str,#___str_13
 	mov	(_Key_Str + 1),#(___str_13 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:71: break;
-;	./src/ir/main.c:72: case 12:
+;	./src/ir/main.c:73: break;
+;	./src/ir/main.c:74: case 12:
 	sjmp	00123$
 00113$:
-;	./src/ir/main.c:73: Key_Str = "1";
+;	./src/ir/main.c:75: Key_Str = "1";
 	mov	_Key_Str,#___str_14
 	mov	(_Key_Str + 1),#(___str_14 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:74: break;
-;	./src/ir/main.c:75: case 24:
+;	./src/ir/main.c:76: break;
+;	./src/ir/main.c:77: case 24:
 	sjmp	00123$
 00114$:
-;	./src/ir/main.c:76: Key_Str = "2";
+;	./src/ir/main.c:78: Key_Str = "2";
 	mov	_Key_Str,#___str_15
 	mov	(_Key_Str + 1),#(___str_15 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:77: break;
-;	./src/ir/main.c:78: case 94:
+;	./src/ir/main.c:79: break;
+;	./src/ir/main.c:80: case 94:
 	sjmp	00123$
 00115$:
-;	./src/ir/main.c:79: Key_Str = "3";
+;	./src/ir/main.c:81: Key_Str = "3";
 	mov	_Key_Str,#___str_16
 	mov	(_Key_Str + 1),#(___str_16 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:80: break;
-;	./src/ir/main.c:81: case 8:
+;	./src/ir/main.c:82: break;
+;	./src/ir/main.c:83: case 8:
 	sjmp	00123$
 00116$:
-;	./src/ir/main.c:82: Key_Str = "4";
+;	./src/ir/main.c:84: Key_Str = "4";
 	mov	_Key_Str,#___str_17
 	mov	(_Key_Str + 1),#(___str_17 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:83: break;
-;	./src/ir/main.c:84: case 28:
+;	./src/ir/main.c:85: break;
+;	./src/ir/main.c:86: case 28:
 	sjmp	00123$
 00117$:
-;	./src/ir/main.c:85: Key_Str = "5";
+;	./src/ir/main.c:87: Key_Str = "5";
 	mov	_Key_Str,#___str_18
 	mov	(_Key_Str + 1),#(___str_18 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:86: break;
-;	./src/ir/main.c:87: case 90:
+;	./src/ir/main.c:88: break;
+;	./src/ir/main.c:89: case 90:
 	sjmp	00123$
 00118$:
-;	./src/ir/main.c:88: Key_Str = "6";
+;	./src/ir/main.c:90: Key_Str = "6";
 	mov	_Key_Str,#___str_19
 	mov	(_Key_Str + 1),#(___str_19 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:89: break;
-;	./src/ir/main.c:90: case 66:
+;	./src/ir/main.c:91: break;
+;	./src/ir/main.c:92: case 66:
 	sjmp	00123$
 00119$:
-;	./src/ir/main.c:91: Key_Str = "7";
+;	./src/ir/main.c:93: Key_Str = "7";
 	mov	_Key_Str,#___str_20
 	mov	(_Key_Str + 1),#(___str_20 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:92: break;
-;	./src/ir/main.c:93: case 82:
+;	./src/ir/main.c:94: break;
+;	./src/ir/main.c:95: case 82:
 	sjmp	00123$
 00120$:
-;	./src/ir/main.c:94: Key_Str = "8";
+;	./src/ir/main.c:96: Key_Str = "8";
 	mov	_Key_Str,#___str_21
 	mov	(_Key_Str + 1),#(___str_21 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:95: break;
-;	./src/ir/main.c:96: case 74:
+;	./src/ir/main.c:97: break;
+;	./src/ir/main.c:98: case 74:
 	sjmp	00123$
 00121$:
-;	./src/ir/main.c:97: Key_Str = "9";
+;	./src/ir/main.c:99: Key_Str = "9";
 	mov	_Key_Str,#___str_22
 	mov	(_Key_Str + 1),#(___str_22 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:98: break;
-;	./src/ir/main.c:99: default:
+;	./src/ir/main.c:100: break;
+;	./src/ir/main.c:101: default:
 	sjmp	00123$
 00122$:
-;	./src/ir/main.c:100: Key_Str = "error!";
+;	./src/ir/main.c:102: Key_Str = "error!";
 	mov	_Key_Str,#___str_23
 	mov	(_Key_Str + 1),#(___str_23 >> 8)
 	mov	(_Key_Str + 2),#0x80
-;	./src/ir/main.c:101: }
+;	./src/ir/main.c:103: }
 00123$:
-;	./src/ir/main.c:102: Disp_1602_str(2, 5, " ");
+;	./src/ir/main.c:104: Disp_1602_str(2,5,"             ");
 	mov	_Disp_1602_str_PARM_3,#___str_24
 	mov	(_Disp_1602_str_PARM_3 + 1),#(___str_24 >> 8)
 	mov	(_Disp_1602_str_PARM_3 + 2),#0x80
 	mov	_Disp_1602_str_PARM_2,#0x05
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/ir/main.c:103: Disp_1602_str(2, 5, Key_Str);
+;	./src/ir/main.c:105: Disp_1602_str(2, 5, Key_Str);
 	mov	_Disp_1602_str_PARM_2,#0x05
 	mov	_Disp_1602_str_PARM_3,_Key_Str
 	mov	(_Disp_1602_str_PARM_3 + 1),(_Key_Str + 1)
 	mov	(_Disp_1602_str_PARM_3 + 2),(_Key_Str + 2)
 	mov	dpl,#0x02
 	lcall	_Disp_1602_str
-;	./src/ir/main.c:106: }
+;	./src/ir/main.c:108: }
 	ljmp	00127$
+;------------------------------------------------------------
+;Allocation info for local variables in function 'wait2'
+;------------------------------------------------------------
+;	./src/ir/main.c:110: void wait2() __interrupt(2)
+;	-----------------------------------------
+;	 function wait2
+;	-----------------------------------------
+_wait2:
+	push	bits
+	push	acc
+	push	b
+	push	dpl
+	push	dph
+	push	(0+7)
+	push	(0+6)
+	push	(0+5)
+	push	(0+4)
+	push	(0+3)
+	push	(0+2)
+	push	(0+1)
+	push	(0+0)
+	push	psw
+	mov	psw,#0x00
+;	./src/ir/main.c:112: if (P10 == 0)
+	jb	_P10,00102$
+;	./src/ir/main.c:114: P10 = 1;
+;	assignBit
+	setb	_P10
+	sjmp	00103$
+00102$:
+;	./src/ir/main.c:118: P10 = 0;
+;	assignBit
+	clr	_P10
+00103$:
+;	./src/ir/main.c:120: WaitRed();
+	lcall	_WaitRed
+;	./src/ir/main.c:121: }
+	pop	psw
+	pop	(0+0)
+	pop	(0+1)
+	pop	(0+2)
+	pop	(0+3)
+	pop	(0+4)
+	pop	(0+5)
+	pop	(0+6)
+	pop	(0+7)
+	pop	dph
+	pop	dpl
+	pop	b
+	pop	acc
+	pop	bits
+	reti
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area CONST   (CODE)
@@ -820,7 +896,7 @@ ___str_23:
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 ___str_24:
-	.ascii " "
+	.ascii "             "
 	.db 0x00
 	.area CSEG    (CODE)
 	.area XINIT   (CODE)

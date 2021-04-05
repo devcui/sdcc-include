@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-04 23:09:09
- * @LastEditTime: 2021-04-05 12:22:11
+ * @LastEditTime: 2021-04-05 14:56:56
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/ir/include/infrared.c
@@ -10,21 +10,7 @@
  */
 
 #include "../../../include/STC89xx.h"
-#include "../../../include/mcs51/lint.h"
 #include "./infrared.h"
-
-#define HIGH_IR 1
-#define LOW_IR 0
-// 如下所有时间都是按照每 1.09us计时一次的 次数
-#define Min_9ms 8000
-#define Max_9ms 10000
-#define Min_4_5ms 3500
-#define MAX_4_5ms 5000
-#define Min_560us 300
-#define Max_560us 700
-#define Max_1680us 1300
-#define Min_1680us 1800
-#define Time_16ms 16000
 
 // LED
 SBIT(LED1, _P1, 1);
@@ -49,10 +35,14 @@ void InitIR()
     // M1=0,M0=1模式,TH0,TL0合并位16位定时器
     // 这里用 |= 也是为了保证前面的不变
     TMOD |= 0x01;
-    // 开始计数
-    TR0 = 1;
+    // 结束中断
+    TR0 = 0;
     // 关闭定时器0中断
     ET0 = 0;
+
+    // 装载计数器目标值
+    TL0 = 12;
+    TH0 = 34;
 
     // ------INT1
     // 下降沿触发
@@ -88,8 +78,7 @@ unsigned int T_Count(unsigned int flag)
     return (TH0 * 256 + TL0);
 }
 
-// Int1 中断 对应的函数是 2
-void Int1() __interrupt(2)
+void WaitRed()
 {
     unsigned int i;
     unsigned int T_Low;
@@ -102,7 +91,7 @@ void Int1() __interrupt(2)
 
     // 判断引导码是否正确
     // 比较1.09us的次数,推算出时常
-    if (T_Low < Min_9ms || T_Low > Max_9ms || T_High < Min_4_5ms || T_High > MAX_4_5ms)
+    if (T_Low < Min_9ms || T_Low > Max_9ms || T_High < Min_4_5ms || T_High > Max_4_5ms)
     {
         // INT1 中断关闭
         IE1 = 0;

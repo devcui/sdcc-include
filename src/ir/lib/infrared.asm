@@ -8,8 +8,6 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _Int1
-	.globl _T_Count
 	.globl _IR_out
 	.globl _LED1
 	.globl _CP_RL2
@@ -151,6 +149,8 @@
 	.globl _Data_IR
 	.globl _Flag_IR
 	.globl _InitIR
+	.globl _T_Count
+	.globl _WaitRed
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -305,20 +305,6 @@ _IR_out	=	0x00b3
 	.area REG_BANK_0	(REL,OVR,DATA)
 	.ds 8
 ;--------------------------------------------------------
-; overlayable bit register bank
-;--------------------------------------------------------
-	.area BIT_BANK	(REL,OVR,DATA)
-bits:
-	.ds 1
-	b0 = bits[0]
-	b1 = bits[1]
-	b2 = bits[2]
-	b3 = bits[3]
-	b4 = bits[4]
-	b5 = bits[5]
-	b6 = bits[6]
-	b7 = bits[7]
-;--------------------------------------------------------
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
@@ -376,7 +362,7 @@ _Data_IR::
 	.area GSINIT  (CODE)
 	.area GSFINAL (CODE)
 	.area GSINIT  (CODE)
-;	./src/ir/include/infrared.c:34: unsigned char Flag_IR = 0;
+;	./src/ir/include/infrared.c:20: unsigned char Flag_IR = 0;
 	mov	_Flag_IR,#0x00
 ;--------------------------------------------------------
 ; Home
@@ -390,7 +376,7 @@ _Data_IR::
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'InitIR'
 ;------------------------------------------------------------
-;	./src/ir/include/infrared.c:39: void InitIR()
+;	./src/ir/include/infrared.c:25: void InitIR()
 ;	-----------------------------------------
 ;	 function InitIR
 ;	-----------------------------------------
@@ -403,50 +389,54 @@ _InitIR:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/ir/include/infrared.c:43: IR_out = 1;
+;	./src/ir/include/infrared.c:29: IR_out = 1;
 ;	assignBit
 	setb	_IR_out
-;	./src/ir/include/infrared.c:47: TMOD &= 0xF0;
+;	./src/ir/include/infrared.c:33: TMOD &= 0xF0;
 	anl	_TMOD,#0xf0
-;	./src/ir/include/infrared.c:51: TMOD |= 0x01;
+;	./src/ir/include/infrared.c:37: TMOD |= 0x01;
 	orl	_TMOD,#0x01
-;	./src/ir/include/infrared.c:53: TR0 = 1;
+;	./src/ir/include/infrared.c:39: TR0 = 0;
 ;	assignBit
-	setb	_TR0
-;	./src/ir/include/infrared.c:55: ET0 = 0;
+	clr	_TR0
+;	./src/ir/include/infrared.c:41: ET0 = 0;
 ;	assignBit
 	clr	_ET0
-;	./src/ir/include/infrared.c:59: IT1 = 1;
+;	./src/ir/include/infrared.c:44: TL0 = 12;
+	mov	_TL0,#0x0c
+;	./src/ir/include/infrared.c:45: TH0 = 34;
+	mov	_TH0,#0x22
+;	./src/ir/include/infrared.c:49: IT1 = 1;
 ;	assignBit
 	setb	_IT1
-;	./src/ir/include/infrared.c:61: EX1 = 1;
+;	./src/ir/include/infrared.c:51: EX1 = 1;
 ;	assignBit
 	setb	_EX1
-;	./src/ir/include/infrared.c:63: EA = 1;
+;	./src/ir/include/infrared.c:53: EA = 1;
 ;	assignBit
 	setb	_EA
-;	./src/ir/include/infrared.c:64: }
+;	./src/ir/include/infrared.c:54: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'T_Count'
 ;------------------------------------------------------------
 ;flag                      Allocated to registers r6 r7 
 ;------------------------------------------------------------
-;	./src/ir/include/infrared.c:66: unsigned int T_Count(unsigned int flag)
+;	./src/ir/include/infrared.c:56: unsigned int T_Count(unsigned int flag)
 ;	-----------------------------------------
 ;	 function T_Count
 ;	-----------------------------------------
 _T_Count:
 	mov	r6,dpl
 	mov	r7,dph
-;	./src/ir/include/infrared.c:69: TH0 = 0;
+;	./src/ir/include/infrared.c:59: TH0 = 0;
 	mov	_TH0,#0x00
-;	./src/ir/include/infrared.c:70: TL0 = 0;
+;	./src/ir/include/infrared.c:60: TL0 = 0;
 	mov	_TL0,#0x00
-;	./src/ir/include/infrared.c:72: TR0 = 1;
+;	./src/ir/include/infrared.c:62: TR0 = 1;
 ;	assignBit
 	setb	_TR0
-;	./src/ir/include/infrared.c:75: while (IR_out == flag)
+;	./src/ir/include/infrared.c:65: while (IR_out == flag)
 00103$:
 	mov	c,_IR_out
 	clr	a
@@ -455,16 +445,16 @@ _T_Count:
 	cjne	a,ar6,00105$
 	mov	a,r5
 	cjne	a,ar7,00105$
-;	./src/ir/include/infrared.c:79: if (TH0 > (Time_16ms >> 8))
+;	./src/ir/include/infrared.c:69: if (TH0 > (Time_16ms >> 8))
 	mov	a,_TH0
 	add	a,#0xff - 0x3e
 	jnc	00103$
-;	./src/ir/include/infrared.c:81: break;
+;	./src/ir/include/infrared.c:71: break;
 00105$:
-;	./src/ir/include/infrared.c:85: TR0 = 0;
+;	./src/ir/include/infrared.c:75: TR0 = 0;
 ;	assignBit
 	clr	_TR0
-;	./src/ir/include/infrared.c:88: return (TH0 * 256 + TL0);
+;	./src/ir/include/infrared.c:78: return (TH0 * 256 + TL0);
 	mov	r7,_TH0
 	mov	r6,#0x00
 	mov	r4,_TL0
@@ -475,41 +465,26 @@ _T_Count:
 	mov	a,r5
 	addc	a,r7
 	mov	dph,a
-;	./src/ir/include/infrared.c:89: }
+;	./src/ir/include/infrared.c:79: }
 	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'Int1'
+;Allocation info for local variables in function 'WaitRed'
 ;------------------------------------------------------------
 ;i                         Allocated to registers r6 r7 
 ;T_Low                     Allocated to registers r4 r5 
 ;T_High                    Allocated to registers r2 r3 
 ;------------------------------------------------------------
-;	./src/ir/include/infrared.c:92: void Int1() __interrupt(2)
+;	./src/ir/include/infrared.c:81: void WaitRed()
 ;	-----------------------------------------
-;	 function Int1
+;	 function WaitRed
 ;	-----------------------------------------
-_Int1:
-	push	bits
-	push	acc
-	push	b
-	push	dpl
-	push	dph
-	push	(0+7)
-	push	(0+6)
-	push	(0+5)
-	push	(0+4)
-	push	(0+3)
-	push	(0+2)
-	push	(0+1)
-	push	(0+0)
-	push	psw
-	mov	psw,#0x00
-;	./src/ir/include/infrared.c:99: T_Low = T_Count(LOW_IR);
+_WaitRed:
+;	./src/ir/include/infrared.c:88: T_Low = T_Count(LOW_IR);
 	mov	dptr,#0x0000
 	lcall	_T_Count
 	mov	r6,dpl
 	mov	r7,dph
-;	./src/ir/include/infrared.c:101: T_High = T_Count(HIGH_IR);
+;	./src/ir/include/infrared.c:90: T_High = T_Count(HIGH_IR);
 	mov	dptr,#0x0001
 	push	ar7
 	push	ar6
@@ -518,7 +493,7 @@ _Int1:
 	mov	r5,dph
 	pop	ar6
 	pop	ar7
-;	./src/ir/include/infrared.c:105: if (T_Low < Min_9ms || T_Low > Max_9ms || T_High < Min_4_5ms || T_High > MAX_4_5ms)
+;	./src/ir/include/infrared.c:94: if (T_Low < Min_9ms || T_Low > Max_9ms || T_High < Min_4_5ms || T_High > Max_4_5ms)
 	clr	c
 	mov	a,r6
 	subb	a,#0x40
@@ -541,24 +516,24 @@ _Int1:
 	subb	a,r5
 	jnc	00125$
 00101$:
-;	./src/ir/include/infrared.c:108: IE1 = 0;
+;	./src/ir/include/infrared.c:97: IE1 = 0;
 ;	assignBit
 	clr	_IE1
-;	./src/ir/include/infrared.c:109: return;
-	ljmp	00116$
-;	./src/ir/include/infrared.c:116: for (i = 0; i < 32; i++)
+;	./src/ir/include/infrared.c:98: return;
+	ret
+;	./src/ir/include/infrared.c:105: for (i = 0; i < 32; i++)
 00125$:
 	mov	r6,#0x00
 	mov	r7,#0x00
 00114$:
-;	./src/ir/include/infrared.c:119: T_Low = T_Count(LOW_IR);
+;	./src/ir/include/infrared.c:108: T_Low = T_Count(LOW_IR);
 	mov	dptr,#0x0000
 	push	ar7
 	push	ar6
 	lcall	_T_Count
 	mov	r4,dpl
 	mov	r5,dph
-;	./src/ir/include/infrared.c:121: T_High = T_Count(HIGH_IR);
+;	./src/ir/include/infrared.c:110: T_High = T_Count(HIGH_IR);
 	mov	dptr,#0x0001
 	push	ar5
 	push	ar4
@@ -569,7 +544,7 @@ _Int1:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	./src/ir/include/infrared.c:123: if (T_Low < Min_560us || T_Low > Max_560us || T_High < Min_560us || T_High > Max_1680us)
+;	./src/ir/include/infrared.c:112: if (T_Low < Min_560us || T_Low > Max_560us || T_High < Min_560us || T_High > Max_1680us)
 	clr	c
 	mov	a,r4
 	subb	a,#0x2c
@@ -586,19 +561,19 @@ _Int1:
 	mov	a,r3
 	subb	a,#0x01
 	jc	00106$
-	mov	a,#0x14
+	mov	a,#0x08
 	subb	a,r2
-	mov	a,#0x05
+	mov	a,#0x07
 	subb	a,r3
 	jnc	00107$
 00106$:
-;	./src/ir/include/infrared.c:126: IE1 = 0;
+;	./src/ir/include/infrared.c:115: IE1 = 0;
 ;	assignBit
 	clr	_IE1
-;	./src/ir/include/infrared.c:127: return;
-	sjmp	00116$
+;	./src/ir/include/infrared.c:116: return;
+	ret
 00107$:
-;	./src/ir/include/infrared.c:130: Data_IR >>= 1;
+;	./src/ir/include/infrared.c:119: Data_IR >>= 1;
 	mov	a,(_Data_IR + 3)
 	clr	c
 	rrc	a
@@ -612,17 +587,17 @@ _Int1:
 	mov	a,_Data_IR
 	rrc	a
 	mov	_Data_IR,a
-;	./src/ir/include/infrared.c:131: if (T_High > Min_1680us)
+;	./src/ir/include/infrared.c:120: if (T_High > Min_1680us)
 	clr	c
-	mov	a,#0x08
+	mov	a,#0x14
 	subb	a,r2
-	mov	a,#0x07
+	mov	a,#0x05
 	subb	a,r3
 	jnc	00115$
-;	./src/ir/include/infrared.c:134: Data_IR |= 0x80000000;
+;	./src/ir/include/infrared.c:123: Data_IR |= 0x80000000;
 	orl	(_Data_IR + 3),#0x80
 00115$:
-;	./src/ir/include/infrared.c:116: for (i = 0; i < 32; i++)
+;	./src/ir/include/infrared.c:105: for (i = 0; i < 32; i++)
 	inc	r6
 	cjne	r6,#0x00,00172$
 	inc	r7
@@ -633,28 +608,13 @@ _Int1:
 	mov	a,r7
 	subb	a,#0x00
 	jc	00114$
-;	./src/ir/include/infrared.c:138: Flag_IR = 1;
+;	./src/ir/include/infrared.c:127: Flag_IR = 1;
 	mov	_Flag_IR,#0x01
-;	./src/ir/include/infrared.c:140: IE1 = 0;
+;	./src/ir/include/infrared.c:129: IE1 = 0;
 ;	assignBit
 	clr	_IE1
-00116$:
-;	./src/ir/include/infrared.c:141: }
-	pop	psw
-	pop	(0+0)
-	pop	(0+1)
-	pop	(0+2)
-	pop	(0+3)
-	pop	(0+4)
-	pop	(0+5)
-	pop	(0+6)
-	pop	(0+7)
-	pop	dph
-	pop	dpl
-	pop	b
-	pop	acc
-	pop	bits
-	reti
+;	./src/ir/include/infrared.c:130: }
+	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
