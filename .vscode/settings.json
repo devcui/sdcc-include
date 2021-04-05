@@ -5,6 +5,7 @@
         "stc89xx.h": "c",
         "lint.h": "c",
         "i2c.h": "c",
-        "at24c256.h": "c"
+        "at24c256.h": "c",
+        "infrared.h": "c"
     }
 }

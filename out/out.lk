@@ -14,9 +14,8 @@
 -l libint
 -l liblong
 -l libfloat
-./src/i2c/lib/main.rel
-./src/i2c/lib/1602.rel
-./src/i2c/lib/AT24C256.rel
-./src/i2c/lib/I2C.rel
+./src/ir/lib/main.rel
+./src/ir/lib/1602.rel
+./src/ir/lib/infrared.rel
 
 -e

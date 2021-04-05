@@ -2,17 +2,16 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 4.0.0 #11528 (Mac OS X x86_64)
 ;--------------------------------------------------------
-	.module main
+	.module infrared
 	.optsdcc -mmcs51 --model-small
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
-	.globl _RdStr_AT24CPAGE
-	.globl _WrStr_AT24CPAGE
-	.globl _Disp_1602_str
-	.globl _Init_1602
+	.globl _Int1
+	.globl _T_Count
+	.globl _IR_out
+	.globl _LED1
 	.globl _CP_RL2
 	.globl _C_T2
 	.globl _TR2
@@ -149,8 +148,9 @@
 	.globl _WDT_CONTR
 	.globl _XICON
 	.globl _P4
-	.globl _str
-	.globl _str1
+	.globl _Data_IR
+	.globl _Flag_IR
+	.globl _InitIR
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -297,29 +297,39 @@ _EXEN2	=	0x00cb
 _TR2	=	0x00ca
 _C_T2	=	0x00c9
 _CP_RL2	=	0x00c8
+_LED1	=	0x0091
+_IR_out	=	0x00b3
 ;--------------------------------------------------------
 ; overlayable register banks
 ;--------------------------------------------------------
 	.area REG_BANK_0	(REL,OVR,DATA)
 	.ds 8
 ;--------------------------------------------------------
+; overlayable bit register bank
+;--------------------------------------------------------
+	.area BIT_BANK	(REL,OVR,DATA)
+bits:
+	.ds 1
+	b0 = bits[0]
+	b1 = bits[1]
+	b2 = bits[2]
+	b3 = bits[3]
+	b4 = bits[4]
+	b5 = bits[5]
+	b6 = bits[6]
+	b7 = bits[7]
+;--------------------------------------------------------
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_str1::
-	.ds 17
-_str::
-	.ds 20
+_Flag_IR::
+	.ds 1
+_Data_IR::
+	.ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
-;--------------------------------------------------------
-; Stack segment in internal ram 
-;--------------------------------------------------------
-	.area	SSEG
-__start__stack:
-	.ds	1
-
+	.area	OSEG    (OVR,DATA)
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
 ;--------------------------------------------------------
@@ -360,64 +370,31 @@ __start__stack:
 	.area GSFINAL (CODE)
 	.area CSEG    (CODE)
 ;--------------------------------------------------------
-; interrupt vector 
-;--------------------------------------------------------
-	.area HOME    (CODE)
-__interrupt_vect:
-	ljmp	__sdcc_gsinit_startup
-;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area GSINIT  (CODE)
 	.area GSFINAL (CODE)
 	.area GSINIT  (CODE)
-	.globl __sdcc_gsinit_startup
-	.globl __sdcc_program_startup
-	.globl __start__stack
-	.globl __mcs51_genXINIT
-	.globl __mcs51_genXRAMCLEAR
-	.globl __mcs51_genRAMCLEAR
-;	./src/i2c/main.c:51: unsigned char str1[] = "AT24C256 WR STR!";
-	mov	_str1,#0x41
-	mov	(_str1 + 0x0001),#0x54
-	mov	(_str1 + 0x0002),#0x32
-	mov	(_str1 + 0x0003),#0x34
-	mov	(_str1 + 0x0004),#0x43
-	mov	(_str1 + 0x0005),#0x32
-	mov	(_str1 + 0x0006),#0x35
-	mov	(_str1 + 0x0007),#0x36
-	mov	(_str1 + 0x0008),#0x20
-	mov	(_str1 + 0x0009),#0x57
-	mov	(_str1 + 0x000a),#0x52
-	mov	(_str1 + 0x000b),#0x20
-	mov	(_str1 + 0x000c),#0x53
-	mov	(_str1 + 0x000d),#0x54
-	mov	(_str1 + 0x000e),#0x52
-	mov	(_str1 + 0x000f),#0x21
-	mov	(_str1 + 0x0010),#0x00
-	.area GSFINAL (CODE)
-	ljmp	__sdcc_program_startup
+;	./src/ir/include/infrared.c:34: unsigned char Flag_IR = 0;
+	mov	_Flag_IR,#0x00
 ;--------------------------------------------------------
 ; Home
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area HOME    (CODE)
-__sdcc_program_startup:
-	ljmp	_main
-;	return from main will return to caller
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'InitIR'
 ;------------------------------------------------------------
-;	./src/i2c/main.c:54: void main()
+;	./src/ir/include/infrared.c:39: void InitIR()
 ;	-----------------------------------------
-;	 function main
+;	 function InitIR
 ;	-----------------------------------------
-_main:
+_InitIR:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -426,33 +403,258 @@ _main:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	./src/i2c/main.c:56: Init_1602();
-	lcall	_Init_1602
-;	./src/i2c/main.c:57: WrStr_AT24CPAGE(str1, 0x0500, 16);
-	mov	_WrStr_AT24CPAGE_PARM_2,#0x00
-	mov	(_WrStr_AT24CPAGE_PARM_2 + 1),#0x05
-	mov	_WrStr_AT24CPAGE_PARM_3,#0x10
-	mov	dptr,#_str1
-	mov	b,#0x40
-	lcall	_WrStr_AT24CPAGE
-;	./src/i2c/main.c:58: RdStr_AT24CPAGE(str, 0x0500, 16);
-	mov	_RdStr_AT24CPAGE_PARM_2,#0x00
-	mov	(_RdStr_AT24CPAGE_PARM_2 + 1),#0x05
-	mov	_RdStr_AT24CPAGE_PARM_3,#0x10
-	mov	dptr,#_str
-	mov	b,#0x40
-	lcall	_RdStr_AT24CPAGE
-;	./src/i2c/main.c:59: Disp_1602_str(1,1,str);
-	mov	_Disp_1602_str_PARM_3,#_str
-	mov	(_Disp_1602_str_PARM_3 + 1),#0x00
-	mov	(_Disp_1602_str_PARM_3 + 2),#0x40
-	mov	_Disp_1602_str_PARM_2,#0x01
-	mov	dpl,#0x01
-	lcall	_Disp_1602_str
-;	./src/i2c/main.c:60: while(1);
-00102$:
-;	./src/i2c/main.c:61: }
-	sjmp	00102$
+;	./src/ir/include/infrared.c:43: IR_out = 1;
+;	assignBit
+	setb	_IR_out
+;	./src/ir/include/infrared.c:47: TMOD &= 0xF0;
+	anl	_TMOD,#0xf0
+;	./src/ir/include/infrared.c:51: TMOD |= 0x01;
+	orl	_TMOD,#0x01
+;	./src/ir/include/infrared.c:53: TR0 = 1;
+;	assignBit
+	setb	_TR0
+;	./src/ir/include/infrared.c:55: ET0 = 0;
+;	assignBit
+	clr	_ET0
+;	./src/ir/include/infrared.c:59: IT1 = 1;
+;	assignBit
+	setb	_IT1
+;	./src/ir/include/infrared.c:61: EX1 = 1;
+;	assignBit
+	setb	_EX1
+;	./src/ir/include/infrared.c:63: EA = 1;
+;	assignBit
+	setb	_EA
+;	./src/ir/include/infrared.c:64: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'T_Count'
+;------------------------------------------------------------
+;flag                      Allocated to registers r6 r7 
+;------------------------------------------------------------
+;	./src/ir/include/infrared.c:66: unsigned int T_Count(unsigned int flag)
+;	-----------------------------------------
+;	 function T_Count
+;	-----------------------------------------
+_T_Count:
+	mov	r6,dpl
+	mov	r7,dph
+;	./src/ir/include/infrared.c:69: TH0 = 0;
+	mov	_TH0,#0x00
+;	./src/ir/include/infrared.c:70: TL0 = 0;
+	mov	_TL0,#0x00
+;	./src/ir/include/infrared.c:72: TR0 = 1;
+;	assignBit
+	setb	_TR0
+;	./src/ir/include/infrared.c:75: while (IR_out == flag)
+00103$:
+	mov	c,_IR_out
+	clr	a
+	rlc	a
+	mov	r5,#0x00
+	cjne	a,ar6,00105$
+	mov	a,r5
+	cjne	a,ar7,00105$
+;	./src/ir/include/infrared.c:79: if (TH0 > (Time_16ms >> 8))
+	mov	a,_TH0
+	add	a,#0xff - 0x3e
+	jnc	00103$
+;	./src/ir/include/infrared.c:81: break;
+00105$:
+;	./src/ir/include/infrared.c:85: TR0 = 0;
+;	assignBit
+	clr	_TR0
+;	./src/ir/include/infrared.c:88: return (TH0 * 256 + TL0);
+	mov	r7,_TH0
+	mov	r6,#0x00
+	mov	r4,_TL0
+	mov	r5,#0x00
+	mov	a,r4
+	add	a,r6
+	mov	dpl,a
+	mov	a,r5
+	addc	a,r7
+	mov	dph,a
+;	./src/ir/include/infrared.c:89: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'Int1'
+;------------------------------------------------------------
+;i                         Allocated to registers r6 r7 
+;T_Low                     Allocated to registers r4 r5 
+;T_High                    Allocated to registers r2 r3 
+;------------------------------------------------------------
+;	./src/ir/include/infrared.c:92: void Int1() __interrupt(2)
+;	-----------------------------------------
+;	 function Int1
+;	-----------------------------------------
+_Int1:
+	push	bits
+	push	acc
+	push	b
+	push	dpl
+	push	dph
+	push	(0+7)
+	push	(0+6)
+	push	(0+5)
+	push	(0+4)
+	push	(0+3)
+	push	(0+2)
+	push	(0+1)
+	push	(0+0)
+	push	psw
+	mov	psw,#0x00
+;	./src/ir/include/infrared.c:99: T_Low = T_Count(LOW_IR);
+	mov	dptr,#0x0000
+	lcall	_T_Count
+	mov	r6,dpl
+	mov	r7,dph
+;	./src/ir/include/infrared.c:101: T_High = T_Count(HIGH_IR);
+	mov	dptr,#0x0001
+	push	ar7
+	push	ar6
+	lcall	_T_Count
+	mov	r4,dpl
+	mov	r5,dph
+	pop	ar6
+	pop	ar7
+;	./src/ir/include/infrared.c:105: if (T_Low < Min_9ms || T_Low > Max_9ms || T_High < Min_4_5ms || T_High > MAX_4_5ms)
+	clr	c
+	mov	a,r6
+	subb	a,#0x40
+	mov	a,r7
+	subb	a,#0x1f
+	jc	00101$
+	mov	a,#0x10
+	subb	a,r6
+	mov	a,#0x27
+	subb	a,r7
+	jc	00101$
+	mov	a,r4
+	subb	a,#0xac
+	mov	a,r5
+	subb	a,#0x0d
+	jc	00101$
+	mov	a,#0x88
+	subb	a,r4
+	mov	a,#0x13
+	subb	a,r5
+	jnc	00125$
+00101$:
+;	./src/ir/include/infrared.c:108: IE1 = 0;
+;	assignBit
+	clr	_IE1
+;	./src/ir/include/infrared.c:109: return;
+	ljmp	00116$
+;	./src/ir/include/infrared.c:116: for (i = 0; i < 32; i++)
+00125$:
+	mov	r6,#0x00
+	mov	r7,#0x00
+00114$:
+;	./src/ir/include/infrared.c:119: T_Low = T_Count(LOW_IR);
+	mov	dptr,#0x0000
+	push	ar7
+	push	ar6
+	lcall	_T_Count
+	mov	r4,dpl
+	mov	r5,dph
+;	./src/ir/include/infrared.c:121: T_High = T_Count(HIGH_IR);
+	mov	dptr,#0x0001
+	push	ar5
+	push	ar4
+	lcall	_T_Count
+	mov	r2,dpl
+	mov	r3,dph
+	pop	ar4
+	pop	ar5
+	pop	ar6
+	pop	ar7
+;	./src/ir/include/infrared.c:123: if (T_Low < Min_560us || T_Low > Max_560us || T_High < Min_560us || T_High > Max_1680us)
+	clr	c
+	mov	a,r4
+	subb	a,#0x2c
+	mov	a,r5
+	subb	a,#0x01
+	jc	00106$
+	mov	a,#0xbc
+	subb	a,r4
+	mov	a,#0x02
+	subb	a,r5
+	jc	00106$
+	mov	a,r2
+	subb	a,#0x2c
+	mov	a,r3
+	subb	a,#0x01
+	jc	00106$
+	mov	a,#0x14
+	subb	a,r2
+	mov	a,#0x05
+	subb	a,r3
+	jnc	00107$
+00106$:
+;	./src/ir/include/infrared.c:126: IE1 = 0;
+;	assignBit
+	clr	_IE1
+;	./src/ir/include/infrared.c:127: return;
+	sjmp	00116$
+00107$:
+;	./src/ir/include/infrared.c:130: Data_IR >>= 1;
+	mov	a,(_Data_IR + 3)
+	clr	c
+	rrc	a
+	mov	(_Data_IR + 3),a
+	mov	a,(_Data_IR + 2)
+	rrc	a
+	mov	(_Data_IR + 2),a
+	mov	a,(_Data_IR + 1)
+	rrc	a
+	mov	(_Data_IR + 1),a
+	mov	a,_Data_IR
+	rrc	a
+	mov	_Data_IR,a
+;	./src/ir/include/infrared.c:131: if (T_High > Min_1680us)
+	clr	c
+	mov	a,#0x08
+	subb	a,r2
+	mov	a,#0x07
+	subb	a,r3
+	jnc	00115$
+;	./src/ir/include/infrared.c:134: Data_IR |= 0x80000000;
+	orl	(_Data_IR + 3),#0x80
+00115$:
+;	./src/ir/include/infrared.c:116: for (i = 0; i < 32; i++)
+	inc	r6
+	cjne	r6,#0x00,00172$
+	inc	r7
+00172$:
+	clr	c
+	mov	a,r6
+	subb	a,#0x20
+	mov	a,r7
+	subb	a,#0x00
+	jc	00114$
+;	./src/ir/include/infrared.c:138: Flag_IR = 1;
+	mov	_Flag_IR,#0x01
+;	./src/ir/include/infrared.c:140: IE1 = 0;
+;	assignBit
+	clr	_IE1
+00116$:
+;	./src/ir/include/infrared.c:141: }
+	pop	psw
+	pop	(0+0)
+	pop	(0+1)
+	pop	(0+2)
+	pop	(0+3)
+	pop	(0+4)
+	pop	(0+5)
+	pop	(0+6)
+	pop	(0+7)
+	pop	dph
+	pop	dpl
+	pop	b
+	pop	acc
+	pop	bits
+	reti
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
