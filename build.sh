@@ -3,7 +3,7 @@
  # @Author: cuihaonan
  # @Email: devcui@outlook.com
  # @Date: 2021-03-29 21:30:19
- # @LastEditTime: 2021-04-05 18:31:37
+ # @LastEditTime: 2021-04-08 22:40:23
  # @LastEditors: cuihaonan
  # @Description: Basic description
  # @FilePath: /sdcc-include/build.sh
@@ -41,8 +41,15 @@ cleanSpace ./out/
 #     && sdcc ./src/ir/lib/main.rel ./src/ir/lib/1602.rel ./src/ir/lib/infrared.rel -o ./out/out.ihx
 
 
-cleanSpace ./src/DS1302/lib/ \
-    && sdcc -c ./src/DS1302/include/1602.c -o ./src/DS1302/lib/ \
-    && sdcc -c ./src/DS1302/include/DS1302.c -o ./src/DS1302/lib/ \
-    && sdcc -c ./src/DS1302/main.c -o ./src/DS1302/lib/ \
-    && sdcc ./src/DS1302/lib/main.rel ./src/DS1302/lib/1602.rel ./src/DS1302/lib/DS1302.rel -o ./out/out.ihx
+# cleanSpace ./src/DS1302/lib/ \
+#     && sdcc -c ./src/DS1302/include/1602.c -o ./src/DS1302/lib/ \
+#     && sdcc -c ./src/DS1302/include/DS1302.c -o ./src/DS1302/lib/ \
+#     && sdcc -c ./src/DS1302/main.c -o ./src/DS1302/lib/ \
+#     && sdcc ./src/DS1302/lib/main.rel ./src/DS1302/lib/1602.rel ./src/DS1302/lib/DS1302.rel -o ./out/out.ihx
+
+
+cleanSpace ./src/eeprom/lib/ \
+    && sdcc -c ./src/eeprom/include/1602.c -o ./src/eeprom/lib/ \
+    && sdcc -c ./src/eeprom/include/eeprom.c -o ./src/eeprom/lib/ \
+    && sdcc -c ./src/eeprom/main.c -o ./src/eeprom/lib/ \
+    && sdcc ./src/eeprom/lib/main.rel ./src/eeprom/lib/1602.rel ./src/eeprom/lib/eeprom.rel -o ./out/out.ihx
