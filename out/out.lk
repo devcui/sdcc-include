@@ -14,8 +14,6 @@
 -l libint
 -l liblong
 -l libfloat
-./src/eeprom/lib/main.rel
-./src/eeprom/lib/1602.rel
-./src/eeprom/lib/eeprom.rel
+./out/out.rel
 
 -e

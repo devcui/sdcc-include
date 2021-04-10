@@ -2,7 +2,7 @@
  * @Author: cuihaonan
  * @Email: devcui@outlook.com
  * @Date: 2021-04-05 22:41:34
- * @LastEditTime: 2021-04-05 22:57:39
+ * @LastEditTime: 2021-04-10 16:17:10
  * @LastEditors: cuihaonan
  * @Description: Basic description
  * @FilePath: /sdcc-include/src/step/main.c
@@ -12,7 +12,7 @@
 #include "../../include/STC89xx.h"
 #include "../../include/mcs51/lint.h"
 
-unsigned char MotorCode[8] = = {0xDF, 0xCF, 0xEF, 0x5F, 0x7F, 0x3F, 0xBF, 0x9F};
+unsigned char MotorCode[8] = {0xDF, 0xCF, 0xEF, 0x5F, 0x7F, 0x3F, 0xBF, 0x9F};
 
 #define FOSC 11059200
 #define T_2ms (65536 - FOSC / 12 * 2 / 1000)
@@ -54,8 +54,8 @@ void timmer0() __interrupt(1)
         if (index >= 8)
         {
             index = 0;
-            beats--;
         }
+        beats--;
     }
 }
 

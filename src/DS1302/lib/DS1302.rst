@@ -1,0 +1,746 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.0.0 #11528 (Mac OS X x86_64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module DS1302
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _SCLK_LINE
+                                     12 	.globl _IO_LINE
+                                     13 	.globl _CE_LINE
+                                     14 	.globl _CP_RL2
+                                     15 	.globl _C_T2
+                                     16 	.globl _TR2
+                                     17 	.globl _EXEN2
+                                     18 	.globl _TCLK
+                                     19 	.globl _RCLK
+                                     20 	.globl _EXF2
+                                     21 	.globl _TF2
+                                     22 	.globl _T2
+                                     23 	.globl _T2EX
+                                     24 	.globl _RI
+                                     25 	.globl _TI
+                                     26 	.globl _RB8
+                                     27 	.globl _TB8
+                                     28 	.globl _REN
+                                     29 	.globl _SM2
+                                     30 	.globl _SM1
+                                     31 	.globl _FE
+                                     32 	.globl _SM0
+                                     33 	.globl _RXD
+                                     34 	.globl _TXD
+                                     35 	.globl _INT0
+                                     36 	.globl _INT1
+                                     37 	.globl _T0
+                                     38 	.globl _T1
+                                     39 	.globl _WR
+                                     40 	.globl _RD
+                                     41 	.globl _PX0
+                                     42 	.globl _PT0
+                                     43 	.globl _PX1
+                                     44 	.globl _PT1
+                                     45 	.globl _PS
+                                     46 	.globl _PT2
+                                     47 	.globl _EX0
+                                     48 	.globl _ET0
+                                     49 	.globl _EX1
+                                     50 	.globl _ET1
+                                     51 	.globl _ES
+                                     52 	.globl _ET2
+                                     53 	.globl _EC
+                                     54 	.globl _EA
+                                     55 	.globl _IT0
+                                     56 	.globl _IE0
+                                     57 	.globl _IT1
+                                     58 	.globl _IE1
+                                     59 	.globl _TR0
+                                     60 	.globl _TF0
+                                     61 	.globl _TR1
+                                     62 	.globl _TF1
+                                     63 	.globl _P
+                                     64 	.globl _OV
+                                     65 	.globl _RS0
+                                     66 	.globl _RS1
+                                     67 	.globl _F0
+                                     68 	.globl _AC
+                                     69 	.globl _CY
+                                     70 	.globl _P37
+                                     71 	.globl _P36
+                                     72 	.globl _P35
+                                     73 	.globl _P34
+                                     74 	.globl _P33
+                                     75 	.globl _P32
+                                     76 	.globl _P31
+                                     77 	.globl _P30
+                                     78 	.globl _P27
+                                     79 	.globl _P26
+                                     80 	.globl _P25
+                                     81 	.globl _P24
+                                     82 	.globl _P23
+                                     83 	.globl _P22
+                                     84 	.globl _P21
+                                     85 	.globl _P20
+                                     86 	.globl _P17
+                                     87 	.globl _P16
+                                     88 	.globl _P15
+                                     89 	.globl _P14
+                                     90 	.globl _P13
+                                     91 	.globl _P12
+                                     92 	.globl _P11
+                                     93 	.globl _P10
+                                     94 	.globl _P07
+                                     95 	.globl _P06
+                                     96 	.globl _P05
+                                     97 	.globl _P04
+                                     98 	.globl _P03
+                                     99 	.globl _P02
+                                    100 	.globl _P01
+                                    101 	.globl _P00
+                                    102 	.globl _P40
+                                    103 	.globl _P41
+                                    104 	.globl _P42
+                                    105 	.globl _P43
+                                    106 	.globl _P44
+                                    107 	.globl _P45
+                                    108 	.globl _P46
+                                    109 	.globl _TH2
+                                    110 	.globl _TL2
+                                    111 	.globl _RCAP2H
+                                    112 	.globl _RCAP2L
+                                    113 	.globl _T2MOD
+                                    114 	.globl _T2CON
+                                    115 	.globl _SADEN
+                                    116 	.globl _IPH
+                                    117 	.globl _SADDR
+                                    118 	.globl _AUXR1
+                                    119 	.globl _AUXR
+                                    120 	.globl _SBUF
+                                    121 	.globl _SCON
+                                    122 	.globl _IP
+                                    123 	.globl _IE
+                                    124 	.globl _TH1
+                                    125 	.globl _TH0
+                                    126 	.globl _TL1
+                                    127 	.globl _TL0
+                                    128 	.globl _TMOD
+                                    129 	.globl _TCON
+                                    130 	.globl _PCON
+                                    131 	.globl _DPH
+                                    132 	.globl _DPL
+                                    133 	.globl _SP
+                                    134 	.globl _B
+                                    135 	.globl _ACC
+                                    136 	.globl _PSW
+                                    137 	.globl _P3
+                                    138 	.globl _P2
+                                    139 	.globl _P1
+                                    140 	.globl _P0
+                                    141 	.globl _ISP_CONTR
+                                    142 	.globl _ISP_TRIG
+                                    143 	.globl _ISP_CMD
+                                    144 	.globl _ISP_ADDRL
+                                    145 	.globl _ISP_ADDRH
+                                    146 	.globl _ISP_DATA
+                                    147 	.globl _WDT_CONTR
+                                    148 	.globl _XICON
+                                    149 	.globl _P4
+                                    150 	.globl _WrSingle_1302_PARM_2
+                                    151 	.globl _WrByte_1302
+                                    152 	.globl _RdByte_1302
+                                    153 	.globl _WrSingle_1302
+                                    154 	.globl _RdSingle_1302
+                                    155 	.globl _Init_1302
+                                    156 	.globl _GetTime
+                                    157 	.globl _WrBurst_1302
+                                    158 	.globl _RdBurst_1302
+                                    159 ;--------------------------------------------------------
+                                    160 ; special function registers
+                                    161 ;--------------------------------------------------------
+                                    162 	.area RSEG    (ABS,DATA)
+      000000                        163 	.org 0x0000
+                           0000E8   164 _P4	=	0x00e8
+                           0000C0   165 _XICON	=	0x00c0
+                           0000E1   166 _WDT_CONTR	=	0x00e1
+                           0000E2   167 _ISP_DATA	=	0x00e2
+                           0000E3   168 _ISP_ADDRH	=	0x00e3
+                           0000E4   169 _ISP_ADDRL	=	0x00e4
+                           0000E5   170 _ISP_CMD	=	0x00e5
+                           0000E6   171 _ISP_TRIG	=	0x00e6
+                           0000E7   172 _ISP_CONTR	=	0x00e7
+                           000080   173 _P0	=	0x0080
+                           000090   174 _P1	=	0x0090
+                           0000A0   175 _P2	=	0x00a0
+                           0000B0   176 _P3	=	0x00b0
+                           0000D0   177 _PSW	=	0x00d0
+                           0000E0   178 _ACC	=	0x00e0
+                           0000F0   179 _B	=	0x00f0
+                           000081   180 _SP	=	0x0081
+                           000082   181 _DPL	=	0x0082
+                           000083   182 _DPH	=	0x0083
+                           000087   183 _PCON	=	0x0087
+                           000088   184 _TCON	=	0x0088
+                           000089   185 _TMOD	=	0x0089
+                           00008A   186 _TL0	=	0x008a
+                           00008B   187 _TL1	=	0x008b
+                           00008C   188 _TH0	=	0x008c
+                           00008D   189 _TH1	=	0x008d
+                           0000A8   190 _IE	=	0x00a8
+                           0000B8   191 _IP	=	0x00b8
+                           000098   192 _SCON	=	0x0098
+                           000099   193 _SBUF	=	0x0099
+                           00008E   194 _AUXR	=	0x008e
+                           0000A2   195 _AUXR1	=	0x00a2
+                           0000A9   196 _SADDR	=	0x00a9
+                           0000B7   197 _IPH	=	0x00b7
+                           0000B9   198 _SADEN	=	0x00b9
+                           0000C8   199 _T2CON	=	0x00c8
+                           0000C9   200 _T2MOD	=	0x00c9
+                           0000CA   201 _RCAP2L	=	0x00ca
+                           0000CB   202 _RCAP2H	=	0x00cb
+                           0000CC   203 _TL2	=	0x00cc
+                           0000CD   204 _TH2	=	0x00cd
+                                    205 ;--------------------------------------------------------
+                                    206 ; special function bits
+                                    207 ;--------------------------------------------------------
+                                    208 	.area RSEG    (ABS,DATA)
+      000000                        209 	.org 0x0000
+                           0000EE   210 _P46	=	0x00ee
+                           0000ED   211 _P45	=	0x00ed
+                           0000EC   212 _P44	=	0x00ec
+                           0000EB   213 _P43	=	0x00eb
+                           0000EA   214 _P42	=	0x00ea
+                           0000E9   215 _P41	=	0x00e9
+                           0000E8   216 _P40	=	0x00e8
+                           000080   217 _P00	=	0x0080
+                           000081   218 _P01	=	0x0081
+                           000082   219 _P02	=	0x0082
+                           000083   220 _P03	=	0x0083
+                           000084   221 _P04	=	0x0084
+                           000085   222 _P05	=	0x0085
+                           000086   223 _P06	=	0x0086
+                           000087   224 _P07	=	0x0087
+                           000090   225 _P10	=	0x0090
+                           000091   226 _P11	=	0x0091
+                           000092   227 _P12	=	0x0092
+                           000093   228 _P13	=	0x0093
+                           000094   229 _P14	=	0x0094
+                           000095   230 _P15	=	0x0095
+                           000096   231 _P16	=	0x0096
+                           000097   232 _P17	=	0x0097
+                           0000A0   233 _P20	=	0x00a0
+                           0000A1   234 _P21	=	0x00a1
+                           0000A2   235 _P22	=	0x00a2
+                           0000A3   236 _P23	=	0x00a3
+                           0000A4   237 _P24	=	0x00a4
+                           0000A5   238 _P25	=	0x00a5
+                           0000A6   239 _P26	=	0x00a6
+                           0000A7   240 _P27	=	0x00a7
+                           0000B0   241 _P30	=	0x00b0
+                           0000B1   242 _P31	=	0x00b1
+                           0000B2   243 _P32	=	0x00b2
+                           0000B3   244 _P33	=	0x00b3
+                           0000B4   245 _P34	=	0x00b4
+                           0000B5   246 _P35	=	0x00b5
+                           0000B6   247 _P36	=	0x00b6
+                           0000B7   248 _P37	=	0x00b7
+                           0000D7   249 _CY	=	0x00d7
+                           0000D6   250 _AC	=	0x00d6
+                           0000D5   251 _F0	=	0x00d5
+                           0000D4   252 _RS1	=	0x00d4
+                           0000D3   253 _RS0	=	0x00d3
+                           0000D2   254 _OV	=	0x00d2
+                           0000D0   255 _P	=	0x00d0
+                           00008F   256 _TF1	=	0x008f
+                           00008E   257 _TR1	=	0x008e
+                           00008D   258 _TF0	=	0x008d
+                           00008C   259 _TR0	=	0x008c
+                           00008B   260 _IE1	=	0x008b
+                           00008A   261 _IT1	=	0x008a
+                           000089   262 _IE0	=	0x0089
+                           000088   263 _IT0	=	0x0088
+                           0000AF   264 _EA	=	0x00af
+                           0000AE   265 _EC	=	0x00ae
+                           0000AD   266 _ET2	=	0x00ad
+                           0000AC   267 _ES	=	0x00ac
+                           0000AB   268 _ET1	=	0x00ab
+                           0000AA   269 _EX1	=	0x00aa
+                           0000A9   270 _ET0	=	0x00a9
+                           0000A8   271 _EX0	=	0x00a8
+                           0000BD   272 _PT2	=	0x00bd
+                           0000BC   273 _PS	=	0x00bc
+                           0000BB   274 _PT1	=	0x00bb
+                           0000BA   275 _PX1	=	0x00ba
+                           0000B9   276 _PT0	=	0x00b9
+                           0000B8   277 _PX0	=	0x00b8
+                           0000B7   278 _RD	=	0x00b7
+                           0000B6   279 _WR	=	0x00b6
+                           0000B5   280 _T1	=	0x00b5
+                           0000B4   281 _T0	=	0x00b4
+                           0000B3   282 _INT1	=	0x00b3
+                           0000B2   283 _INT0	=	0x00b2
+                           0000B1   284 _TXD	=	0x00b1
+                           0000B0   285 _RXD	=	0x00b0
+                           00009F   286 _SM0	=	0x009f
+                           00009F   287 _FE	=	0x009f
+                           00009E   288 _SM1	=	0x009e
+                           00009D   289 _SM2	=	0x009d
+                           00009C   290 _REN	=	0x009c
+                           00009B   291 _TB8	=	0x009b
+                           00009A   292 _RB8	=	0x009a
+                           000099   293 _TI	=	0x0099
+                           000098   294 _RI	=	0x0098
+                           000091   295 _T2EX	=	0x0091
+                           000090   296 _T2	=	0x0090
+                           0000CF   297 _TF2	=	0x00cf
+                           0000CE   298 _EXF2	=	0x00ce
+                           0000CD   299 _RCLK	=	0x00cd
+                           0000CC   300 _TCLK	=	0x00cc
+                           0000CB   301 _EXEN2	=	0x00cb
+                           0000CA   302 _TR2	=	0x00ca
+                           0000C9   303 _C_T2	=	0x00c9
+                           0000C8   304 _CP_RL2	=	0x00c8
+                           000085   305 _CE_LINE	=	0x0085
+                           000084   306 _IO_LINE	=	0x0084
+                           000083   307 _SCLK_LINE	=	0x0083
+                                    308 ;--------------------------------------------------------
+                                    309 ; overlayable register banks
+                                    310 ;--------------------------------------------------------
+                                    311 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        312 	.ds 8
+                                    313 ;--------------------------------------------------------
+                                    314 ; internal ram data
+                                    315 ;--------------------------------------------------------
+                                    316 	.area DSEG    (DATA)
+      000044                        317 _WrSingle_1302_PARM_2:
+      000044                        318 	.ds 1
+                                    319 ;--------------------------------------------------------
+                                    320 ; overlayable items in internal ram 
+                                    321 ;--------------------------------------------------------
+                                    322 	.area	OSEG    (OVR,DATA)
+                                    323 	.area	OSEG    (OVR,DATA)
+                                    324 ;--------------------------------------------------------
+                                    325 ; indirectly addressable internal ram data
+                                    326 ;--------------------------------------------------------
+                                    327 	.area ISEG    (DATA)
+                                    328 ;--------------------------------------------------------
+                                    329 ; absolute internal ram data
+                                    330 ;--------------------------------------------------------
+                                    331 	.area IABS    (ABS,DATA)
+                                    332 	.area IABS    (ABS,DATA)
+                                    333 ;--------------------------------------------------------
+                                    334 ; bit data
+                                    335 ;--------------------------------------------------------
+                                    336 	.area BSEG    (BIT)
+                                    337 ;--------------------------------------------------------
+                                    338 ; paged external ram data
+                                    339 ;--------------------------------------------------------
+                                    340 	.area PSEG    (PAG,XDATA)
+                                    341 ;--------------------------------------------------------
+                                    342 ; external ram data
+                                    343 ;--------------------------------------------------------
+                                    344 	.area XSEG    (XDATA)
+                                    345 ;--------------------------------------------------------
+                                    346 ; absolute external ram data
+                                    347 ;--------------------------------------------------------
+                                    348 	.area XABS    (ABS,XDATA)
+                                    349 ;--------------------------------------------------------
+                                    350 ; external initialized ram data
+                                    351 ;--------------------------------------------------------
+                                    352 	.area XISEG   (XDATA)
+                                    353 	.area HOME    (CODE)
+                                    354 	.area GSINIT0 (CODE)
+                                    355 	.area GSINIT1 (CODE)
+                                    356 	.area GSINIT2 (CODE)
+                                    357 	.area GSINIT3 (CODE)
+                                    358 	.area GSINIT4 (CODE)
+                                    359 	.area GSINIT5 (CODE)
+                                    360 	.area GSINIT  (CODE)
+                                    361 	.area GSFINAL (CODE)
+                                    362 	.area CSEG    (CODE)
+                                    363 ;--------------------------------------------------------
+                                    364 ; global & static initialisations
+                                    365 ;--------------------------------------------------------
+                                    366 	.area HOME    (CODE)
+                                    367 	.area GSINIT  (CODE)
+                                    368 	.area GSFINAL (CODE)
+                                    369 	.area GSINIT  (CODE)
+                                    370 ;--------------------------------------------------------
+                                    371 ; Home
+                                    372 ;--------------------------------------------------------
+                                    373 	.area HOME    (CODE)
+                                    374 	.area HOME    (CODE)
+                                    375 ;--------------------------------------------------------
+                                    376 ; code
+                                    377 ;--------------------------------------------------------
+                                    378 	.area CSEG    (CODE)
+                                    379 ;------------------------------------------------------------
+                                    380 ;Allocation info for local variables in function 'WrByte_1302'
+                                    381 ;------------------------------------------------------------
+                                    382 ;dat                       Allocated to registers r7 
+                                    383 ;j                         Allocated to registers r6 
+                                    384 ;flag                      Allocated to registers r4 r5 
+                                    385 ;------------------------------------------------------------
+                                    386 ;	./src/DS1302/include/DS1302.c:19: void WrByte_1302(unsigned char dat)
+                                    387 ;	-----------------------------------------
+                                    388 ;	 function WrByte_1302
+                                    389 ;	-----------------------------------------
+      00029F                        390 _WrByte_1302:
+                           000007   391 	ar7 = 0x07
+                           000006   392 	ar6 = 0x06
+                           000005   393 	ar5 = 0x05
+                           000004   394 	ar4 = 0x04
+                           000003   395 	ar3 = 0x03
+                           000002   396 	ar2 = 0x02
+                           000001   397 	ar1 = 0x01
+                           000000   398 	ar0 = 0x00
+      00029F AF 82            [24]  399 	mov	r7,dpl
+                                    400 ;	./src/DS1302/include/DS1302.c:23: for (j = 1; j <= 8; j++)
+      0002A1 7E 01            [12]  401 	mov	r6,#0x01
+      0002A3                        402 00102$:
+                                    403 ;	./src/DS1302/include/DS1302.c:26: flag = dat & 0x01;
+      0002A3 8F 04            [24]  404 	mov	ar4,r7
+      0002A5 53 04 01         [24]  405 	anl	ar4,#0x01
+      0002A8 7D 00            [12]  406 	mov	r5,#0x00
+                                    407 ;	./src/DS1302/include/DS1302.c:28: IO_LINE = flag;
+                                    408 ;	assignBit
+      0002AA EC               [12]  409 	mov	a,r4
+      0002AB 4D               [12]  410 	orl	a,r5
+      0002AC 24 FF            [12]  411 	add	a,#0xff
+      0002AE 92 84            [24]  412 	mov	_IO_LINE,c
+                                    413 ;	./src/DS1302/include/DS1302.c:30: SCLK_LINE = 0;
+                                    414 ;	assignBit
+      0002B0 C2 83            [12]  415 	clr	_SCLK_LINE
+                                    416 ;	./src/DS1302/include/DS1302.c:31: SCLK_LINE = 1;
+                                    417 ;	assignBit
+      0002B2 D2 83            [12]  418 	setb	_SCLK_LINE
+                                    419 ;	./src/DS1302/include/DS1302.c:33: dat >>= 1;
+      0002B4 EF               [12]  420 	mov	a,r7
+      0002B5 C3               [12]  421 	clr	c
+      0002B6 13               [12]  422 	rrc	a
+      0002B7 FF               [12]  423 	mov	r7,a
+                                    424 ;	./src/DS1302/include/DS1302.c:23: for (j = 1; j <= 8; j++)
+      0002B8 0E               [12]  425 	inc	r6
+      0002B9 EE               [12]  426 	mov	a,r6
+      0002BA 24 F7            [12]  427 	add	a,#0xff - 0x08
+      0002BC 50 E5            [24]  428 	jnc	00102$
+                                    429 ;	./src/DS1302/include/DS1302.c:36: }
+      0002BE 22               [24]  430 	ret
+                                    431 ;------------------------------------------------------------
+                                    432 ;Allocation info for local variables in function 'RdByte_1302'
+                                    433 ;------------------------------------------------------------
+                                    434 ;dat                       Allocated to registers r7 
+                                    435 ;flag                      Allocated to registers 
+                                    436 ;j                         Allocated to registers r6 
+                                    437 ;------------------------------------------------------------
+                                    438 ;	./src/DS1302/include/DS1302.c:38: unsigned char RdByte_1302(void)
+                                    439 ;	-----------------------------------------
+                                    440 ;	 function RdByte_1302
+                                    441 ;	-----------------------------------------
+      0002BF                        442 _RdByte_1302:
+                                    443 ;	./src/DS1302/include/DS1302.c:40: unsigned char dat = 0;
+      0002BF 7F 00            [12]  444 	mov	r7,#0x00
+                                    445 ;	./src/DS1302/include/DS1302.c:44: for (j = 1; j <= 8; j++)
+      0002C1 7E 01            [12]  446 	mov	r6,#0x01
+      0002C3                        447 00102$:
+                                    448 ;	./src/DS1302/include/DS1302.c:47: SCLK_LINE = 1;
+                                    449 ;	assignBit
+      0002C3 D2 83            [12]  450 	setb	_SCLK_LINE
+                                    451 ;	./src/DS1302/include/DS1302.c:48: SCLK_LINE = 0;
+                                    452 ;	assignBit
+      0002C5 C2 83            [12]  453 	clr	_SCLK_LINE
+                                    454 ;	./src/DS1302/include/DS1302.c:50: flag = IO_LINE;
+      0002C7 A2 84            [12]  455 	mov	c,_IO_LINE
+      0002C9 E4               [12]  456 	clr	a
+      0002CA 33               [12]  457 	rlc	a
+      0002CB FD               [12]  458 	mov	r5,a
+                                    459 ;	./src/DS1302/include/DS1302.c:52: dat = (dat >> 1) | (flag << 7);
+      0002CC EF               [12]  460 	mov	a,r7
+      0002CD C3               [12]  461 	clr	c
+      0002CE 13               [12]  462 	rrc	a
+      0002CF FC               [12]  463 	mov	r4,a
+      0002D0 ED               [12]  464 	mov	a,r5
+      0002D1 03               [12]  465 	rr	a
+      0002D2 54 80            [12]  466 	anl	a,#0x80
+      0002D4 4C               [12]  467 	orl	a,r4
+      0002D5 FF               [12]  468 	mov	r7,a
+                                    469 ;	./src/DS1302/include/DS1302.c:44: for (j = 1; j <= 8; j++)
+      0002D6 0E               [12]  470 	inc	r6
+      0002D7 EE               [12]  471 	mov	a,r6
+      0002D8 24 F7            [12]  472 	add	a,#0xff - 0x08
+      0002DA 50 E7            [24]  473 	jnc	00102$
+                                    474 ;	./src/DS1302/include/DS1302.c:54: return dat;
+      0002DC 8F 82            [24]  475 	mov	dpl,r7
+                                    476 ;	./src/DS1302/include/DS1302.c:55: }
+      0002DE 22               [24]  477 	ret
+                                    478 ;------------------------------------------------------------
+                                    479 ;Allocation info for local variables in function 'WrSingle_1302'
+                                    480 ;------------------------------------------------------------
+                                    481 ;dat                       Allocated with name '_WrSingle_1302_PARM_2'
+                                    482 ;addr                      Allocated to registers 
+                                    483 ;------------------------------------------------------------
+                                    484 ;	./src/DS1302/include/DS1302.c:57: void WrSingle_1302(unsigned char addr, unsigned char dat)
+                                    485 ;	-----------------------------------------
+                                    486 ;	 function WrSingle_1302
+                                    487 ;	-----------------------------------------
+      0002DF                        488 _WrSingle_1302:
+                                    489 ;	./src/DS1302/include/DS1302.c:60: CE_LINE = 1;
+                                    490 ;	assignBit
+      0002DF D2 85            [12]  491 	setb	_CE_LINE
+                                    492 ;	./src/DS1302/include/DS1302.c:62: WrByte_1302(addr);
+      0002E1 12 02 9F         [24]  493 	lcall	_WrByte_1302
+                                    494 ;	./src/DS1302/include/DS1302.c:64: WrByte_1302(dat);
+      0002E4 85 44 82         [24]  495 	mov	dpl,_WrSingle_1302_PARM_2
+      0002E7 12 02 9F         [24]  496 	lcall	_WrByte_1302
+                                    497 ;	./src/DS1302/include/DS1302.c:66: CE_LINE = 0;
+                                    498 ;	assignBit
+      0002EA C2 85            [12]  499 	clr	_CE_LINE
+                                    500 ;	./src/DS1302/include/DS1302.c:68: SCLK_LINE = 0;
+                                    501 ;	assignBit
+      0002EC C2 83            [12]  502 	clr	_SCLK_LINE
+                                    503 ;	./src/DS1302/include/DS1302.c:69: }
+      0002EE 22               [24]  504 	ret
+                                    505 ;------------------------------------------------------------
+                                    506 ;Allocation info for local variables in function 'RdSingle_1302'
+                                    507 ;------------------------------------------------------------
+                                    508 ;addr                      Allocated to registers 
+                                    509 ;dat                       Allocated to registers 
+                                    510 ;------------------------------------------------------------
+                                    511 ;	./src/DS1302/include/DS1302.c:71: unsigned char RdSingle_1302(unsigned char addr)
+                                    512 ;	-----------------------------------------
+                                    513 ;	 function RdSingle_1302
+                                    514 ;	-----------------------------------------
+      0002EF                        515 _RdSingle_1302:
+                                    516 ;	./src/DS1302/include/DS1302.c:75: CE_LINE = 1;
+                                    517 ;	assignBit
+      0002EF D2 85            [12]  518 	setb	_CE_LINE
+                                    519 ;	./src/DS1302/include/DS1302.c:77: WrByte_1302(addr);
+      0002F1 12 02 9F         [24]  520 	lcall	_WrByte_1302
+                                    521 ;	./src/DS1302/include/DS1302.c:78: dat = RdByte_1302();
+      0002F4 12 02 BF         [24]  522 	lcall	_RdByte_1302
+                                    523 ;	./src/DS1302/include/DS1302.c:80: CE_LINE = 0;
+                                    524 ;	assignBit
+      0002F7 C2 85            [12]  525 	clr	_CE_LINE
+                                    526 ;	./src/DS1302/include/DS1302.c:81: return dat;
+                                    527 ;	./src/DS1302/include/DS1302.c:82: }
+      0002F9 22               [24]  528 	ret
+                                    529 ;------------------------------------------------------------
+                                    530 ;Allocation info for local variables in function 'Init_1302'
+                                    531 ;------------------------------------------------------------
+                                    532 ;time                      Allocated to registers r5 r6 r7 
+                                    533 ;j                         Allocated with name '_Init_1302_j_65536_22'
+                                    534 ;------------------------------------------------------------
+                                    535 ;	./src/DS1302/include/DS1302.c:84: void Init_1302(unsigned char *time)
+                                    536 ;	-----------------------------------------
+                                    537 ;	 function Init_1302
+                                    538 ;	-----------------------------------------
+      0002FA                        539 _Init_1302:
+      0002FA AD 82            [24]  540 	mov	r5,dpl
+      0002FC AE 83            [24]  541 	mov	r6,dph
+      0002FE AF F0            [24]  542 	mov	r7,b
+                                    543 ;	./src/DS1302/include/DS1302.c:87: CE_LINE = 0;
+                                    544 ;	assignBit
+      000300 C2 85            [12]  545 	clr	_CE_LINE
+                                    546 ;	./src/DS1302/include/DS1302.c:88: SCLK_LINE = 0;
+                                    547 ;	assignBit
+      000302 C2 83            [12]  548 	clr	_SCLK_LINE
+                                    549 ;	./src/DS1302/include/DS1302.c:90: WrSingle_1302(0x8E, 0x00);
+      000304 75 44 00         [24]  550 	mov	_WrSingle_1302_PARM_2,#0x00
+      000307 75 82 8E         [24]  551 	mov	dpl,#0x8e
+      00030A C0 07            [24]  552 	push	ar7
+      00030C C0 06            [24]  553 	push	ar6
+      00030E C0 05            [24]  554 	push	ar5
+      000310 12 02 DF         [24]  555 	lcall	_WrSingle_1302
+      000313 D0 05            [24]  556 	pop	ar5
+      000315 D0 06            [24]  557 	pop	ar6
+      000317 D0 07            [24]  558 	pop	ar7
+                                    559 ;	./src/DS1302/include/DS1302.c:97: WrBurst_1302(time);
+      000319 8D 82            [24]  560 	mov	dpl,r5
+      00031B 8E 83            [24]  561 	mov	dph,r6
+      00031D 8F F0            [24]  562 	mov	b,r7
+                                    563 ;	./src/DS1302/include/DS1302.c:98: }
+      00031F 02 03 61         [24]  564 	ljmp	_WrBurst_1302
+                                    565 ;------------------------------------------------------------
+                                    566 ;Allocation info for local variables in function 'GetTime'
+                                    567 ;------------------------------------------------------------
+                                    568 ;currentTime               Allocated to registers r5 r6 r7 
+                                    569 ;j                         Allocated to registers r4 
+                                    570 ;------------------------------------------------------------
+                                    571 ;	./src/DS1302/include/DS1302.c:100: void GetTime(unsigned char *currentTime)
+                                    572 ;	-----------------------------------------
+                                    573 ;	 function GetTime
+                                    574 ;	-----------------------------------------
+      000322                        575 _GetTime:
+      000322 AD 82            [24]  576 	mov	r5,dpl
+      000324 AE 83            [24]  577 	mov	r6,dph
+      000326 AF F0            [24]  578 	mov	r7,b
+                                    579 ;	./src/DS1302/include/DS1302.c:103: CE_LINE = 0;
+                                    580 ;	assignBit
+      000328 C2 85            [12]  581 	clr	_CE_LINE
+                                    582 ;	./src/DS1302/include/DS1302.c:104: SCLK_LINE = 0;
+                                    583 ;	assignBit
+      00032A C2 83            [12]  584 	clr	_SCLK_LINE
+                                    585 ;	./src/DS1302/include/DS1302.c:105: for (j = 0; j <= 6; j++)
+      00032C 7C 00            [12]  586 	mov	r4,#0x00
+      00032E                        587 00102$:
+                                    588 ;	./src/DS1302/include/DS1302.c:107: *currentTime = RdSingle_1302(0x81 + 2 * j);
+      00032E 8C 03            [24]  589 	mov	ar3,r4
+      000330 EB               [12]  590 	mov	a,r3
+      000331 2B               [12]  591 	add	a,r3
+      000332 24 81            [12]  592 	add	a,#0x81
+      000334 F5 82            [12]  593 	mov	dpl,a
+      000336 C0 07            [24]  594 	push	ar7
+      000338 C0 06            [24]  595 	push	ar6
+      00033A C0 05            [24]  596 	push	ar5
+      00033C C0 04            [24]  597 	push	ar4
+      00033E 12 02 EF         [24]  598 	lcall	_RdSingle_1302
+      000341 AB 82            [24]  599 	mov	r3,dpl
+      000343 D0 04            [24]  600 	pop	ar4
+      000345 D0 05            [24]  601 	pop	ar5
+      000347 D0 06            [24]  602 	pop	ar6
+      000349 D0 07            [24]  603 	pop	ar7
+      00034B 8D 82            [24]  604 	mov	dpl,r5
+      00034D 8E 83            [24]  605 	mov	dph,r6
+      00034F 8F F0            [24]  606 	mov	b,r7
+      000351 EB               [12]  607 	mov	a,r3
+      000352 12 03 FA         [24]  608 	lcall	__gptrput
+      000355 A3               [24]  609 	inc	dptr
+      000356 AD 82            [24]  610 	mov	r5,dpl
+      000358 AE 83            [24]  611 	mov	r6,dph
+                                    612 ;	./src/DS1302/include/DS1302.c:108: currentTime++;
+                                    613 ;	./src/DS1302/include/DS1302.c:105: for (j = 0; j <= 6; j++)
+      00035A 0C               [12]  614 	inc	r4
+      00035B EC               [12]  615 	mov	a,r4
+      00035C 24 F9            [12]  616 	add	a,#0xff - 0x06
+      00035E 50 CE            [24]  617 	jnc	00102$
+                                    618 ;	./src/DS1302/include/DS1302.c:110: }
+      000360 22               [24]  619 	ret
+                                    620 ;------------------------------------------------------------
+                                    621 ;Allocation info for local variables in function 'WrBurst_1302'
+                                    622 ;------------------------------------------------------------
+                                    623 ;SetTime                   Allocated to registers r5 r6 r7 
+                                    624 ;j                         Allocated to registers r4 
+                                    625 ;------------------------------------------------------------
+                                    626 ;	./src/DS1302/include/DS1302.c:113: void WrBurst_1302(unsigned char *SetTime)
+                                    627 ;	-----------------------------------------
+                                    628 ;	 function WrBurst_1302
+                                    629 ;	-----------------------------------------
+      000361                        630 _WrBurst_1302:
+      000361 AD 82            [24]  631 	mov	r5,dpl
+      000363 AE 83            [24]  632 	mov	r6,dph
+      000365 AF F0            [24]  633 	mov	r7,b
+                                    634 ;	./src/DS1302/include/DS1302.c:117: CE_LINE = 1;
+                                    635 ;	assignBit
+      000367 D2 85            [12]  636 	setb	_CE_LINE
+                                    637 ;	./src/DS1302/include/DS1302.c:119: WrByte_1302(0xBE);
+      000369 75 82 BE         [24]  638 	mov	dpl,#0xbe
+      00036C C0 07            [24]  639 	push	ar7
+      00036E C0 06            [24]  640 	push	ar6
+      000370 C0 05            [24]  641 	push	ar5
+      000372 12 02 9F         [24]  642 	lcall	_WrByte_1302
+      000375 D0 05            [24]  643 	pop	ar5
+      000377 D0 06            [24]  644 	pop	ar6
+      000379 D0 07            [24]  645 	pop	ar7
+                                    646 ;	./src/DS1302/include/DS1302.c:120: for (j = 0; j < 6; j++)
+      00037B 7C 00            [12]  647 	mov	r4,#0x00
+      00037D                        648 00102$:
+                                    649 ;	./src/DS1302/include/DS1302.c:123: WrByte_1302(SetTime[j]);
+      00037D EC               [12]  650 	mov	a,r4
+      00037E 2D               [12]  651 	add	a,r5
+      00037F F9               [12]  652 	mov	r1,a
+      000380 E4               [12]  653 	clr	a
+      000381 3E               [12]  654 	addc	a,r6
+      000382 FA               [12]  655 	mov	r2,a
+      000383 8F 03            [24]  656 	mov	ar3,r7
+      000385 89 82            [24]  657 	mov	dpl,r1
+      000387 8A 83            [24]  658 	mov	dph,r2
+      000389 8B F0            [24]  659 	mov	b,r3
+      00038B 12 04 15         [24]  660 	lcall	__gptrget
+      00038E F5 82            [12]  661 	mov	dpl,a
+      000390 C0 07            [24]  662 	push	ar7
+      000392 C0 06            [24]  663 	push	ar6
+      000394 C0 05            [24]  664 	push	ar5
+      000396 C0 04            [24]  665 	push	ar4
+      000398 12 02 9F         [24]  666 	lcall	_WrByte_1302
+      00039B D0 04            [24]  667 	pop	ar4
+      00039D D0 05            [24]  668 	pop	ar5
+      00039F D0 06            [24]  669 	pop	ar6
+      0003A1 D0 07            [24]  670 	pop	ar7
+                                    671 ;	./src/DS1302/include/DS1302.c:120: for (j = 0; j < 6; j++)
+      0003A3 0C               [12]  672 	inc	r4
+      0003A4 BC 06 00         [24]  673 	cjne	r4,#0x06,00115$
+      0003A7                        674 00115$:
+      0003A7 40 D4            [24]  675 	jc	00102$
+                                    676 ;	./src/DS1302/include/DS1302.c:125: WrByte_1302(0);
+      0003A9 75 82 00         [24]  677 	mov	dpl,#0x00
+      0003AC 12 02 9F         [24]  678 	lcall	_WrByte_1302
+                                    679 ;	./src/DS1302/include/DS1302.c:127: CE_LINE = 0;
+                                    680 ;	assignBit
+      0003AF C2 85            [12]  681 	clr	_CE_LINE
+                                    682 ;	./src/DS1302/include/DS1302.c:128: }
+      0003B1 22               [24]  683 	ret
+                                    684 ;------------------------------------------------------------
+                                    685 ;Allocation info for local variables in function 'RdBurst_1302'
+                                    686 ;------------------------------------------------------------
+                                    687 ;CurrentTime               Allocated to registers r5 r6 r7 
+                                    688 ;j                         Allocated to registers r4 
+                                    689 ;------------------------------------------------------------
+                                    690 ;	./src/DS1302/include/DS1302.c:130: void RdBurst_1302(unsigned char *CurrentTime)
+                                    691 ;	-----------------------------------------
+                                    692 ;	 function RdBurst_1302
+                                    693 ;	-----------------------------------------
+      0003B2                        694 _RdBurst_1302:
+      0003B2 AD 82            [24]  695 	mov	r5,dpl
+      0003B4 AE 83            [24]  696 	mov	r6,dph
+      0003B6 AF F0            [24]  697 	mov	r7,b
+                                    698 ;	./src/DS1302/include/DS1302.c:134: CE_LINE = 1;
+                                    699 ;	assignBit
+      0003B8 D2 85            [12]  700 	setb	_CE_LINE
+                                    701 ;	./src/DS1302/include/DS1302.c:136: WrByte_1302(0xBF);
+      0003BA 75 82 BF         [24]  702 	mov	dpl,#0xbf
+      0003BD C0 07            [24]  703 	push	ar7
+      0003BF C0 06            [24]  704 	push	ar6
+      0003C1 C0 05            [24]  705 	push	ar5
+      0003C3 12 02 9F         [24]  706 	lcall	_WrByte_1302
+      0003C6 D0 05            [24]  707 	pop	ar5
+      0003C8 D0 06            [24]  708 	pop	ar6
+      0003CA D0 07            [24]  709 	pop	ar7
+                                    710 ;	./src/DS1302/include/DS1302.c:137: for (j = 0; j <= 6; j++)
+      0003CC 7C 07            [12]  711 	mov	r4,#0x07
+      0003CE                        712 00104$:
+                                    713 ;	./src/DS1302/include/DS1302.c:140: *CurrentTime = RdByte_1302();
+      0003CE C0 07            [24]  714 	push	ar7
+      0003D0 C0 06            [24]  715 	push	ar6
+      0003D2 C0 05            [24]  716 	push	ar5
+      0003D4 C0 04            [24]  717 	push	ar4
+      0003D6 12 02 BF         [24]  718 	lcall	_RdByte_1302
+      0003D9 AB 82            [24]  719 	mov	r3,dpl
+      0003DB D0 04            [24]  720 	pop	ar4
+      0003DD D0 05            [24]  721 	pop	ar5
+      0003DF D0 06            [24]  722 	pop	ar6
+      0003E1 D0 07            [24]  723 	pop	ar7
+      0003E3 8D 82            [24]  724 	mov	dpl,r5
+      0003E5 8E 83            [24]  725 	mov	dph,r6
+      0003E7 8F F0            [24]  726 	mov	b,r7
+      0003E9 EB               [12]  727 	mov	a,r3
+      0003EA 12 03 FA         [24]  728 	lcall	__gptrput
+      0003ED A3               [24]  729 	inc	dptr
+      0003EE AD 82            [24]  730 	mov	r5,dpl
+      0003F0 AE 83            [24]  731 	mov	r6,dph
+                                    732 ;	./src/DS1302/include/DS1302.c:141: CurrentTime++;
+      0003F2 EC               [12]  733 	mov	a,r4
+      0003F3 14               [12]  734 	dec	a
+                                    735 ;	./src/DS1302/include/DS1302.c:137: for (j = 0; j <= 6; j++)
+      0003F4 FC               [12]  736 	mov	r4,a
+      0003F5 70 D7            [24]  737 	jnz	00104$
+                                    738 ;	./src/DS1302/include/DS1302.c:144: CE_LINE = 0;
+                                    739 ;	assignBit
+      0003F7 C2 85            [12]  740 	clr	_CE_LINE
+                                    741 ;	./src/DS1302/include/DS1302.c:145: }
+      0003F9 22               [24]  742 	ret
+                                    743 	.area CSEG    (CODE)
+                                    744 	.area CONST   (CODE)
+                                    745 	.area XINIT   (CODE)
+                                    746 	.area CABS    (ABS,CODE)
